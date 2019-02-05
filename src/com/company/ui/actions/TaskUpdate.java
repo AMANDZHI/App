@@ -2,23 +2,30 @@ package com.company.ui.actions;
 
 import com.company.model.Project;
 import com.company.model.Task;
-import com.company.service.Service;
-import com.company.ui.Command;
+import com.company.ui.ServiceLocator;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 
-public class UpdateTask implements Action {
-    private Command command;
+public class TaskUpdate implements Action {
+    private final String command = "updateTask";
+    private final String descr = "Update your task";
     private BufferedReader reader;
-    private Service<Task> taskService;
-    private Service<Project> projectService;
+    private ServiceLocator<Project, Task> serviceLocator;
 
-    public UpdateTask(Command command, BufferedReader reader, Service<Task> taskService, Service<Project> projectService) {
-        this.command = command;
+    public TaskUpdate(BufferedReader reader, ServiceLocator<Project, Task> serviceLocator) {
         this.reader = reader;
-        this.taskService = taskService;
-        this.projectService = projectService;
+        this.serviceLocator = serviceLocator;
+    }
+
+    @Override
+    public String getName() {
+        return command;
+    }
+
+    @Override
+    public String getDescription() {
+        return descr;
     }
 
     @Override
@@ -31,9 +38,9 @@ public class UpdateTask implements Action {
         String answerDescrTask = reader.readLine();
         System.out.println("Введите новый номер id проекта");
         String answerProjectTask = reader.readLine();
-        Project project = projectService.findById(Integer.parseInt(answerProjectTask));
+        Project project = serviceLocator.getProjectService().findById(Integer.parseInt(answerProjectTask));
         Task updateTask = new Task(Integer.parseInt(answerIdTask), answerNameTask, answerDescrTask, project);
-        taskService.update(updateTask);
+        serviceLocator.getTaskService().update(updateTask);
         System.out.println(updateTask);
     }
 }

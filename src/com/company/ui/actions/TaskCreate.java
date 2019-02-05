@@ -2,23 +2,30 @@ package com.company.ui.actions;
 
 import com.company.model.Project;
 import com.company.model.Task;
-import com.company.service.Service;
-import com.company.ui.Command;
+import com.company.ui.ServiceLocator;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 
-public class CreateTask implements Action {
-    private Command command;
+public class TaskCreate implements Action {
+    private final String command = "saveTask";
+    private final String descr = "Save your task";
     private BufferedReader reader;
-    private Service<Task> taskService;
-    private Service<Project> projectService;
+    private ServiceLocator<Project, Task> serviceLocator;
 
-    public CreateTask(Command command, BufferedReader reader, Service<Task> taskService, Service<Project> projectService) {
-        this.command = command;
+    public TaskCreate( BufferedReader reader, ServiceLocator<Project, Task> serviceLocatore) {
         this.reader = reader;
-        this.taskService = taskService;
-        this.projectService = projectService;
+        this.serviceLocator = serviceLocatore;
+    }
+
+    @Override
+    public String getName() {
+        return command;
+    }
+
+    @Override
+    public String getDescription() {
+        return descr;
     }
 
     @Override
@@ -31,9 +38,9 @@ public class CreateTask implements Action {
         String answerDescrTask = reader.readLine();
         System.out.println("Введите номер id проекта");
         String answerProjectTask = reader.readLine();
-        Project project = projectService.findById(Integer.parseInt(answerProjectTask));
+        Project project = serviceLocator.getProjectService().findById(Integer.parseInt(answerProjectTask));
         Task newTask = new Task(Integer.parseInt(answerIdTask), answerNameTask, answerDescrTask, project);
-        taskService.save(newTask);
+        serviceLocator.getTaskService().save(newTask);
         System.out.println(newTask);
     }
 }

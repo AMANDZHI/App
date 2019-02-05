@@ -1,21 +1,31 @@
 package com.company.ui.actions;
 
 import com.company.model.Project;
-import com.company.service.Service;
-import com.company.ui.Command;
+import com.company.model.Task;
+import com.company.ui.ServiceLocator;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 
-public class CreateProject implements Action {
-    private Command command;
+public class ProjectCreate implements Action {
+    private final String command = "saveProject";
+    private final String descr = "Save your project";
     private BufferedReader reader;
-    private Service<Project> projectService;
+    private ServiceLocator<Project, Task> serviceLocator;
 
-    public CreateProject(Command command, BufferedReader reader, Service<Project> projectService) {
-        this.command = command;
+    public ProjectCreate(BufferedReader reader, ServiceLocator<Project, Task> serviceLocator) {
         this.reader = reader;
-        this.projectService = projectService;
+        this.serviceLocator = serviceLocator;
+    }
+
+    @Override
+    public String getName() {
+        return command;
+    }
+
+    @Override
+    public String getDescription() {
+        return descr;
     }
 
     @Override
@@ -27,7 +37,7 @@ public class CreateProject implements Action {
         System.out.println("Введите описание проекта");
         String answerDescrProject = reader.readLine();
         Project newProject = new Project(Integer.parseInt(answerIdProject), answerNameProject, answerDescrProject);
-        projectService.save(newProject);
+        serviceLocator.getProjectService().save(newProject);
         System.out.println(newProject);
     }
 }

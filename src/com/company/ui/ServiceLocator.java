@@ -1,8 +1,10 @@
 package com.company.ui;
 
+import com.company.model.Project;
+import com.company.model.Task;
 import com.company.service.Service;
 
-public interface ServiceLocator<Project, Task> {
+public interface ServiceLocator {
     Service<Project> getProjectService();
     Service<Task> getTaskService();
 }

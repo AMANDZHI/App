@@ -17,24 +17,24 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.HashMap;
 
-public class Initializer implements ServiceLocator<Project, Task> {
+public class Initializer implements ServiceLocator {
     private final Repository projectRepository = new ProjectRepository();
     private final Repository taskRepository = new TaskRepository();
     private final Service<Project> projectService = new ProjectServiceImpl(projectRepository, taskRepository);
     private final Service<Task> taskService = new TaskServiceImpl(taskRepository);
     private final BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-    private final ServiceLocator<Project, Task> serviceLocator = this;
-    private final Action saveProject = new ProjectCreate(reader, serviceLocator);
-    private final Action findProject = new ProjectFind(reader, serviceLocator);
-    private final Action updateProject = new ProjectUpdate( reader, serviceLocator);
-    private final Action removeProject = new ProjectRemove(reader, serviceLocator);
-    private final Action getListProjects = new ProjectsGet( reader, serviceLocator);
-    private final Action saveTask = new TaskCreate(reader, serviceLocator);
-    private final Action findTask = new TaskFind(reader, serviceLocator);
-    private final Action updateTask = new TaskUpdate(reader, serviceLocator);
-    private final Action removeTask = new TaskRemove(reader, serviceLocator);
-    private final Action getListTasks = new TasksGet( reader, serviceLocator);
-    private final HashMap<String, Action> map = new HashMap<>();
+    private final ServiceLocator serviceLocator = this;
+    private final CrudAction saveProject = new ProjectCreateCrudAction(reader, serviceLocator);
+    private final CrudAction findProject = new ProjectFindCrudAction(reader, serviceLocator);
+    private final CrudAction updateProject = new ProjectUpdateCrudAction( reader, serviceLocator);
+    private final CrudAction removeProject = new ProjectRemoveCrudAction(reader, serviceLocator);
+    private final CrudAction getListProjects = new ProjectsGetCrudAction( reader, serviceLocator);
+    private final CrudAction saveTask = new TaskCreateCrudAction(reader, serviceLocator);
+    private final CrudAction findTask = new TaskFindCrudAction(reader, serviceLocator);
+    private final CrudAction updateTask = new TaskUpdateCrudAction(reader, serviceLocator);
+    private final CrudAction removeTask = new TaskRemoveCrudAction(reader, serviceLocator);
+    private final CrudAction getListTasks = new TasksGetCrudAction( reader, serviceLocator);
+    private final HashMap<String, CrudAction> map = new HashMap<>();
 
 
     @Override

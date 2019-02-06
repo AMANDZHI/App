@@ -3,15 +3,12 @@ package com.company.ui.actions;
 import com.company.ui.ServiceLocator;
 import com.company.ui.util.CommonReader;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 
 public class TaskRemoveCrudAction implements CrudAction {
-    private final BufferedReader reader;
     private final ServiceLocator serviceLocator;
 
-    public TaskRemoveCrudAction(BufferedReader reader, ServiceLocator serviceLocator) {
-        this.reader = reader;
+    public TaskRemoveCrudAction(ServiceLocator serviceLocator) {
         this.serviceLocator = serviceLocator;
     }
 

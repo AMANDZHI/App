@@ -4,15 +4,12 @@ import com.company.model.Project;
 import com.company.ui.ServiceLocator;
 import com.company.ui.util.CommonReader;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 
 public class ProjectCreateCrudAction implements CrudAction {
-    private final BufferedReader reader;
     private final ServiceLocator serviceLocator;
 
-    public ProjectCreateCrudAction(BufferedReader reader, ServiceLocator serviceLocator) {
-        this.reader = reader;
+    public ProjectCreateCrudAction(ServiceLocator serviceLocator) {
         this.serviceLocator = serviceLocator;
     }
 

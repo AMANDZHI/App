@@ -5,15 +5,12 @@ import com.company.model.Task;
 import com.company.ui.ServiceLocator;
 import com.company.ui.util.CommonReader;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 
 public class TaskCreateCrudAction implements CrudAction {
-    private final BufferedReader reader;
     private final ServiceLocator serviceLocator;
 
-    public TaskCreateCrudAction(BufferedReader reader, ServiceLocator serviceLocatore) {
-        this.reader = reader;
+    public TaskCreateCrudAction(ServiceLocator serviceLocatore) {
         this.serviceLocator = serviceLocatore;
     }
 

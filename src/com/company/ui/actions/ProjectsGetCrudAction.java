@@ -2,15 +2,12 @@ package com.company.ui.actions;
 
 import com.company.ui.ServiceLocator;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 
 public class ProjectsGetCrudAction implements CrudAction {
-    private final BufferedReader reader;
     private final ServiceLocator serviceLocator;
 
-    public ProjectsGetCrudAction(BufferedReader reader, ServiceLocator serviceLocator) {
-        this.reader = reader;
+    public ProjectsGetCrudAction(ServiceLocator serviceLocator) {
         this.serviceLocator = serviceLocator;
     }
 

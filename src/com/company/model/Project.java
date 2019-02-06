@@ -4,14 +4,16 @@ public class Project {
     private Integer id;
     private String name;
     private String descr;
+    private User user;
 
     public Project() {
     }
 
-    public Project(Integer id, String name, String descr) {
+    public Project(Integer id, String name, String descr, User user) {
         this.id = id;
         this.name = name;
         this.descr = descr;
+        this.user = user;
     }
 
     public Integer getId() {
@@ -38,6 +40,14 @@ public class Project {
         this.descr = descr;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -47,7 +57,8 @@ public class Project {
 
         if (getId() != null ? !getId().equals(project.getId()) : project.getId() != null) return false;
         if (getName() != null ? !getName().equals(project.getName()) : project.getName() != null) return false;
-        return getDescr() != null ? getDescr().equals(project.getDescr()) : project.getDescr() == null;
+        if (getDescr() != null ? !getDescr().equals(project.getDescr()) : project.getDescr() != null) return false;
+        return getUser() != null ? getUser().equals(project.getUser()) : project.getUser() == null;
     }
 
     @Override
@@ -55,6 +66,7 @@ public class Project {
         int result = getId() != null ? getId().hashCode() : 0;
         result = 31 * result + (getName() != null ? getName().hashCode() : 0);
         result = 31 * result + (getDescr() != null ? getDescr().hashCode() : 0);
+        result = 31 * result + (getUser() != null ? getUser().hashCode() : 0);
         return result;
     }
 
@@ -64,6 +76,7 @@ public class Project {
                 "id=" + id +
                 ", name='" + name + '\'' +
                 ", descr='" + descr + '\'' +
+                ", user=" + user +
                 '}';
     }
 }

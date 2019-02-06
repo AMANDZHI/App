@@ -1,7 +1,6 @@
 package com.company.service;
 
 import com.company.dao.repository.Repository;
-import com.company.dao.repository.TaskRepository;
 import com.company.model.Task;
 
 import java.util.List;

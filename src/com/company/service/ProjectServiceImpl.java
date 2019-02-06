@@ -1,6 +1,5 @@
 package com.company.service;
 
-import com.company.dao.repository.ProjectRepository;
 import com.company.dao.repository.Repository;
 import com.company.model.Project;
 import com.company.model.Task;

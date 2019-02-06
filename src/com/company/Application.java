@@ -1,5 +1,7 @@
 package com.company;
 
+import com.company.dao.config.Initializer;
+
 import java.io.IOException;
 
 public class Application {

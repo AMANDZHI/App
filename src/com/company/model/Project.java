@@ -1,27 +1,22 @@
 package com.company.model;
 
+import java.util.UUID;
+
 public class Project {
-    private Integer id;
+    private String id;
     private String name;
-    private String descr;
+    private String description;
     private User user;
 
-    public Project() {
-    }
-
-    public Project(Integer id, String name, String descr, User user) {
-        this.id = id;
+    public Project(String name, String description, User user) {
         this.name = name;
-        this.descr = descr;
+        this.description = description;
         this.user = user;
+        this.id = UUID.randomUUID().toString();
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public String getName() {
@@ -32,12 +27,12 @@ public class Project {
         this.name = name;
     }
 
-    public String getDescr() {
-        return descr;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDescr(String descr) {
-        this.descr = descr;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public User getUser() {
@@ -57,17 +52,8 @@ public class Project {
 
         if (getId() != null ? !getId().equals(project.getId()) : project.getId() != null) return false;
         if (getName() != null ? !getName().equals(project.getName()) : project.getName() != null) return false;
-        if (getDescr() != null ? !getDescr().equals(project.getDescr()) : project.getDescr() != null) return false;
+        if (getDescription() != null ? !getDescription().equals(project.getDescription()) : project.getDescription() != null) return false;
         return getUser() != null ? getUser().equals(project.getUser()) : project.getUser() == null;
-    }
-
-    @Override
-    public int hashCode() {
-        int result = getId() != null ? getId().hashCode() : 0;
-        result = 31 * result + (getName() != null ? getName().hashCode() : 0);
-        result = 31 * result + (getDescr() != null ? getDescr().hashCode() : 0);
-        result = 31 * result + (getUser() != null ? getUser().hashCode() : 0);
-        return result;
     }
 
     @Override
@@ -75,7 +61,7 @@ public class Project {
         return "Project{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", descr='" + descr + '\'' +
+                ", description='" + description + '\'' +
                 ", user=" + user +
                 '}';
     }

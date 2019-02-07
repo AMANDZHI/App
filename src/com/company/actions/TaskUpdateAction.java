@@ -1,9 +1,9 @@
 package com.company.actions;
 
 import com.company.api.Action;
+import com.company.api.ServiceLocator;
 import com.company.model.Project;
 import com.company.model.Task;
-import com.company.api.ServiceLocator;
 
 import java.io.IOException;
 
@@ -26,21 +26,24 @@ public class TaskUpdateAction implements Action {
 
     @Override
     public void execute() throws IOException {
-        String answerIdTask = CommonReader.getIdTask();
-        String answerNameTask = CommonReader.getNewNameTask();;
+        String answerNameTask = CommonReader.getNameTask();
+        String answerNewNameTask = CommonReader.getNewNameTask();
         String answerDescrTask = CommonReader.getNewDescrTask();
-        String answerProjectTask = CommonReader.getNewProjectTask();
-        Project project = serviceLocator.getProjectService().findById(Integer.parseInt(answerProjectTask));
-        if (project != null) {
+        String answerProjectTask = CommonReader.getNewNameProjectTask();
+        Project project = serviceLocator.getProjectService().findByName(answerProjectTask);
+        Task task = serviceLocator.getTaskService().findByName(answerNameTask);
+        if (project != null && task != null) {
             if (project.getUser().equals(serviceLocator.getSessionService().getSession().getUser()) || serviceLocator.getSessionService().getSession().getUser().isAdmin()) {
-                Task updateTask = new Task(Integer.parseInt(answerIdTask), answerNameTask, answerDescrTask, project);
-                serviceLocator.getTaskService().update(updateTask);
+                task.setName(answerNewNameTask);
+                task.setDescription(answerDescrTask);
+                task.setProject(project);
+                serviceLocator.getTaskService().update(task);
             }
             else {
                 System.out.println("Нет прав для обновления задачи - нет доступа к указанному проекту");
             }
         } else {
-            System.out.println("не найден указанный вами проект ");
+            System.out.println("не найден указанный вами проект или таск ");
         }
     }
 }

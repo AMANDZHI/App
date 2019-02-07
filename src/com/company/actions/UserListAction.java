@@ -24,6 +24,6 @@ public class UserListAction implements Action {
 
     @Override
     public void execute() throws IOException {
-        System.out.println(serviceLocator.getUserService().getList());
+        System.out.println(serviceLocator.getUserService().getMap());
     }
 }

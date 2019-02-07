@@ -25,16 +25,18 @@ public class UserRemoveAction implements Action {
 
     @Override
     public void execute() throws IOException {
-        String answerIdUser = CommonReader.getIdUser();
+        String answerLoginUser = CommonReader.getLoginUser();
 
-        User user = serviceLocator.getUserService().findById(Integer.parseInt(answerIdUser));
+        User user = serviceLocator.getUserService().findByLogin(answerLoginUser);
         if (user != null) {
             if (!user.equals(serviceLocator.getSessionService().getSession().getUser())) {
-                serviceLocator.getUserService().removeById(Integer.parseInt(answerIdUser));
+                serviceLocator.getUserService().removeByLogin(answerLoginUser);
                 System.out.println("Удален юзер");
             } else {
                 System.out.println("Нельзя удалить себя");
             }
+        } else {
+            System.out.println("Нет такого юзера");
         }
     }
 }

@@ -26,14 +26,13 @@ public class TaskCreateAction implements Action {
 
     @Override
     public void execute() throws IOException {
-        String answerIdTask = CommonReader.getIdTask();
         String answerNameTask = CommonReader.getNameTask();
         String answerDescrTask = CommonReader.getDescrTask();
-        String answerProjectTask = CommonReader.getIdProject();
-        Project project = serviceLocator.getProjectService().findById(Integer.parseInt(answerProjectTask));
+        String answerProjectTask = CommonReader.getNameProject();
+        Project project = serviceLocator.getProjectService().findByName(answerProjectTask);
         if (project != null) {
             if (project.getUser().equals(serviceLocator.getSessionService().getSession().getUser()) || serviceLocator.getSessionService().getSession().getUser().isAdmin()) {
-                Task newTask = new Task(Integer.parseInt(answerIdTask), answerNameTask, answerDescrTask, project);
+                Task newTask = new Task(answerNameTask, answerDescrTask, project);
                 serviceLocator.getTaskService().save(newTask);
                 System.out.println(newTask);
             } else {
@@ -41,7 +40,7 @@ public class TaskCreateAction implements Action {
             }
 
         } else {
-            System.out.println("не найден проект с таким id");
+            System.out.println("не найден проект с таким именем");
         }
 
     }

@@ -4,12 +4,12 @@ import com.company.api.Repository;
 import com.company.api.Service;
 import com.company.model.Task;
 
-import java.util.List;
+import java.util.Map;
 
-public class TaskServiceImpl implements Service<Task> {
-    private Repository<Task> taskRepository;
+public class TaskServiceImpl implements Service<String, Task> {
+    private final Repository<String, Task> taskRepository;
 
-    public TaskServiceImpl(Repository<Task> taskRepository) {
+    public TaskServiceImpl(Repository<String, Task> taskRepository) {
         this.taskRepository = taskRepository;
     }
 
@@ -19,8 +19,8 @@ public class TaskServiceImpl implements Service<Task> {
     }
 
     @Override
-    public Task findById(Integer id) {
-        return taskRepository.findById(id);
+    public Task findByName(String name) {
+        return taskRepository.findByName(name);
     }
 
     @Override
@@ -29,12 +29,17 @@ public class TaskServiceImpl implements Service<Task> {
     }
 
     @Override
-    public boolean removeById(Integer id) {
-        return taskRepository.removeById(id);
+    public boolean removeByName(String name) {
+        if (findByName(name) != null) {
+            taskRepository.removeByName(name);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override
-    public List<Task> getList() {
-        return taskRepository.getList();
+    public Map<String, Task> getMap() {
+        return taskRepository.getMap();
     }
 }

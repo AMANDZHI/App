@@ -4,10 +4,10 @@ import com.company.api.UserRepository;
 import com.company.api.UserService;
 import com.company.model.User;
 
-import java.util.List;
+import java.util.Map;
 
 public class UserServiceImpl implements UserService {
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
@@ -19,8 +19,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User findById(Integer id) {
-        return userRepository.findById(id);
+    public User findByLogin(String login) {
+        return userRepository.findByLogin(login);
     }
 
     @Override
@@ -29,17 +29,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean removeById(Integer id) {
-        return userRepository.removeById(id);
+    public boolean removeByLogin(String login) {
+        if (findByLogin(login) != null) {
+            userRepository.removeByLogin(login);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override
-    public List<User> getList() {
-        return userRepository.getList();
-    }
-
-    @Override
-    public User findByLogin(String login) {
-        return userRepository.findByLogin(login);
+    public Map<String, User> getMap() {
+        return userRepository.getMap();
     }
 }

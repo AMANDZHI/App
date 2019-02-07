@@ -1,26 +1,28 @@
 package com.company.model;
 
+import java.util.UUID;
+
 public class Task {
-    private Integer id;
+    private String id;
     private String name;
-    private String descr;
+    private String description;
     private Project project;
 
     public Task() {
     }
 
-    public Task(Integer id, String name, String descr, Project project) {
-        this.id = id;
+    public Task(String name, String description, Project project) {
         this.name = name;
-        this.descr = descr;
+        this.description = description;
         this.project = project;
+        this.id = UUID.randomUUID().toString();
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -32,12 +34,12 @@ public class Task {
         this.name = name;
     }
 
-    public String getDescr() {
-        return descr;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDescr(String descr) {
-        this.descr = descr;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Project getProject() {
@@ -53,7 +55,7 @@ public class Task {
         return "Task{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", descr='" + descr + '\'' +
+                ", description='" + description + '\'' +
                 ", project=" + project +
                 '}';
     }

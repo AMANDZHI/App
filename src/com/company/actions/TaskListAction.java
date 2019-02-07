@@ -7,6 +7,7 @@ import com.company.api.ServiceLocator;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class TaskListAction implements Action {
     private final ServiceLocator serviceLocator;
@@ -28,10 +29,10 @@ public class TaskListAction implements Action {
     @Override
     public void execute() throws IOException {
         List<Task> yourTasks = new ArrayList<>();
-        List<Task> list = serviceLocator.getTaskService().getList();
-        for (Task t: list) {
-            if (t.getProject().getUser().equals(serviceLocator.getSessionService().getSession().getUser()) || serviceLocator.getSessionService().getSession().getUser().isAdmin()) {
-                yourTasks.add(t);
+        Map<String, Task> map = serviceLocator.getTaskService().getMap();
+        for (Map.Entry<String, Task> pair: map.entrySet()) {
+            if (pair.getValue().getProject().getUser().equals(serviceLocator.getSessionService().getSession().getUser()) || serviceLocator.getSessionService().getSession().getUser().isAdmin()) {
+                yourTasks.add(pair.getValue());
             }
         }
         System.out.println(yourTasks);

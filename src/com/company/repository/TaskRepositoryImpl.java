@@ -1,24 +1,27 @@
 package com.company.repository;
 
 import com.company.api.Repository;
+import com.company.model.Project;
 import com.company.model.Task;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-public class TaskRepositoryImpl implements Repository<Task> {
-    private List<Task> list = new ArrayList<>();
+public class TaskRepositoryImpl implements Repository<String, Task> {
+    private final Map<String, Task> map = new HashMap<>();
 
     @Override
     public void save(Task object) {
-        list.add(object);
+        map.put(object.getId(), object);
     }
 
     @Override
-    public Task findById(Integer id) {
-        for (Task t: list) {
-            if (t.getId().equals(id)) {
-                return t;
+    public Task findByName(String name) {
+        for (Map.Entry<String, Task> pair: map.entrySet()) {
+            if (pair.getValue().getName().equals(name)) {
+                return pair.getValue();
             }
         }
         return null;
@@ -26,25 +29,18 @@ public class TaskRepositoryImpl implements Repository<Task> {
 
     @Override
     public Task update(Task object) {
-        list.get(object.getId()).setName(object.getName());
-        list.get(object.getId()).setName(object.getDescr());
-        list.get(object.getId()).setProject(object.getProject());
-        return list.get(object.getId());
+        return map.put(object.getId(), object);
     }
 
     @Override
-    public boolean removeById(Integer id) {
-        Task task = findById(id);
-        if (task != null) {
-            list.remove(task);
-            return true;
-        } else {
-            return false;
-        }
+    public boolean removeByName(String name) {
+        Task task = findByName(name);
+        map.remove(task.getId());
+        return true;
     }
 
     @Override
-    public List<Task> getList() {
-        return list;
+    public Map<String, Task> getMap() {
+        return map;
     }
 }

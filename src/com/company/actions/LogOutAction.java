@@ -6,7 +6,7 @@ import com.company.service.AppSecurity;
 import java.io.IOException;
 
 public class LogOutAction implements Action {
-    private AppSecurity appSecurity;
+    private final AppSecurity appSecurity;
 
     public LogOutAction(AppSecurity appSecurity) {
         this.appSecurity = appSecurity;

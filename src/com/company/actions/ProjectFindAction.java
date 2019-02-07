@@ -25,12 +25,17 @@ public class ProjectFindAction implements Action {
 
     @Override
     public void execute() throws IOException {
-        String answerIdProject = CommonReader.getIdProject();
-        Project findProject = serviceLocator.getProjectService().findById(Integer.parseInt(answerIdProject));
-        if (findProject.getUser().equals(serviceLocator.getSessionService().getSession().getUser()) || serviceLocator.getSessionService().getSession().getUser().isAdmin()) {
-            System.out.println(findProject);
+        String answerNameProject = CommonReader.getNameProject();
+        Project findProject = serviceLocator.getProjectService().findByName(answerNameProject);
+        if (findProject != null) {
+            if (findProject.getUser().equals(serviceLocator.getSessionService().getSession().getUser()) || serviceLocator.getSessionService().getSession().getUser().isAdmin()) {
+                System.out.println(findProject);
+            } else {
+                System.out.println("Неn прав для просмотра проекта");
+            }
         } else {
             System.out.println("Не найден такой проект");
         }
+
     }
 }

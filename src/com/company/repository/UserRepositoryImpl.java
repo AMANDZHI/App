@@ -3,53 +3,45 @@ package com.company.repository;
 import com.company.api.UserRepository;
 import com.company.model.User;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class UserRepositoryImpl implements UserRepository {
-    private List<User> list = new ArrayList<>();
+    private final Map<String, User> map = new HashMap<>();
 
     {
-        list.add(new User(1, "admin", "admin", "admin", true));
+        User user = new User("admin", "admin", "admin", true);
+        map.put(user.getId(), user);
     }
 
     @Override
     public void save(User object) {
-        list.add(object);
+        map.put(object.getId(), object);
     }
 
-    @Override
-    public User findById(Integer id) {
-        try {
-            return list.get(id);
-        } catch (Exception e) {
-            return null;
-        }
-    }
 
     @Override
     public User update(User object) {
-        list.get(object.getId()).setName(object.getName());
-        list.get(object.getId()).setLogin(object.getLogin());
-        list.get(object.getId()).setPassword(object.getPassword());
-        return list.get(object.getId());
+        return map.put(object.getId(), object);
     }
 
     @Override
-    public boolean removeById(Integer id) {
-        return list.remove(id);
+    public boolean removeByLogin(String login) {
+        User user = findByLogin(login);
+        map.remove(user);
+        return true;
     }
 
     @Override
-    public List<User> getList() {
-        return list;
+    public Map<String, User> getMap() {
+        return map;
     }
 
     @Override
     public User findByLogin(String login) {
-        for (User u: list) {
-            if (u.getLogin().equals(login)) {
-                return u;
+        for (Map.Entry<String, User> pair: map.entrySet()) {
+            if (pair.getValue().getLogin().equals(login)) {
+                return pair.getValue();
             }
         }
         return null;

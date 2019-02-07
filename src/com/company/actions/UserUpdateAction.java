@@ -26,28 +26,29 @@ public class UserUpdateAction implements Action {
 
     @Override
     public void execute() throws IOException {
-        String answerIdUser = CommonReader.getIdUser();
-        String answerNameUser = CommonReader.getNameUser();
+        String answerNewNameUser = CommonReader.getNewNameUser();
         String answerLoginUser = CommonReader.getLoginUser();
+        String answerNewLoginUser = CommonReader.getNewLoginUser();
         String answerPasswordUser = CommonReader.getPasswordUser();
 
-        User user = serviceLocator.getUserService().findById(Integer.parseInt(answerIdUser));
+        User user = serviceLocator.getUserService().findByLogin(answerLoginUser);
         if (user != null) {
             if (!user.equals(serviceLocator.getSessionService().getSession().getUser())) {
-                User updateUser = new User(Integer.parseInt(answerIdUser), answerNameUser, answerLoginUser, answerPasswordUser);
-                serviceLocator.getUserService().update(updateUser);
-                System.out.println(updateUser);
+                user.setName(answerNewNameUser);
+                user.setLogin(answerNewLoginUser);
+                user.setPassword(answerPasswordUser);
+                serviceLocator.getUserService().update(user);
+                System.out.println(user);
             } else {
-                User updateUser = new User(Integer.parseInt(answerIdUser), answerNameUser, answerLoginUser, answerPasswordUser);
-                serviceLocator.getUserService().update(updateUser);
-                serviceLocator.getSessionService().save(new Session(updateUser));
-                System.out.println(updateUser);
+                user.setName(answerNewNameUser);
+                user.setLogin(answerNewLoginUser);
+                user.setPassword(answerPasswordUser);
+                serviceLocator.getUserService().update(user);
+                serviceLocator.getSessionService().save(new Session(user));
+                System.out.println(user);
             }
         } else {
-            System.out.println("Не найден юзер с таким id");
+            System.out.println("Не найден юзер с таким логином");
         }
-        User updateUser = new User(Integer.parseInt(answerIdUser), answerNameUser, answerLoginUser, answerPasswordUser);
-        serviceLocator.getUserService().update(updateUser);
-        System.out.println(updateUser);
     }
 }

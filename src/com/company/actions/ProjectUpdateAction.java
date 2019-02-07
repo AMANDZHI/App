@@ -25,20 +25,21 @@ public class ProjectUpdateAction implements Action {
 
     @Override
     public void execute() throws IOException {
-        String answerIdProject = CommonReader.getIdProject();
-        String answerNameProject = CommonReader.getNewNameProject();
+        String answerNameProject = CommonReader.getNameProject();
+        String answerNewNameProject = CommonReader.getNewNameProject();
         String answerDescrProject = CommonReader.getNewDescrProject();
-        Project project = serviceLocator.getProjectService().findById(Integer.parseInt(answerIdProject));
+        Project project = serviceLocator.getProjectService().findByName(answerNameProject);
         if (project != null) {
             if (project.getUser().equals(serviceLocator.getSessionService().getSession().getUser()) || serviceLocator.getSessionService().getSession().getUser().isAdmin()) {
-                Project updateProject = new Project(Integer.parseInt(answerIdProject), answerNameProject, answerDescrProject, serviceLocator.getSessionService().getSession().getUser());
-                serviceLocator.getProjectService().update(updateProject);
-                System.out.println(updateProject);
+                project.setName(answerNewNameProject);
+                project.setDescription(answerDescrProject);
+                serviceLocator.getProjectService().update(project);
+                System.out.println(project);
             } else {
-                System.out.println("Не имеете прав для обновления проекта с таким id");
+                System.out.println("Не имеете прав для обновления проекта с таким именем");
             }
         } else {
-            System.out.println("Не найден проект с таким id");
+            System.out.println("Не найден проект с таким именем");
         }
 
     }

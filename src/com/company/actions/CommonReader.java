@@ -7,11 +7,6 @@ import java.io.InputStreamReader;
 public class CommonReader {
     private final static BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
-    public static String getIdProject() throws IOException {
-        System.out.println("Введите id проекта");
-        return reader.readLine();
-    }
-
     public static String getNameProject() throws IOException {
         System.out.println("Введите название проекта");
         return reader.readLine();
@@ -29,11 +24,6 @@ public class CommonReader {
 
     public static String getNewDescrProject() throws IOException {
         System.out.println("Введите новое описание проекта");
-        return reader.readLine();
-    }
-
-    public static String getIdTask() throws IOException {
-        System.out.println("Введите id таска");
         return reader.readLine();
     }
 
@@ -57,13 +47,8 @@ public class CommonReader {
         return reader.readLine();
     }
 
-    public static String getNewProjectTask() throws IOException {
-        System.out.println("Введите новый id проекта");
-        return reader.readLine();
-    }
-
-    public static String getIdUser() throws IOException {
-        System.out.println("Введите id юзера");
+    public static String getNewNameProjectTask() throws IOException {
+        System.out.println("Введите имя другого проекта для этого таска");
         return reader.readLine();
     }
 

@@ -5,6 +5,7 @@ import com.company.api.ServiceLocator;
 import com.company.model.Project;
 
 import java.io.IOException;
+import java.util.UUID;
 
 public class ProjectCreateAction implements Action {
     private final ServiceLocator serviceLocator;
@@ -25,10 +26,9 @@ public class ProjectCreateAction implements Action {
 
     @Override
     public void execute() throws IOException {
-        String answerIdProject = CommonReader.getIdProject();
         String answerNameProject = CommonReader.getNameProject();
         String answerDescrProject = CommonReader.getDescrProject();
-        Project newProject = new Project(Integer.parseInt(answerIdProject), answerNameProject, answerDescrProject, serviceLocator.getSessionService().getSession().getUser());
+        Project newProject = new Project(answerNameProject, answerDescrProject, serviceLocator.getSessionService().getSession().getUser());
         serviceLocator.getProjectService().save(newProject);
         System.out.println(newProject);
     }

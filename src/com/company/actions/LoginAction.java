@@ -8,8 +8,8 @@ import com.company.api.ServiceLocator;
 import java.io.IOException;
 
 public class LoginAction implements AuthAction {
-    private AppSecurity appSecurity;
-    private ServiceLocator serviceLocator;
+    private final AppSecurity appSecurity;
+    private final ServiceLocator serviceLocator;
 
     public LoginAction(AppSecurity appSecurity, ServiceLocator serviceLocator) {
         this.appSecurity = appSecurity;

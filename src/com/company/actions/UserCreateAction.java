@@ -25,12 +25,11 @@ public class UserCreateAction implements Action {
 
     @Override
     public void execute() throws IOException {
-        String answerIdUser = CommonReader.getIdUser();
         String answerNameUser = CommonReader.getNameUser();
         String answerLoginUser = CommonReader.getLoginUser();
         String answerPasswordUser = CommonReader.getPasswordUser();
         String answerAdminUser = CommonReader.getAdminUser();
-        User newUser = new User(Integer.parseInt(answerIdUser), answerNameUser, answerLoginUser, answerPasswordUser, Boolean.parseBoolean(answerAdminUser));
+        User newUser = new User(answerNameUser, answerLoginUser, answerPasswordUser, Boolean.parseBoolean(answerAdminUser));
         if (serviceLocator.getUserService().findByLogin(newUser.getLogin()) == null) {
             serviceLocator.getUserService().save(newUser);
             System.out.println(newUser);

@@ -25,8 +25,8 @@ public class TaskFindAction implements Action {
 
     @Override
     public void execute() throws IOException {
-        String answerIdTask = CommonReader.getIdTask();
-        Task findTask = serviceLocator.getTaskService().findById(Integer.parseInt(answerIdTask));
+        String answerNameTask = CommonReader.getNameTask();
+        Task findTask = serviceLocator.getTaskService().findByName(answerNameTask);
         if (findTask != null) {
             if (findTask.getProject().getUser().equals(serviceLocator.getSessionService().getSession().getUser()) || serviceLocator.getSessionService().getSession().getUser().isAdmin()) {
                 System.out.println(findTask);
@@ -34,7 +34,7 @@ public class TaskFindAction implements Action {
                 System.out.println("Данный таск не Ваш");
             }
         } else {
-            System.out.println("не найден таск с таким id");
+            System.out.println("не найден таск с таким именем");
         }
     }
 }

@@ -1,10 +1,9 @@
 package com.company.ui;
 
-import com.company.api.ServiceLocator;
-import com.company.model.Session;
-import com.company.model.User;
 import com.company.api.Action;
 import com.company.api.AuthAction;
+import com.company.api.ServiceLocator;
+import com.company.model.User;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -13,12 +12,12 @@ import java.util.Map;
 
 public class Menu {
     private BufferedReader reader;
-    private HashMap<String, Action> map;
-    private HashMap<String, AuthAction> mapAuth;
-    private HashMap<String, Action> mapAdmAction;
+    private Map<String, Action> map;
+    private Map<String, AuthAction> mapAuth;
+    private Map<String, Action> mapAdmAction;
     private ServiceLocator serviceLocator;
 
-    public Menu(BufferedReader reader, HashMap<String, Action> map, HashMap<String, AuthAction> mapAuth, HashMap<String, Action> mapAdmAction, ServiceLocator serviceLocator) {
+    public Menu(BufferedReader reader, Map<String, Action> map, Map<String, AuthAction> mapAuth, Map<String, Action> mapAdmAction, ServiceLocator serviceLocator) {
         this.reader = reader;
         this.map = map;
         this.mapAuth = mapAuth;

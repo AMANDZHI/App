@@ -14,19 +14,19 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.HashMap;
+import java.util.Map;
 
 public class Initializer implements ServiceLocator {
-    private final Repository<Project> projectRepository = new ProjectRepositoryImpl();
-    private final Repository<Task> taskRepository = new TaskRepositoryImpl();
+    private final Repository<String, Project> projectRepository = new ProjectRepositoryImpl();
+    private final Repository<String, Task> taskRepository = new TaskRepositoryImpl();
     private final UserRepository userRepository = new UserRepositoryImpl();
     private final SessionRepository sessionRepository = new SessionRepositoryImpl();
-    private final Service<Project> projectService = new ProjectServiceImpl(projectRepository, taskRepository);
-    private final Service<Task> taskService = new TaskServiceImpl(taskRepository);
+    private final Service<String, Project> projectService = new ProjectServiceImpl(projectRepository, taskRepository);
+    private final Service<String, Task> taskService = new TaskServiceImpl(taskRepository);
     private final UserService userService = new UserServiceImpl(userRepository);
     private final SessionService sessionService = new SessionServiceImpl(sessionRepository);
     private final BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
     private final ServiceLocator serviceLocator = this;
-    private final Session session = new Session();
     private final AppSecurity appSecurity = new AppSecurity(serviceLocator);
     private final Action saveProject = new ProjectCreateAction(serviceLocator);
     private final Action findProject = new ProjectFindAction(serviceLocator);
@@ -46,18 +46,19 @@ public class Initializer implements ServiceLocator {
     private final Action logOutAction = new LogOutAction(appSecurity);
     private final AuthAction loginUser = new LoginAction(appSecurity, serviceLocator);
     private final AuthAction registration = new RegistrationAction(serviceLocator);
-    private final HashMap<String, Action> map = new HashMap<>();
-    private final HashMap<String, AuthAction> mapAuth = new HashMap<>();
-    private final HashMap<String, Action> mapAdmAction = new HashMap<>();
+    private final Map<String, Action> map = new HashMap<>();
+    private final Map<String, AuthAction> mapAuth = new HashMap<>();
+    private final Map<String, Action> mapAdmAction = new HashMap<>();
+    private final Menu menu = new Menu(reader, map, mapAuth, mapAdmAction, serviceLocator);
 
 
     @Override
-    public Service<Project> getProjectService() {
+    public Service<String, Project> getProjectService() {
         return projectService;
     }
 
     @Override
-    public Service<Task> getTaskService() {
+    public Service<String, Task> getTaskService() {
         return taskService;
     }
 
@@ -105,7 +106,7 @@ public class Initializer implements ServiceLocator {
     }
 
     public void run() throws IOException {
-        Menu menu = new Menu(reader, map, mapAuth, mapAdmAction, serviceLocator);
         menu.startMenu();
     }
+
 }

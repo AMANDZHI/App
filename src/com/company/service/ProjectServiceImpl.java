@@ -5,13 +5,13 @@ import com.company.api.Service;
 import com.company.model.Project;
 import com.company.model.Task;
 
-import java.util.List;
+import java.util.Map;
 
-public class ProjectServiceImpl implements Service<Project> {
-    private Repository<Project> projectRepository;
-    private Repository<Task> taskRepository;
+public class ProjectServiceImpl implements Service<String, Project> {
+    private final Repository<String, Project> projectRepository;
+    private final Repository<String, Task> taskRepository;
 
-    public ProjectServiceImpl(Repository<Project> projectRepository, Repository<Task> taskRepository) {
+    public ProjectServiceImpl(Repository<String, Project> projectRepository, Repository<String, Task> taskRepository) {
         this.projectRepository = projectRepository;
         this.taskRepository = taskRepository;
     }
@@ -22,37 +22,52 @@ public class ProjectServiceImpl implements Service<Project> {
     }
 
     @Override
-    public Project findById(Integer id) {
-        return projectRepository.findById(id);
+    public Project findByName(String name) {
+        return projectRepository.findByName(name);
     }
 
     @Override
     public Project update(Project object) {
-        List<Task> listTaks = taskRepository.getList();
-        for (Task task: listTaks) {
-            if (task.getProject().getId().equals(object.getId())) {
+        Map<String, Task> mapTasks = taskRepository.getMap();
+        for (Map.Entry<String, Task> pair: mapTasks.entrySet()) {
+            if (pair.getValue().getProject().getId().equals(object.getId())) {
+                Task task = pair.getValue();
                 task.setProject(object);
                 taskRepository.update(task);
             }
         }
-        return projectRepository.update(object);
-    }
+        Map<String, Project> mapProjects = projectRepository.getMap();
 
-    @Override
-    public boolean removeById(Integer id) {
-        Project project = projectRepository.findById(id);
-        List<Task> listTaks = taskRepository.getList();
-        for (Task task: listTaks) {
-            if (task.getProject().equals(project)) {
-                taskRepository.removeById(task.getId());
+        for (Map.Entry<String, Project> pair: mapProjects.entrySet()) {
+            if (pair.getKey().equals(object.getId())) {
+                return projectRepository.update(object);
             }
         }
-        return projectRepository.removeById(id);
-
+        return null;
     }
 
     @Override
-    public List<Project> getList() {
-        return projectRepository.getList();
+    public boolean removeByName(String name) {
+        Project findProject = projectRepository.findByName(name);
+        if (findProject != null) {
+            Map<String, Task> mapTasks = taskRepository.getMap();
+            for (Map.Entry<String, Task> pair: mapTasks.entrySet()) {
+                if (pair.getValue().getProject().getId().equals(findProject.getId())) {
+                    Task task = pair.getValue();
+                    taskRepository.removeByName(task.getName());
+                }
+            }
+
+            Map<String, Project> mapProjects = projectRepository.getMap();
+            mapProjects.remove(findProject.getId());
+            return true;
+        } else{
+            return false;
+        }
+    }
+
+    @Override
+    public Map<String, Project> getMap() {
+        return projectRepository.getMap();
     }
 }

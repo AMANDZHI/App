@@ -25,17 +25,17 @@ public class TaskRemoveAction implements Action {
 
     @Override
     public void execute() throws IOException {
-        String answerIdTask = CommonReader.getIdTask();
-        Task task = serviceLocator.getTaskService().findById(Integer.parseInt(answerIdTask));
+        String answerNameTask = CommonReader.getNameTask();
+        Task task = serviceLocator.getTaskService().findByName(answerNameTask);
         if (task != null) {
             if (task.getProject().getUser().equals(serviceLocator.getSessionService().getSession().getUser()) || serviceLocator.getSessionService().getSession().getUser().isAdmin()) {
-                serviceLocator.getTaskService().removeById(Integer.parseInt(answerIdTask));
+                serviceLocator.getTaskService().removeByName(answerNameTask);
                 System.out.println("Успешно удалено");
             } else {
                 System.out.println("Не имеет прав для удаления таска");
             }
         } else {
-            System.out.println("не найден таск с таким id");
+            System.out.println("не найден таск с таким именем");
         }
     }
 }

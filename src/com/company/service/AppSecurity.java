@@ -4,7 +4,7 @@ import com.company.api.ServiceLocator;
 import com.company.model.Session;
 import com.company.model.User;
 
-import java.util.List;
+import java.util.Map;
 
 public class AppSecurity {
     private final ServiceLocator serviceLocator;
@@ -14,10 +14,10 @@ public class AppSecurity {
     }
 
     public boolean authorization(User user) {
-        List<User> list = serviceLocator.getUserService().getList();
+        Map<String, User> map = serviceLocator.getUserService().getMap();
         boolean check = false;
-        for (User u: list) {
-            if (u.getLogin().equals(user.getLogin()) && u.getPassword().equals(user.getPassword())) {
+        for (Map.Entry<String, User> pair: map.entrySet()) {
+            if (pair.getValue().getLogin().equals(user.getLogin()) && pair.getValue().getPassword().equals(user.getPassword())) {
                 check = true;
                 serviceLocator.getSessionService().save(new Session(user));
             }

@@ -1,11 +1,12 @@
 package com.company.api;
 
 import java.util.List;
+import java.util.Map;
 
-public interface Repository<T> {
-    void save(T object);
-    T findById(Integer id);
-    T update(T object);
-    boolean removeById(Integer id);
-    List<T> getList();
+public interface Repository<T, M> {
+    void save(M object);
+    M findByName(T name);
+    M update(M object);
+    boolean removeByName(T name);
+    Map<T, M> getMap();
 }

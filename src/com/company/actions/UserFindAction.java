@@ -25,8 +25,13 @@ public class UserFindAction implements Action {
 
     @Override
     public void execute() throws IOException {
-        String answerIdUser = CommonReader.getIdUser();
-        User findUser = serviceLocator.getUserService().findById(Integer.parseInt(answerIdUser));
-        System.out.println(findUser);
+        String answerLoginUser = CommonReader.getLoginUser();
+        User findUser = serviceLocator.getUserService().findByLogin(answerLoginUser);
+        if (findUser != null) {
+            System.out.println(findUser);
+        } else {
+            System.out.println("Не найден юзер с таким логином");
+        }
+
     }
 }

@@ -1,7 +1,9 @@
 package com.company.model;
 
+import java.util.UUID;
+
 public class User {
-    private Integer id;
+    private String id;
     private String name;
     private String login;
     private String password;
@@ -12,27 +14,23 @@ public class User {
         this.password = password;
     }
 
-    public User(Integer id, String name, String login, String password) {
-        this.id = id;
+    public User(String name, String login, String password) {
         this.name = name;
         this.login = login;
         this.password = password;
+        this.id = UUID.randomUUID().toString() + UUID.fromString(name);
     }
 
-    public User(Integer id, String name, String login, String password, boolean admin) {
-        this.id = id;
+    public User(String name, String login, String password, boolean admin) {
         this.name = name;
         this.login = login;
         this.password = password;
         this.admin = admin;
+        this.id = UUID.randomUUID().toString();
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
     }
 
     public String getName() {

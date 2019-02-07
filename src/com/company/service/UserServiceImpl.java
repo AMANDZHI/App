@@ -1,7 +1,7 @@
 package com.company.service;
 
-import com.company.dao.repository.Repository;
-import com.company.dao.repository.UserRepository;
+import com.company.api.UserRepository;
+import com.company.api.UserService;
 import com.company.model.User;
 
 import java.util.List;

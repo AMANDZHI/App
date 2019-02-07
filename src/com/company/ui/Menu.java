@@ -1,9 +1,10 @@
 package com.company.ui;
 
-import com.company.dao.config.Session;
+import com.company.api.ServiceLocator;
+import com.company.model.Session;
 import com.company.model.User;
-import com.company.ui.actions.Action;
-import com.company.ui.actions.AuthAction;
+import com.company.api.Action;
+import com.company.api.AuthAction;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -15,14 +16,14 @@ public class Menu {
     private HashMap<String, Action> map;
     private HashMap<String, AuthAction> mapAuth;
     private HashMap<String, Action> mapAdmAction;
-    private Session session;
+    private ServiceLocator serviceLocator;
 
-    public Menu(BufferedReader reader, HashMap<String, Action> map, HashMap<String, AuthAction> mapAuth, HashMap<String, Action> mapAdmAction, Session session) {
+    public Menu(BufferedReader reader, HashMap<String, Action> map, HashMap<String, AuthAction> mapAuth, HashMap<String, Action> mapAdmAction, ServiceLocator serviceLocator) {
         this.reader = reader;
         this.map = map;
         this.mapAuth = mapAuth;
         this.mapAdmAction = mapAdmAction;
-        this.session = session;
+        this.serviceLocator = serviceLocator;
     }
 
     public void startMenu() throws IOException {
@@ -57,7 +58,7 @@ public class Menu {
 
             } else if (mapAuth.get(answerAction).equals(mapAuth.get("registration"))) {
                 User user = mapAuth.get(answerAction).execute();
-                if (mapAuth.get(answerAction).execute() != null) {
+                if (user != null) {
                     authMenu(user);
                 } else {
                     startMenu();
@@ -94,7 +95,7 @@ public class Menu {
                 }
             }
 
-            if (session.getUser() != null) {
+            if (serviceLocator.getSessionService().getSession().getUser() != null) {
                 this.authMenu(user);
             } else {
                 startMenu();

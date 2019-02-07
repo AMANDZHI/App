@@ -1,7 +1,7 @@
 package com.company.service;
 
-import com.company.dao.config.Session;
-import com.company.dao.repository.Repository;
+import com.company.api.Repository;
+import com.company.api.Service;
 import com.company.model.Project;
 import com.company.model.Task;
 

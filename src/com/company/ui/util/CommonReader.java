@@ -61,4 +61,54 @@ public class CommonReader {
         System.out.println("Введите новый id проекта");
         return reader.readLine();
     }
+
+    public static String getIdUser() throws IOException {
+        System.out.println("Введите id юзера");
+        return reader.readLine();
+    }
+
+    public static String getNameUser() throws IOException {
+        System.out.println("Введите имя юзера");
+        return reader.readLine();
+    }
+
+    public static String getLoginUser() throws IOException {
+        System.out.println("Введите login юзера");
+        return reader.readLine();
+    }
+
+    public static String getPasswordUser() throws IOException {
+        System.out.println("Введите password юзера");
+        return reader.readLine();
+    }
+
+    public static String getAdminUser() throws IOException {
+        System.out.println("Введите true если хотите сделать юзера админом, или false если юзером");
+        boolean f = true;
+        String str = null;
+        while(f) {
+            str = reader.readLine();
+            if (str.equals("true") || str.equals("false")) {
+                f = false;
+            } else {
+                System.out.println("Введите true если хотите сделать юзера админом, или false если юзером");
+            }
+        }
+        return str;
+    }
+
+    public static String getNewNameUser() throws IOException {
+        System.out.println("Введите новое имя юзера");
+        return reader.readLine();
+    }
+
+    public static String getNewLoginUser() throws IOException {
+        System.out.println("Введите новый login юзера");
+        return reader.readLine();
+    }
+
+    public static String getNewNamePassword() throws IOException {
+        System.out.println("Введите новый password юзера");
+        return reader.readLine();
+    }
 }

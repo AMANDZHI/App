@@ -1,16 +1,9 @@
 package com.company.dao.config;
 
-import com.company.dao.repository.ProjectRepository;
-import com.company.dao.repository.Repository;
-import com.company.dao.repository.TaskRepository;
-import com.company.dao.repository.UserRepository;
+import com.company.dao.repository.*;
 import com.company.model.Project;
 import com.company.model.Task;
-import com.company.model.User;
-import com.company.service.ProjectServiceImpl;
-import com.company.service.Service;
-import com.company.service.TaskServiceImpl;
-import com.company.service.UserServiceImpl;
+import com.company.service.*;
 import com.company.ui.Menu;
 import com.company.ui.ServiceLocator;
 import com.company.ui.actions.*;
@@ -21,26 +14,38 @@ import java.io.InputStreamReader;
 import java.util.HashMap;
 
 public class Initializer implements ServiceLocator {
-    private final Repository<Project> projectRepository = new ProjectRepository();
-    private final Repository<Task> taskRepository = new TaskRepository();
-    private final Repository<User> userRepository = new UserRepository();
+    private final Repository<Project> projectRepository = new ProjectRepositoryImpl();
+    private final Repository<Task> taskRepository = new TaskRepositoryImpl();
+    private final UserRepository userRepository = new UserRepositoryImpl();
     private final Service<Project> projectService = new ProjectServiceImpl(projectRepository, taskRepository);
     private final Service<Task> taskService = new TaskServiceImpl(taskRepository);
-    private final Service<User> userService = new UserServiceImpl(userRepository);
+    private final UserService userService = new UserServiceImpl(userRepository);
     private final BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
     private final ServiceLocator serviceLocator = this;
-    private final CrudAction saveProject = new ProjectCreateCrudAction(serviceLocator);
-    private final CrudAction findProject = new ProjectFindCrudAction(serviceLocator);
-    private final CrudAction updateProject = new ProjectUpdateCrudAction(serviceLocator);
-    private final CrudAction removeProject = new ProjectRemoveCrudAction(serviceLocator);
-    private final CrudAction getListProjects = new ProjectsGetCrudAction(serviceLocator);
-    private final CrudAction saveTask = new TaskCreateCrudAction(serviceLocator);
-    private final CrudAction findTask = new TaskFindCrudAction(serviceLocator);
-    private final CrudAction updateTask = new TaskUpdateCrudAction(serviceLocator);
-    private final CrudAction removeTask = new TaskRemoveCrudAction(serviceLocator);
-    private final CrudAction getListTasks = new TasksGetCrudAction(serviceLocator);
-    private final AppSecurityConfig appSecurityConfig = new AppSecurityConfig(serviceLocator);
-    private final HashMap<String, CrudAction> map = new HashMap<>();
+    private final Session session = new Session();
+    private final AppSecurity appSecurity = new AppSecurity(serviceLocator, session);
+    private final Action saveProject = new ProjectCreateAction(serviceLocator, session);
+    private final Action findProject = new ProjectFindAction(serviceLocator, session);
+    private final Action updateProject = new ProjectUpdateAction(serviceLocator, session);
+    private final Action removeProject = new ProjectRemoveAction(serviceLocator, session);
+    private final Action getListProjects = new ProjectListAction(serviceLocator, session);
+    private final Action saveTask = new TaskCreateAction(serviceLocator, session);
+    private final Action findTask = new TaskFindAction(serviceLocator, session);
+    private final Action updateTask = new TaskUpdateAction(serviceLocator, session);
+    private final Action removeTask = new TaskRemoveAction(serviceLocator, session);
+    private final Action getListTasks = new TaskListAction(serviceLocator, session);
+    private final Action saveUser = new UserCreateAction(serviceLocator);
+    private final Action findUser = new UserFindAction(serviceLocator);
+    private final Action updateUser = new UserUpdateAction(serviceLocator, session);
+    private final Action removeUser = new UserRemoveAction(serviceLocator, session);
+    private final Action getListUsers = new UserListAction(serviceLocator);
+    private final Action logOutAction = new LogOutAction(appSecurity);
+    private final AuthAction loginUser = new LoginAction(appSecurity, serviceLocator);
+    private final AuthAction registration = new RegistrationAction(serviceLocator);
+    private final HashMap<String, Action> map = new HashMap<>();
+    private final HashMap<String, AuthAction> mapAuth = new HashMap<>();
+    private final HashMap<String, Action> mapAdmAction = new HashMap<>();
+
 
     @Override
     public Service<Project> getProjectService() {
@@ -53,7 +58,7 @@ public class Initializer implements ServiceLocator {
     }
 
     @Override
-    public Service<User> getUserService() {
+    public UserService getUserService() {
         return userService;
     }
 
@@ -68,10 +73,30 @@ public class Initializer implements ServiceLocator {
         map.put(updateTask.getName(), updateTask);
         map.put(removeTask.getName(), removeTask);
         map.put(getListTasks.getName(), getListTasks);
+        
+        mapAuth.put(loginUser.getName(), loginUser);
+        mapAuth.put(registration.getName(), registration);
+
+        mapAdmAction.put(saveProject.getName(), saveProject);
+        mapAdmAction.put(findProject.getName(), findProject);
+        mapAdmAction.put(updateProject.getName(), updateProject);
+        mapAdmAction.put(removeProject.getName(), removeProject);
+        mapAdmAction.put(getListProjects.getName(), getListProjects);
+        mapAdmAction.put(saveTask.getName(), saveTask);
+        mapAdmAction.put(findTask.getName(), findTask);
+        mapAdmAction.put(updateTask.getName(), updateTask);
+        mapAdmAction.put(removeTask.getName(), removeTask);
+        mapAdmAction.put(getListTasks.getName(), getListTasks);
+        mapAdmAction.put(saveUser.getName(), saveUser);
+        mapAdmAction.put(findUser.getName(), findUser);
+        mapAdmAction.put(updateUser.getName(), updateUser);
+        mapAdmAction.put(removeUser.getName(), removeUser);
+        mapAdmAction.put(getListUsers.getName(), getListUsers);
+        mapAdmAction.put(logOutAction.getName(), logOutAction);
     }
 
     public void run() throws IOException {
-        Menu menu = new Menu(reader, map);
+        Menu menu = new Menu(reader, map, mapAuth, mapAdmAction, session);
         menu.startMenu();
     }
 }

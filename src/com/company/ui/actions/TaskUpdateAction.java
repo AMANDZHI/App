@@ -1,5 +1,6 @@
 package com.company.ui.actions;
 
+import com.company.dao.config.Session;
 import com.company.model.Project;
 import com.company.model.Task;
 import com.company.ui.ServiceLocator;
@@ -7,11 +8,13 @@ import com.company.ui.util.CommonReader;
 
 import java.io.IOException;
 
-public class TaskUpdateCrudAction implements CrudAction {
+public class TaskUpdateAction implements Action {
     private final ServiceLocator serviceLocator;
+    private final Session session;
 
-    public TaskUpdateCrudAction(ServiceLocator serviceLocator) {
+    public TaskUpdateAction(ServiceLocator serviceLocator, Session session) {
         this.serviceLocator = serviceLocator;
+        this.session = session;
     }
 
     @Override
@@ -31,8 +34,16 @@ public class TaskUpdateCrudAction implements CrudAction {
         String answerDescrTask = CommonReader.getNewDescrTask();
         String answerProjectTask = CommonReader.getNewProjectTask();
         Project project = serviceLocator.getProjectService().findById(Integer.parseInt(answerProjectTask));
-        Task updateTask = new Task(Integer.parseInt(answerIdTask), answerNameTask, answerDescrTask, project);
-        serviceLocator.getTaskService().update(updateTask);
-        System.out.println(updateTask);
+        if (project != null) {
+            if (project.getUser().equals(session.getUser()) || session.getUser().isAdmin()) {
+                Task updateTask = new Task(Integer.parseInt(answerIdTask), answerNameTask, answerDescrTask, project);
+                serviceLocator.getTaskService().update(updateTask);
+            }
+            else {
+                System.out.println("Нет прав для обновления задачи - нет доступа к указанному проекту");
+            }
+        } else {
+            System.out.println("не найден указанный вами проект ");
+        }
     }
 }

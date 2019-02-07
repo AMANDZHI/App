@@ -1,14 +1,15 @@
 package com.company.service;
 
 import com.company.dao.repository.Repository;
+import com.company.dao.repository.UserRepository;
 import com.company.model.User;
 
 import java.util.List;
 
-public class UserServiceImpl implements Service<User> {
-    private Repository<User> userRepository;
+public class UserServiceImpl implements UserService {
+    private UserRepository userRepository;
 
-    public UserServiceImpl(Repository<User> userRepository) {
+    public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
     }
 
@@ -35,5 +36,10 @@ public class UserServiceImpl implements Service<User> {
     @Override
     public List<User> getList() {
         return userRepository.getList();
+    }
+
+    @Override
+    public User findByLogin(String login) {
+        return userRepository.findByLogin(login);
     }
 }

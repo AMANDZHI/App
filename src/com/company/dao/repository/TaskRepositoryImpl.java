@@ -5,7 +5,7 @@ import com.company.model.Task;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TaskRepository implements Repository<Task> {
+public class TaskRepositoryImpl implements Repository<Task> {
     private List<Task> list = new ArrayList<>();
 
     @Override
@@ -15,7 +15,12 @@ public class TaskRepository implements Repository<Task> {
 
     @Override
     public Task findById(Integer id) {
-        return list.get(id);
+        for (Task t: list) {
+            if (t.getId() == id) {
+                return t;
+            }
+        }
+        return null;
     }
 
     @Override
@@ -28,7 +33,13 @@ public class TaskRepository implements Repository<Task> {
 
     @Override
     public boolean removeById(Integer id) {
-        return list.remove(id);
+        Task task = findById(id);
+        if (task != null) {
+            list.remove(task);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override

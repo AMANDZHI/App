@@ -1,5 +1,6 @@
 package com.company.service;
 
+import com.company.dao.config.Session;
 import com.company.dao.repository.Repository;
 import com.company.model.Project;
 import com.company.model.Task;
@@ -29,7 +30,7 @@ public class ProjectServiceImpl implements Service<Project> {
     public Project update(Project object) {
         List<Task> listTaks = taskRepository.getList();
         for (Task task: listTaks) {
-            if (task.getProject().equals(object)) {
+            if (task.getProject().getId().equals(object.getId())) {
                 task.setProject(object);
                 taskRepository.update(task);
             }

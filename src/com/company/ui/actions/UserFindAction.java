@@ -1,32 +1,32 @@
 package com.company.ui.actions;
 
-import com.company.model.Task;
+import com.company.model.User;
 import com.company.ui.ServiceLocator;
 import com.company.ui.util.CommonReader;
 
 import java.io.IOException;
 
-public class TaskFindCrudAction implements CrudAction {
+public class UserFindAction implements Action {
     private final ServiceLocator serviceLocator;
 
-    public TaskFindCrudAction(ServiceLocator serviceLocator) {
+    public UserFindAction(ServiceLocator serviceLocator) {
         this.serviceLocator = serviceLocator;
     }
 
     @Override
     public String getName() {
-        return "findTask";
+        return "findUser";
     }
 
     @Override
     public String getDescription() {
-        return "FindById your task";
+        return "find user";
     }
 
     @Override
     public void execute() throws IOException {
-        String answerIdTask = CommonReader.getIdTask();
-        Task findTask = serviceLocator.getTaskService().findById(Integer.parseInt(answerIdTask)-1);
-        System.out.println(findTask);
+        String answerIdUser = CommonReader.getIdUser();
+        User findUser = serviceLocator.getUserService().findById(Integer.parseInt(answerIdUser));
+        System.out.println(findUser);
     }
 }

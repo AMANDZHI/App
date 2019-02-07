@@ -5,7 +5,7 @@ import com.company.model.Project;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProjectRepository implements Repository<Project> {
+public class ProjectRepositoryImpl implements Repository<Project> {
     private List<Project> list = new ArrayList<>();
 
     @Override
@@ -15,7 +15,12 @@ public class ProjectRepository implements Repository<Project> {
 
     @Override
     public Project findById(Integer id) {
-        return list.get(id);
+        for (Project p: list) {
+            if (p.getId().equals(id)) {
+                return p;
+            }
+        }
+        return null;
     }
 
     @Override
@@ -27,7 +32,13 @@ public class ProjectRepository implements Repository<Project> {
 
     @Override
     public boolean removeById(Integer id) {
-        return list.remove(id);
+        Project project = findById(id);
+        if (project != null) {
+            list.remove(project);
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override

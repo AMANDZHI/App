@@ -4,25 +4,25 @@ import com.company.ui.ServiceLocator;
 
 import java.io.IOException;
 
-public class ProjectsGetCrudAction implements CrudAction {
+public class UserListAction implements Action {
     private final ServiceLocator serviceLocator;
 
-    public ProjectsGetCrudAction(ServiceLocator serviceLocator) {
+    public UserListAction(ServiceLocator serviceLocator) {
         this.serviceLocator = serviceLocator;
     }
 
     @Override
     public String getName() {
-        return "getListProjects";
+        return "getListUsers";
     }
 
     @Override
     public String getDescription() {
-        return "Get your all projects";
+        return "get all users";
     }
 
     @Override
     public void execute() throws IOException {
-        System.out.println(serviceLocator.getProjectService().getList());
+        System.out.println(serviceLocator.getUserService().getList());
     }
 }

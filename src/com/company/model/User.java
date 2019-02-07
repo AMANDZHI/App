@@ -5,12 +5,26 @@ public class User {
     private String name;
     private String login;
     private String password;
+    private boolean admin;
+
+    public User(String login, String password) {
+        this.login = login;
+        this.password = password;
+    }
 
     public User(Integer id, String name, String login, String password) {
         this.id = id;
         this.name = name;
         this.login = login;
         this.password = password;
+    }
+
+    public User(Integer id, String name, String login, String password, boolean admin) {
+        this.id = id;
+        this.name = name;
+        this.login = login;
+        this.password = password;
+        this.admin = admin;
     }
 
     public Integer getId() {
@@ -43,6 +57,14 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public boolean isAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(boolean admin) {
+        this.admin = admin;
     }
 
     @Override

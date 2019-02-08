@@ -8,11 +8,7 @@ import com.company.model.Task;
 import java.io.IOException;
 
 public class TaskUpdateAction implements Action {
-    private final ServiceLocator serviceLocator;
-
-    public TaskUpdateAction(ServiceLocator serviceLocator) {
-        this.serviceLocator = serviceLocator;
-    }
+    private ServiceLocator serviceLocator;
 
     @Override
     public String getName() {
@@ -45,5 +41,10 @@ public class TaskUpdateAction implements Action {
         } else {
             System.out.println("не найден указанный вами проект или таск ");
         }
+    }
+
+    @Override
+    public void setServiceLocator(ServiceLocator serviceLocator) {
+        this.serviceLocator = serviceLocator;
     }
 }

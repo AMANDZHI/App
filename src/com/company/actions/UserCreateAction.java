@@ -7,11 +7,7 @@ import com.company.api.ServiceLocator;
 import java.io.IOException;
 
 public class UserCreateAction implements Action {
-    private final ServiceLocator serviceLocator;
-
-    public UserCreateAction(ServiceLocator serviceLocator) {
-        this.serviceLocator = serviceLocator;
-    }
+    private ServiceLocator serviceLocator;
 
     @Override
     public String getName() {
@@ -36,5 +32,10 @@ public class UserCreateAction implements Action {
         } else {
             System.out.println("Такой логин уже используется");
         }
+    }
+
+    @Override
+    public void setServiceLocator(ServiceLocator serviceLocator) {
+        this.serviceLocator = serviceLocator;
     }
 }

@@ -7,11 +7,7 @@ import com.company.api.ServiceLocator;
 import java.io.IOException;
 
 public class RegistrationAction implements AuthAction {
-    private final ServiceLocator serviceLocator;
-
-    public RegistrationAction(ServiceLocator serviceLocator) {
-        this.serviceLocator = serviceLocator;
-    }
+    private ServiceLocator serviceLocator;
 
     @Override
     public String getName() {
@@ -37,5 +33,10 @@ public class RegistrationAction implements AuthAction {
             System.out.println("Такой логин уже используется");
             return null;
         }
+    }
+
+    @Override
+    public void setServiceLocator(ServiceLocator serviceLocator) {
+        this.serviceLocator = serviceLocator;
     }
 }

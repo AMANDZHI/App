@@ -7,11 +7,7 @@ import com.company.api.ServiceLocator;
 import java.io.IOException;
 
 public class ProjectUpdateAction implements Action {
-    private final ServiceLocator serviceLocator;
-
-    public ProjectUpdateAction(ServiceLocator serviceLocator) {
-        this.serviceLocator = serviceLocator;
-    }
+    private ServiceLocator serviceLocator;
 
     @Override
     public String getName() {
@@ -42,5 +38,10 @@ public class ProjectUpdateAction implements Action {
             System.out.println("Не найден проект с таким именем");
         }
 
+    }
+
+    @Override
+    public void setServiceLocator(ServiceLocator serviceLocator) {
+        this.serviceLocator = serviceLocator;
     }
 }

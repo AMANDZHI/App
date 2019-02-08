@@ -7,11 +7,7 @@ import com.company.api.ServiceLocator;
 import java.io.IOException;
 
 public class UserFindAction implements Action {
-    private final ServiceLocator serviceLocator;
-
-    public UserFindAction(ServiceLocator serviceLocator) {
-        this.serviceLocator = serviceLocator;
-    }
+    private ServiceLocator serviceLocator;
 
     @Override
     public String getName() {
@@ -33,5 +29,10 @@ public class UserFindAction implements Action {
             System.out.println("Не найден юзер с таким логином");
         }
 
+    }
+
+    @Override
+    public void setServiceLocator(ServiceLocator serviceLocator) {
+        this.serviceLocator = serviceLocator;
     }
 }

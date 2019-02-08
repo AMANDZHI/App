@@ -1,16 +1,12 @@
 package com.company.actions;
 
 import com.company.api.Action;
-import com.company.service.AppSecurity;
+import com.company.api.ServiceLocator;
 
 import java.io.IOException;
 
 public class LogOutAction implements Action {
-    private final AppSecurity appSecurity;
-
-    public LogOutAction(AppSecurity appSecurity) {
-        this.appSecurity = appSecurity;
-    }
+    private ServiceLocator serviceLocator;
 
     @Override
     public String getName() {
@@ -24,6 +20,11 @@ public class LogOutAction implements Action {
 
     @Override
     public void execute() throws IOException {
-        appSecurity.logOut();
+        serviceLocator.getAppSecurity().logOut();
+    }
+
+    @Override
+    public void setServiceLocator(ServiceLocator serviceLocator) {
+        this.serviceLocator = serviceLocator;
     }
 }

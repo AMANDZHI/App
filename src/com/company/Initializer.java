@@ -85,11 +85,11 @@ public class Initializer implements ServiceLocator {
             listForAction.add(TaskListAction.class.newInstance());
             listForAction.add(TaskRemoveAction.class.newInstance());
             listForAction.add(TaskUpdateAction.class.newInstance());
+            listForAction.add(LogOutAction.class.newInstance());
 
             listForAuth.add(LoginAction.class.newInstance());
             listForAuth.add(RegistrationAction.class.newInstance());
 
-            listForAdmAction.add(LogOutAction.class.newInstance());
             listForAdmAction.add(UserCreateAction.class.newInstance());
             listForAdmAction.add(UserFindAction.class.newInstance());
             listForAdmAction.add(UserListAction.class.newInstance());

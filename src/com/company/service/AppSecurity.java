@@ -19,7 +19,8 @@ public class AppSecurity {
         for (Map.Entry<String, User> pair: map.entrySet()) {
             if (pair.getValue().getLogin().equals(user.getLogin()) && pair.getValue().getPassword().equals(user.getPassword())) {
                 check = true;
-                serviceLocator.getSessionService().save(new Session(user));
+                User findUser = serviceLocator.getUserService().findByLogin(user.getLogin());
+                serviceLocator.getSessionService().save(new Session(findUser));
             }
         }
         return check;

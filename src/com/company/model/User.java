@@ -20,7 +20,7 @@ public class User {
         this.name = name;
         this.login = login;
         this.password = Encryption.md5Custom(password);
-        this.id = UUID.randomUUID().toString() + UUID.fromString(name);
+        this.id = UUID.randomUUID().toString();
     }
 
     public User(String name, String login, String password, boolean admin) {

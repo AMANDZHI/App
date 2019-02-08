@@ -8,4 +8,5 @@ public interface AuthAction {
     String getName();
     String getDescription();
     User execute() throws IOException;
+    void setServiceLocator(ServiceLocator serviceLocator);
 }

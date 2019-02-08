@@ -7,12 +7,7 @@ import com.company.model.Project;
 import java.io.IOException;
 
 public class ProjectRemoveAction implements Action {
-    private final ServiceLocator serviceLocator;
-
-    public ProjectRemoveAction(ServiceLocator serviceLocator) {
-        this.serviceLocator = serviceLocator;
-    }
-
+    private ServiceLocator serviceLocator;
 
     @Override
     public String getName() {
@@ -38,5 +33,10 @@ public class ProjectRemoveAction implements Action {
         } else {
             System.out.println("Такого проекта нет");
         }
+    }
+
+    @Override
+    public void setServiceLocator(ServiceLocator serviceLocator) {
+        this.serviceLocator = serviceLocator;
     }
 }

@@ -10,11 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 public class TaskListAction implements Action {
-    private final ServiceLocator serviceLocator;
-
-    public TaskListAction(ServiceLocator serviceLocator) {
-        this.serviceLocator = serviceLocator;
-    }
+    private ServiceLocator serviceLocator;
 
     @Override
     public String getName() {
@@ -36,5 +32,10 @@ public class TaskListAction implements Action {
             }
         }
         System.out.println(yourTasks);
+    }
+
+    @Override
+    public void setServiceLocator(ServiceLocator serviceLocator) {
+        this.serviceLocator = serviceLocator;
     }
 }

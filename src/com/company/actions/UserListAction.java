@@ -6,11 +6,7 @@ import com.company.api.ServiceLocator;
 import java.io.IOException;
 
 public class UserListAction implements Action {
-    private final ServiceLocator serviceLocator;
-
-    public UserListAction(ServiceLocator serviceLocator) {
-        this.serviceLocator = serviceLocator;
-    }
+    private ServiceLocator serviceLocator;
 
     @Override
     public String getName() {
@@ -25,5 +21,10 @@ public class UserListAction implements Action {
     @Override
     public void execute() throws IOException {
         System.out.println(serviceLocator.getUserService().getMap());
+    }
+
+    @Override
+    public void setServiceLocator(ServiceLocator serviceLocator) {
+        this.serviceLocator = serviceLocator;
     }
 }

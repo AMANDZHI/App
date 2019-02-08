@@ -7,11 +7,7 @@ import com.company.api.ServiceLocator;
 import java.io.IOException;
 
 public class UserRemoveAction implements Action {
-    private final ServiceLocator serviceLocator;
-
-    public UserRemoveAction(ServiceLocator serviceLocator) {
-        this.serviceLocator = serviceLocator;
-    }
+    private ServiceLocator serviceLocator;
 
     @Override
     public String getName() {
@@ -38,5 +34,10 @@ public class UserRemoveAction implements Action {
         } else {
             System.out.println("Нет такого юзера");
         }
+    }
+
+    @Override
+    public void setServiceLocator(ServiceLocator serviceLocator) {
+        this.serviceLocator = serviceLocator;
     }
 }

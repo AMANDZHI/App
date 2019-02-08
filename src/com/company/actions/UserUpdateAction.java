@@ -8,11 +8,7 @@ import com.company.api.ServiceLocator;
 import java.io.IOException;
 
 public class UserUpdateAction implements Action {
-    private final ServiceLocator serviceLocator;
-
-    public UserUpdateAction(ServiceLocator serviceLocator) {
-        this.serviceLocator = serviceLocator;
-    }
+    private ServiceLocator serviceLocator;
 
     @Override
     public String getName() {
@@ -50,5 +46,10 @@ public class UserUpdateAction implements Action {
         } else {
             System.out.println("Не найден юзер с таким логином");
         }
+    }
+
+    @Override
+    public void setServiceLocator(ServiceLocator serviceLocator) {
+        this.serviceLocator = serviceLocator;
     }
 }

@@ -7,11 +7,7 @@ import com.company.api.ServiceLocator;
 import java.io.IOException;
 
 public class TaskFindAction implements Action {
-    private final ServiceLocator serviceLocator;
-
-    public TaskFindAction(ServiceLocator serviceLocator) {
-        this.serviceLocator = serviceLocator;
-    }
+    private ServiceLocator serviceLocator;
 
     @Override
     public String getName() {
@@ -36,5 +32,10 @@ public class TaskFindAction implements Action {
         } else {
             System.out.println("не найден таск с таким именем");
         }
+    }
+
+    @Override
+    public void setServiceLocator(ServiceLocator serviceLocator) {
+        this.serviceLocator = serviceLocator;
     }
 }

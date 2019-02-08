@@ -1,14 +1,15 @@
 package com.company;
 
+import com.company.actions.*;
 import com.company.api.*;
-import com.company.service.AppSecurity;
-import com.company.model.Session;
-import com.company.repository.*;
 import com.company.model.Project;
 import com.company.model.Task;
+import com.company.repository.ProjectRepositoryImpl;
+import com.company.repository.SessionRepositoryImpl;
+import com.company.repository.TaskRepositoryImpl;
+import com.company.repository.UserRepositoryImpl;
 import com.company.service.*;
 import com.company.ui.Menu;
-import com.company.actions.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -30,24 +31,6 @@ public class Initializer implements ServiceLocator {
     private final BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
     private final ServiceLocator serviceLocator = this;
     private final AppSecurity appSecurity = new AppSecurity(serviceLocator);
-//    private final Action saveProject = new ProjectCreateAction(serviceLocator);
-//    private final Action findProject = new ProjectFindAction(serviceLocator);
-//    private final Action updateProject = new ProjectUpdateAction(serviceLocator);
-//    private final Action removeProject = new ProjectRemoveAction(serviceLocator);
-//    private final Action getListProjects = new ProjectListAction(serviceLocator);
-//    private final Action saveTask = new TaskCreateAction(serviceLocator);
-//    private final Action findTask = new TaskFindAction(serviceLocator);
-//    private final Action updateTask = new TaskUpdateAction(serviceLocator);
-//    private final Action removeTask = new TaskRemoveAction(serviceLocator);
-//    private final Action getListTasks = new TaskListAction(serviceLocator);
-//    private final Action saveUser = new UserCreateAction(serviceLocator);
-//    private final Action findUser = new UserFindAction(serviceLocator);
-//    private final Action updateUser = new UserUpdateAction(serviceLocator);
-//    private final Action removeUser = new UserRemoveAction(serviceLocator);
-//    private final Action getListUsers = new UserListAction(serviceLocator);
-//    private final Action logOutAction = new LogOutAction(serviceLocator);
-//    private final AuthAction loginUser = new LoginAction(serviceLocator);
-//    private final AuthAction registration = new RegistrationAction(serviceLocator);
     private final Map<String, Action> map = new HashMap<>();
     private final Map<String, AuthAction> mapAuth = new HashMap<>();
     private final Map<String, Action> mapAdmAction = new HashMap<>();
@@ -83,37 +66,6 @@ public class Initializer implements ServiceLocator {
     }
 
     {
-
-//        map.put(saveProject.getName(), saveProject);
-//        map.put(findProject.getName(), findProject);
-//        map.put(updateProject.getName(), updateProject);
-//        map.put(removeProject.getName(), removeProject);
-//        map.put(getListProjects.getName(), getListProjects);
-//        map.put(saveTask.getName(), saveTask);
-//        map.put(findTask.getName(), findTask);
-//        map.put(updateTask.getName(), updateTask);
-//        map.put(removeTask.getName(), removeTask);
-//        map.put(getListTasks.getName(), getListTasks);
-//
-//        mapAuth.put(loginUser.getName(), loginUser);
-//        mapAuth.put(registration.getName(), registration);
-//
-//        mapAdmAction.put(saveProject.getName(), saveProject);
-//        mapAdmAction.put(findProject.getName(), findProject);
-//        mapAdmAction.put(updateProject.getName(), updateProject);
-//        mapAdmAction.put(removeProject.getName(), removeProject);
-//        mapAdmAction.put(getListProjects.getName(), getListProjects);
-//        mapAdmAction.put(saveTask.getName(), saveTask);
-//        mapAdmAction.put(findTask.getName(), findTask);
-//        mapAdmAction.put(updateTask.getName(), updateTask);
-//        mapAdmAction.put(removeTask.getName(), removeTask);
-//        mapAdmAction.put(getListTasks.getName(), getListTasks);
-//        mapAdmAction.put(saveUser.getName(), saveUser);
-//        mapAdmAction.put(findUser.getName(), findUser);
-//        mapAdmAction.put(updateUser.getName(), updateUser);
-//        mapAdmAction.put(removeUser.getName(), removeUser);
-//        mapAdmAction.put(getListUsers.getName(), getListUsers);
-//        mapAdmAction.put(logOutAction.getName(), logOutAction);
         init();
     }
 

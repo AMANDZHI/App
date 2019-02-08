@@ -83,20 +83,22 @@ public class Initializer implements ServiceLocator {
         map.put(updateTask.getName(), updateTask);
         map.put(removeTask.getName(), removeTask);
         map.put(getListTasks.getName(), getListTasks);
+
         
         mapAuth.put(loginUser.getName(), loginUser);
         mapAuth.put(registration.getName(), registration);
 
-        mapAdmAction.put(saveProject.getName(), saveProject);
-        mapAdmAction.put(findProject.getName(), findProject);
-        mapAdmAction.put(updateProject.getName(), updateProject);
-        mapAdmAction.put(removeProject.getName(), removeProject);
-        mapAdmAction.put(getListProjects.getName(), getListProjects);
-        mapAdmAction.put(saveTask.getName(), saveTask);
-        mapAdmAction.put(findTask.getName(), findTask);
-        mapAdmAction.put(updateTask.getName(), updateTask);
-        mapAdmAction.put(removeTask.getName(), removeTask);
-        mapAdmAction.put(getListTasks.getName(), getListTasks);
+        mapAdmAction.putAll(map);
+//        mapAdmAction.put(saveProject.getName(), saveProject);
+//        mapAdmAction.put(findProject.getName(), findProject);
+//        mapAdmAction.put(updateProject.getName(), updateProject);
+//        mapAdmAction.put(removeProject.getName(), removeProject);
+//        mapAdmAction.put(getListProjects.getName(), getListProjects);
+//        mapAdmAction.put(saveTask.getName(), saveTask);
+//        mapAdmAction.put(findTask.getName(), findTask);
+//        mapAdmAction.put(updateTask.getName(), updateTask);
+//        mapAdmAction.put(removeTask.getName(), removeTask);
+//        mapAdmAction.put(getListTasks.getName(), getListTasks);
         mapAdmAction.put(saveUser.getName(), saveUser);
         mapAdmAction.put(findUser.getName(), findUser);
         mapAdmAction.put(updateUser.getName(), updateUser);
@@ -107,6 +109,10 @@ public class Initializer implements ServiceLocator {
 
     public void run() throws IOException {
         menu.startMenu();
+    }
+
+    private void initMap() {
+
     }
 
 }

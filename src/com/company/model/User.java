@@ -1,5 +1,7 @@
 package com.company.model;
 
+import com.company.util.Encryption;
+
 import java.util.UUID;
 
 public class User {
@@ -11,20 +13,20 @@ public class User {
 
     public User(String login, String password) {
         this.login = login;
-        this.password = password;
+        this.password = Encryption.md5Custom(password);
     }
 
     public User(String name, String login, String password) {
         this.name = name;
         this.login = login;
-        this.password = password;
+        this.password = Encryption.md5Custom(password);
         this.id = UUID.randomUUID().toString() + UUID.fromString(name);
     }
 
     public User(String name, String login, String password, boolean admin) {
         this.name = name;
         this.login = login;
-        this.password = password;
+        this.password = Encryption.md5Custom(password);
         this.admin = admin;
         this.id = UUID.randomUUID().toString();
     }

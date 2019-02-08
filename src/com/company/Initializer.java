@@ -1,14 +1,15 @@
 package com.company;
 
+import com.company.actions.*;
 import com.company.api.*;
-import com.company.service.AppSecurity;
-import com.company.model.Session;
-import com.company.repository.*;
 import com.company.model.Project;
 import com.company.model.Task;
+import com.company.repository.ProjectRepositoryImpl;
+import com.company.repository.SessionRepositoryImpl;
+import com.company.repository.TaskRepositoryImpl;
+import com.company.repository.UserRepositoryImpl;
 import com.company.service.*;
 import com.company.ui.Menu;
-import com.company.actions.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -84,21 +85,10 @@ public class Initializer implements ServiceLocator {
         map.put(removeTask.getName(), removeTask);
         map.put(getListTasks.getName(), getListTasks);
 
-        
         mapAuth.put(loginUser.getName(), loginUser);
         mapAuth.put(registration.getName(), registration);
 
         mapAdmAction.putAll(map);
-//        mapAdmAction.put(saveProject.getName(), saveProject);
-//        mapAdmAction.put(findProject.getName(), findProject);
-//        mapAdmAction.put(updateProject.getName(), updateProject);
-//        mapAdmAction.put(removeProject.getName(), removeProject);
-//        mapAdmAction.put(getListProjects.getName(), getListProjects);
-//        mapAdmAction.put(saveTask.getName(), saveTask);
-//        mapAdmAction.put(findTask.getName(), findTask);
-//        mapAdmAction.put(updateTask.getName(), updateTask);
-//        mapAdmAction.put(removeTask.getName(), removeTask);
-//        mapAdmAction.put(getListTasks.getName(), getListTasks);
         mapAdmAction.put(saveUser.getName(), saveUser);
         mapAdmAction.put(findUser.getName(), findUser);
         mapAdmAction.put(updateUser.getName(), updateUser);
@@ -110,9 +100,4 @@ public class Initializer implements ServiceLocator {
     public void run() throws IOException {
         menu.startMenu();
     }
-
-    private void initMap() {
-
-    }
-
 }

@@ -10,4 +10,7 @@ public interface ServiceLocator {
     UserService getUserService();
     SessionService getSessionService();
     AppSecurity getAppSecurity();
+    SerializationService getProjectSerializationServiceImpl();
+    SerializationService getTaskSerializationServiceImpl();
+    SerializationService getUserSerializationServiceImpl();
 }

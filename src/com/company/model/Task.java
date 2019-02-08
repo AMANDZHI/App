@@ -1,8 +1,9 @@
 package com.company.model;
 
+import java.io.Serializable;
 import java.util.UUID;
 
-public class Task {
+public class Task implements Serializable {
     private String id;
     private String name;
     private String description;

@@ -2,7 +2,6 @@ package com.company.api;
 
 import com.company.model.User;
 
-import java.util.List;
 import java.util.Map;
 
 public interface UserRepository {
@@ -11,4 +10,5 @@ public interface UserRepository {
     User update(User object);
     boolean removeByLogin(String name);
     Map<String, User> getMap();
+    void setMap(Map<String, User> map);
 }

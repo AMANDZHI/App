@@ -1,16 +1,14 @@
 package com.company.repository;
 
 import com.company.api.Repository;
-import com.company.model.Project;
 import com.company.model.Task;
 
-import java.util.ArrayList;
+import java.io.Serializable;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-public class TaskRepositoryImpl implements Repository<String, Task> {
-    private final Map<String, Task> map = new HashMap<>();
+public class TaskRepositoryImpl implements Repository<String, Task>, Serializable {
+    private Map<String, Task> map = new HashMap<>();
 
     @Override
     public void save(Task object) {
@@ -42,5 +40,10 @@ public class TaskRepositoryImpl implements Repository<String, Task> {
     @Override
     public Map<String, Task> getMap() {
         return map;
+    }
+
+    @Override
+    public void setMap(Map<String, Task> map) {
+        this.map = map;
     }
 }

@@ -10,4 +10,5 @@ public interface UserService {
     User update(User object);
     boolean removeByLogin(String name);
     Map<String, User> getMap();
+    UserRepository getRepository();
 }

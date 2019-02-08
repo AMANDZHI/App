@@ -2,9 +2,10 @@ package com.company.model;
 
 import com.company.util.Encryption;
 
+import java.io.Serializable;
 import java.util.UUID;
 
-public class User {
+public class User implements Serializable {
     private String id;
     private String name;
     private String login;

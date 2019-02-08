@@ -3,11 +3,12 @@ package com.company.repository;
 import com.company.api.Repository;
 import com.company.model.Project;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ProjectRepositoryImpl implements Repository<String, Project> {
-    private final Map<String, Project> map = new HashMap<>();
+public class ProjectRepositoryImpl implements Repository<String, Project>, Serializable {
+    private Map<String, Project> map = new HashMap<>();
 
     @Override
     public void save(Project object) {
@@ -39,5 +40,10 @@ public class ProjectRepositoryImpl implements Repository<String, Project> {
     @Override
     public Map<String, Project> getMap() {
         return map;
+    }
+
+    @Override
+    public void setMap(Map<String, Project> map) {
+        this.map = map;
     }
 }

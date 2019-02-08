@@ -4,10 +4,7 @@ import com.company.actions.*;
 import com.company.api.*;
 import com.company.model.Project;
 import com.company.model.Task;
-import com.company.repository.ProjectRepositoryImpl;
-import com.company.repository.SessionRepositoryImpl;
-import com.company.repository.TaskRepositoryImpl;
-import com.company.repository.UserRepositoryImpl;
+import com.company.repository.*;
 import com.company.service.*;
 import com.company.ui.Menu;
 
@@ -38,7 +35,12 @@ public class Initializer implements ServiceLocator {
     private final List<Action> listForAction = new ArrayList<>();
     private final List<AuthAction> listForAuth = new ArrayList<>();
     private final List<Action> listForAdmAction = new ArrayList<>();
-
+    private final CommonSerializationRepository projectSerialization = new ProjectSerializationRepositoryImpl();
+    private final CommonSerializationRepository taskSerialization = new TaskSerializationRepositoryImpl();
+    private final CommonSerializationRepository userSerialization = new UserSerializationRepositoryImpl();
+    private final SerializationService projectSerializationService = new ProjectSerializationServiceImpl(projectSerialization);
+    private final SerializationService taskSerializationService = new TaskSerializationServiceImpl(taskSerialization);
+    private final SerializationService userSerializationService = new TaskSerializationServiceImpl(userSerialization);
 
     @Override
     public Service<String, Project> getProjectService() {
@@ -63,6 +65,21 @@ public class Initializer implements ServiceLocator {
     @Override
     public AppSecurity getAppSecurity() {
         return appSecurity;
+    }
+
+    @Override
+    public SerializationService getProjectSerializationServiceImpl() {
+        return projectSerializationService;
+    }
+
+    @Override
+    public SerializationService getTaskSerializationServiceImpl() {
+        return taskSerializationService;
+    }
+
+    @Override
+    public SerializationService getUserSerializationServiceImpl() {
+        return userSerializationService;
     }
 
     {
@@ -95,8 +112,15 @@ public class Initializer implements ServiceLocator {
             listForAdmAction.add(UserListAction.class.newInstance());
             listForAdmAction.add(UserRemoveAction.class.newInstance());
             listForAdmAction.add(UserUpdateAction.class.newInstance());
+            listForAdmAction.add(WriteProjectsToFileAction.class.newInstance());
+            listForAdmAction.add(WriteUsersToFileAction.class.newInstance());
+            listForAdmAction.add(WriteTasksToFileAction.class.newInstance());
+            listForAdmAction.add(WriteAllToFileAction.class.newInstance());
+            listForAdmAction.add(ReadFileToProjectsAction.class.newInstance());
+            listForAdmAction.add(ReadFileToUsersAction.class.newInstance());
+            listForAdmAction.add(ReadFileToTasksAction.class.newInstance());
+            listForAdmAction.add(ReadFileToAllAction.class.newInstance());
             listForAdmAction.addAll(listForAction);
-
 
             for (Action action: listForAdmAction) {
                 action.setServiceLocator(serviceLocator);

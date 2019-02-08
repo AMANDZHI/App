@@ -1,5 +1,6 @@
 package com.company.service;
 
+import com.company.api.Repository;
 import com.company.api.UserRepository;
 import com.company.api.UserService;
 import com.company.model.User;
@@ -41,5 +42,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public Map<String, User> getMap() {
         return userRepository.getMap();
+    }
+
+    @Override
+    public UserRepository getRepository() {
+        return userRepository;
     }
 }

@@ -9,4 +9,6 @@ public interface Service<T, M> {
     M update(M object);
     boolean removeByName(T name);
     Map<T, M> getMap();
+    Repository<T, M> getRepository();
+    void setRepository(Repository repository);
 }

@@ -1,6 +1,5 @@
 package com.company.api;
 
-import java.util.List;
 import java.util.Map;
 
 public interface Repository<T, M> {
@@ -9,4 +8,5 @@ public interface Repository<T, M> {
     M update(M object);
     boolean removeByName(T name);
     Map<T, M> getMap();
+    void setMap(Map<T, M> map);
 }

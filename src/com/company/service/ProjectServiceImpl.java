@@ -8,7 +8,7 @@ import com.company.model.Task;
 import java.util.Map;
 
 public class ProjectServiceImpl implements Service<String, Project> {
-    private final Repository<String, Project> projectRepository;
+    private Repository<String, Project> projectRepository;
     private final Repository<String, Task> taskRepository;
 
     public ProjectServiceImpl(Repository<String, Project> projectRepository, Repository<String, Task> taskRepository) {
@@ -70,4 +70,16 @@ public class ProjectServiceImpl implements Service<String, Project> {
     public Map<String, Project> getMap() {
         return projectRepository.getMap();
     }
+
+    @Override
+    public Repository<String, Project> getRepository() {
+        return projectRepository;
+    }
+
+    @Override
+    public void setRepository(Repository repository) {
+        this.projectRepository = repository;
+    }
+
+
 }

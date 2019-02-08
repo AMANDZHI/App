@@ -3,11 +3,12 @@ package com.company.repository;
 import com.company.api.UserRepository;
 import com.company.model.User;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class UserRepositoryImpl implements UserRepository {
-    private final Map<String, User> map = new HashMap<>();
+public class UserRepositoryImpl implements UserRepository, Serializable {
+    private Map<String, User> map = new HashMap<>();
 
     {
         User user = new User("admin", "admin", "admin", true);
@@ -35,6 +36,11 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public Map<String, User> getMap() {
         return map;
+    }
+
+    @Override
+    public void setMap(Map<String, User> map) {
+        this.map = map;
     }
 
     @Override

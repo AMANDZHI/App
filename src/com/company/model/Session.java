@@ -1,7 +1,5 @@
 package com.company.model;
 
-import com.company.model.User;
-
 public class Session {
     private User user;
 

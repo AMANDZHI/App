@@ -12,6 +12,9 @@ public class User implements Serializable {
     private String password;
     private boolean admin;
 
+    public User() {
+    }
+
     public User(String login, String password) {
         this.login = login;
         this.password = Encryption.md5Custom(password);

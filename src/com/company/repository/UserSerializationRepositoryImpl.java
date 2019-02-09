@@ -1,7 +1,11 @@
 package com.company.repository;
 
 import com.company.api.CommonSerializationRepository;
+import com.company.model.Project;
 import com.company.model.User;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -22,6 +26,38 @@ public class UserSerializationRepositoryImpl implements CommonSerializationRepos
             }
             return map;
         } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public void writeObjectToJson(String path, Map<String, User> map) throws JsonMappingException {
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            List<User> list = new ArrayList<>();
+            for (Map.Entry<String, User> pair: map.entrySet()) {
+                list.add(pair.getValue());
+            }
+            mapper.writeValue(new FileOutputStream(path), list);
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public Map<String, User> readJsonToObject(String path) {
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            List<User> list = mapper.readValue(new FileInputStream(path), new TypeReference<List<User>>(){});
+
+            Map<String, User> map = new HashMap<>();
+            for (User u: list) {
+                map.put(u.getId(), u);
+            }
+            return map;
+        } catch (IOException e) {
             e.printStackTrace();
         }
         return null;

@@ -3,6 +3,7 @@ package com.company.service;
 import com.company.api.CommonSerializationRepository;
 import com.company.api.SerializationService;
 import com.company.model.Task;
+import com.fasterxml.jackson.databind.JsonMappingException;
 
 import java.util.Map;
 
@@ -19,7 +20,17 @@ public class TaskSerializationServiceImpl implements SerializationService<String
     }
 
     @Override
+    public void writeObjectToJson(String path, Map<String, Task> map) throws JsonMappingException {
+        commonSerializationRepository.writeObjectToJson(path, map);
+    }
+
+    @Override
     public Map<String, Task> readFileToObject(String path) {
        return commonSerializationRepository.readFileToObject(path);
+    }
+
+    @Override
+    public Map<String, Task> readJsonToObject(String path) {
+        return commonSerializationRepository.readJsonToObject(path);
     }
 }

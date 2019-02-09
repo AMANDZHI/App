@@ -9,6 +9,9 @@ public class Project implements Serializable {
     private String description;
     private User user;
 
+    public Project() {
+    }
+
     public Project(String name, String description, User user) {
         this.name = name;
         this.description = description;

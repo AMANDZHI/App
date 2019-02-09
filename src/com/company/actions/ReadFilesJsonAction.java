@@ -10,32 +10,32 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ReadFileToAllAction implements Action {
+public class ReadFilesJsonAction implements Action {
     private ServiceLocator serviceLocator;
 
     @Override
     public String getName() {
-        return "readFileToAllRepo";
+        return "readFileJsonToAllRepo";
     }
 
     @Override
     public String getDescription() {
-        return "deserialization all data";
+        return "deserialization json data to objects";
     }
 
     @Override
     public void execute() throws IOException {
-        String filePathUsers = "users.txt";
-        String filePathTasks = "tasks.txt";
-        String filePathProjects = "projects.txt";
+        String filePathUsers = "users.json";
+        String filePathTasks = "tasks.json";
+        String filePathProjects = "projects.json";
 
         Map<String, Project> mapProjects = new HashMap<>();
         Map<String, User> mapUsers = new HashMap<>();
         Map<String, Task> mapTasks = new HashMap<>();
 
-        mapProjects = serviceLocator.getProjectSerializationServiceImpl().readFileToObject(filePathProjects);
-        mapUsers = serviceLocator.getUserSerializationServiceImpl().readFileToObject(filePathUsers);
-        mapTasks = serviceLocator.getTaskSerializationServiceImpl().readFileToObject(filePathTasks);
+        mapProjects = serviceLocator.getProjectSerializationServiceImpl().readJsonToObject(filePathProjects);
+        mapUsers = serviceLocator.getUserSerializationServiceImpl().readJsonToObject(filePathUsers);
+        mapTasks = serviceLocator.getTaskSerializationServiceImpl().readJsonToObject(filePathTasks);
         serviceLocator.getProjectService().getRepository().setMap(mapProjects);
         serviceLocator.getUserService().getRepository().setMap(mapUsers);
         serviceLocator.getTaskService().getRepository().setMap(mapTasks);

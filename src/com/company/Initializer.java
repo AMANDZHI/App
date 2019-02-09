@@ -115,11 +115,19 @@ public class Initializer implements ServiceLocator {
             listForAdmAction.add(WriteProjectsToFileAction.class.newInstance());
             listForAdmAction.add(WriteUsersToFileAction.class.newInstance());
             listForAdmAction.add(WriteTasksToFileAction.class.newInstance());
-            listForAdmAction.add(WriteAllToFileAction.class.newInstance());
+            listForAdmAction.add(WriteAllToFilesTxtAction.class.newInstance());
+            listForAdmAction.add(WriteProjectsToJsonAction.class.newInstance());
+            listForAdmAction.add(WriteUsersToJsonAction.class.newInstance());
+            listForAdmAction.add(WriteTasksToJsonAction.class.newInstance());
+            listForAdmAction.add(WriteAllToFilesJsonAction.class.newInstance());
             listForAdmAction.add(ReadFileToProjectsAction.class.newInstance());
             listForAdmAction.add(ReadFileToUsersAction.class.newInstance());
             listForAdmAction.add(ReadFileToTasksAction.class.newInstance());
-            listForAdmAction.add(ReadFileToAllAction.class.newInstance());
+            listForAdmAction.add(ReadFilesTxtAction.class.newInstance());
+            listForAdmAction.add(ReadJsonToProjectsAction.class.newInstance());
+            listForAdmAction.add(ReadJsonToUsersAction.class.newInstance());
+            listForAdmAction.add(ReadJsonToTasksAction.class.newInstance());
+            listForAdmAction.add(ReadFilesJsonAction.class.newInstance());
             listForAdmAction.addAll(listForAction);
 
             for (Action action: listForAdmAction) {

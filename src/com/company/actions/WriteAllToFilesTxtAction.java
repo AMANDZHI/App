@@ -5,12 +5,12 @@ import com.company.api.ServiceLocator;
 
 import java.io.IOException;
 
-public class WriteAllToFileAction implements Action {
+public class WriteAllToFilesTxtAction implements Action {
     private ServiceLocator serviceLocator;
 
     @Override
     public String getName() {
-        return "writeAllToFiles";
+        return "writeAllToFilesTxt";
     }
 
     @Override

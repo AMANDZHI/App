@@ -25,6 +25,11 @@ public class UserSerializationServiceImpl implements SerializationService<String
     }
 
     @Override
+    public void writeObjectToXml(String path, Map<String, User> map) throws JsonMappingException {
+        commonSerializationRepository.writeObjectToXml(path, map);
+    }
+
+    @Override
     public Map<String, User> readFileToObject(String path) {
        return commonSerializationRepository.readFileToObject(path);
     }
@@ -32,5 +37,10 @@ public class UserSerializationServiceImpl implements SerializationService<String
     @Override
     public Map<String, User> readJsonToObject(String path) {
         return commonSerializationRepository.readJsonToObject(path);
+    }
+
+    @Override
+    public Map<String, User> readXmlToObject(String path) {
+        return commonSerializationRepository.readXmlToObject(path);
     }
 }

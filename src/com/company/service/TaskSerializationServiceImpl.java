@@ -25,6 +25,11 @@ public class TaskSerializationServiceImpl implements SerializationService<String
     }
 
     @Override
+    public void writeObjectToXml(String path, Map<String, Task> map) throws JsonMappingException {
+        commonSerializationRepository.writeObjectToXml(path, map);
+    }
+
+    @Override
     public Map<String, Task> readFileToObject(String path) {
        return commonSerializationRepository.readFileToObject(path);
     }
@@ -32,5 +37,10 @@ public class TaskSerializationServiceImpl implements SerializationService<String
     @Override
     public Map<String, Task> readJsonToObject(String path) {
         return commonSerializationRepository.readJsonToObject(path);
+    }
+
+    @Override
+    public Map<String, Task> readXmlToObject(String path) {
+        return commonSerializationRepository.readXmlToObject(path);
     }
 }

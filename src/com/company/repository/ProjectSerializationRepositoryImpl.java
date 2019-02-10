@@ -3,8 +3,8 @@ package com.company.repository;
 import com.company.api.CommonSerializationRepository;
 import com.company.model.Project;
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -38,9 +38,23 @@ public class ProjectSerializationRepositoryImpl implements CommonSerializationRe
             for (Map.Entry<String, Project> pair: map.entrySet()) {
                 list.add(pair.getValue());
             }
-            mapper.writeValue(new FileOutputStream(path), list);
+            mapper.writeValue(new File(path), list);
         }
         catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void writeObjectToXml(String path, Map<String, Project> map) {
+        try {
+            ObjectMapper mapper = new XmlMapper();
+            List<Project> list = new ArrayList<>();
+            for (Map.Entry<String, Project> pair: map.entrySet()) {
+                list.add(pair.getValue());
+            }
+            mapper.writeValue(new File(path), list);
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -49,7 +63,7 @@ public class ProjectSerializationRepositoryImpl implements CommonSerializationRe
     public Map<String, Project> readJsonToObject(String path) {
         try {
             ObjectMapper mapper = new ObjectMapper();
-            List<Project> list = mapper.readValue(new FileInputStream(path), new TypeReference<List<Project>>(){});
+            List<Project> list = mapper.readValue(new File(path), new TypeReference<List<Project>>(){});
 
             Map<String, Project> map = new HashMap<>();
             for (Project p: list) {
@@ -60,7 +74,24 @@ public class ProjectSerializationRepositoryImpl implements CommonSerializationRe
             e.printStackTrace();
         }
         return null;
-}
+    }
+
+    @Override
+    public Map<String, Project> readXmlToObject(String path) {
+        try {
+            ObjectMapper mapper = new XmlMapper();
+            List<Project> list = mapper.readValue(new File(path), new TypeReference<List<Project>>(){});
+
+            Map<String, Project> map = new HashMap<>();
+            for (Project p: list) {
+                map.put(p.getId(), p);
+            }
+            return map;
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
     @Override
     public void writeObjectToFile(String path, Map<String, Project> map) {

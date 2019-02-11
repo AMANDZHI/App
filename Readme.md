@@ -10,3 +10,4 @@
 + jackson-dataformat-xml-2.9.8
 + jackson-module-jaxb-annotations-2.9.8
 + stax2-api-4.1
++ mysql-connector-java-5.1.47-bin

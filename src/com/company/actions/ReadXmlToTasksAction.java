@@ -18,7 +18,7 @@ public class ReadXmlToTasksAction implements Action {
 
     @Override
     public String getDescription() {
-        return "deserialization Xml to Tasks data";
+        return "deserialization tasks file Xml to Tasks data";
     }
 
     @Override

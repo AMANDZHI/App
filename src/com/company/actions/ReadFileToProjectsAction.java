@@ -13,12 +13,12 @@ public class ReadFileToProjectsAction implements Action {
 
     @Override
     public String getName() {
-        return "readFileToProjectsRepo";
+        return "readFileTxtToProjectsRepo";
     }
 
     @Override
     public String getDescription() {
-        return "deserialization projects data";
+        return "deserialization projects file txt to projects data";
     }
 
     @Override

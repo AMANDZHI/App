@@ -15,12 +15,12 @@ public class ReadFilesXmlAction implements Action {
 
     @Override
     public String getName() {
-        return "readFileXmlToAllRepo";
+        return "readFilesXmlToAllRepo";
     }
 
     @Override
     public String getDescription() {
-        return "deserialization Xml data to objects";
+        return "deserialization files Xml data to objects";
     }
 
     @Override

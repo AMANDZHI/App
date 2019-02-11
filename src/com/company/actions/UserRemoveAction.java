@@ -16,7 +16,7 @@ public class UserRemoveAction implements Action {
 
     @Override
     public String getDescription() {
-        return "remove user";
+        return "removeByLogin user";
     }
 
     @Override

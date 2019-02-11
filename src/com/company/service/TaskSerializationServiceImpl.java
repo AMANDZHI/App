@@ -20,12 +20,12 @@ public class TaskSerializationServiceImpl implements SerializationService<String
     }
 
     @Override
-    public void writeObjectToJson(String path, Map<String, Task> map) throws JsonMappingException {
+    public void writeObjectToJson(String path, Map<String, Task> map) {
         commonSerializationRepository.writeObjectToJson(path, map);
     }
 
     @Override
-    public void writeObjectToXml(String path, Map<String, Task> map) throws JsonMappingException {
+    public void writeObjectToXml(String path, Map<String, Task> map) {
         commonSerializationRepository.writeObjectToXml(path, map);
     }
 

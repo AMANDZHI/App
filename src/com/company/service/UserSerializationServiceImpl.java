@@ -20,12 +20,12 @@ public class UserSerializationServiceImpl implements SerializationService<String
     }
 
     @Override
-    public void writeObjectToJson(String path, Map<String, User> map) throws JsonMappingException {
+    public void writeObjectToJson(String path, Map<String, User> map) {
         commonSerializationRepository.writeObjectToJson(path, map);
     }
 
     @Override
-    public void writeObjectToXml(String path, Map<String, User> map) throws JsonMappingException {
+    public void writeObjectToXml(String path, Map<String, User> map) {
         commonSerializationRepository.writeObjectToXml(path, map);
     }
 

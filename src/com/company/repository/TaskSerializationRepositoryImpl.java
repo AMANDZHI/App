@@ -3,7 +3,6 @@ package com.company.repository;
 import com.company.api.CommonSerializationRepository;
 import com.company.model.Task;
 import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 
@@ -32,7 +31,7 @@ public class TaskSerializationRepositoryImpl implements CommonSerializationRepos
     }
 
     @Override
-    public void writeObjectToJson(String path, Map<String, Task> map) throws JsonMappingException {
+    public void writeObjectToJson(String path, Map<String, Task> map) {
         try {
             ObjectMapper mapper = new ObjectMapper();
             List<Task> list = new ArrayList<>();

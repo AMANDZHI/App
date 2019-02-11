@@ -15,7 +15,7 @@ public class ReadFilesTxtAction implements Action {
 
     @Override
     public String getName() {
-        return "readFileTxtToAllRepo";
+        return "readFilesTxtToAllRepo";
     }
 
     @Override

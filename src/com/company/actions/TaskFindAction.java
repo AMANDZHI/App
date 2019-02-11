@@ -16,7 +16,7 @@ public class TaskFindAction implements Action {
 
     @Override
     public String getDescription() {
-        return "FindById your task";
+        return "FindByName your task";
     }
 
     @Override

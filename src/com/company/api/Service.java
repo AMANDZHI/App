@@ -1,6 +1,5 @@
 package com.company.api;
 
-import java.util.List;
 import java.util.Map;
 
 public interface Service<T, M> {

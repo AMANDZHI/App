@@ -18,7 +18,7 @@ public class ReadXmlToProjectsAction implements Action {
 
     @Override
     public String getDescription() {
-        return "deserialization Xml to projects data";
+        return "deserialization projects file Xml to projects data";
     }
 
     @Override

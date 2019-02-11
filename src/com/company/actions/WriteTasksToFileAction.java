@@ -2,27 +2,32 @@ package com.company.actions;
 
 import com.company.api.Action;
 import com.company.api.ServiceLocator;
+import com.company.model.Task;
 
 import java.io.IOException;
+import java.util.Map;
 
 public class WriteTasksToFileAction implements Action {
     private ServiceLocator serviceLocator;
 
     @Override
     public String getName() {
-        return "writeTasksToFile";
+        return "writeTasksToFileTxt";
     }
 
     @Override
     public String getDescription() {
-        return "serialization Tasks data";
+        return "serialization Tasks data to txt";
     }
 
     @Override
     public void execute() throws IOException {
         String answerNameFilePath = CommonReader.getNameFilePathForTasks();
-        serviceLocator.getTaskSerializationServiceImpl().writeObjectToFile(answerNameFilePath, serviceLocator.getTaskService().getRepository().getMap());
-        System.out.println("Успешно");
+        Map<String, Task> mapTasks = serviceLocator.getTaskService().getRepository().getMap();
+
+        if (mapTasks.size() != 0) {
+            serviceLocator.getTaskSerializationServiceImpl().writeObjectToFile(answerNameFilePath, mapTasks);
+        }
     }
 
     @Override

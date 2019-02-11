@@ -13,12 +13,12 @@ public class ReadFileToUsersAction implements Action {
 
     @Override
     public String getName() {
-        return "readFileToUsersRepo";
+        return "readFileTxtToUsersRepo";
     }
 
     @Override
     public String getDescription() {
-        return "deserialization Users data";
+        return "deserialization users file txt to users data";
     }
 
     @Override

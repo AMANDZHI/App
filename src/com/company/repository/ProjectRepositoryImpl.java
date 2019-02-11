@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class ProjectRepositoryImpl implements Repository<String, Project>, Serializable {
+public class ProjectRepositoryImpl implements Repository<String, Project> {
     private Map<String, Project> map = new HashMap<>();
 
     @Override

@@ -18,7 +18,7 @@ public class ReadJsonToProjectsAction implements Action {
 
     @Override
     public String getDescription() {
-        return "deserialization json to projects data";
+        return "deserialization projects file json to projects data";
     }
 
     @Override

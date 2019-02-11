@@ -32,7 +32,7 @@ public class UserSerializationRepositoryImpl implements CommonSerializationRepos
     }
 
     @Override
-    public void writeObjectToJson(String path, Map<String, User> map) throws JsonMappingException {
+    public void writeObjectToJson(String path, Map<String, User> map) {
         try {
             ObjectMapper mapper = new ObjectMapper();
             List<User> list = new ArrayList<>();

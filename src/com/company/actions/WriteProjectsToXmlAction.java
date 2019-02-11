@@ -2,8 +2,10 @@ package com.company.actions;
 
 import com.company.api.Action;
 import com.company.api.ServiceLocator;
+import com.company.model.Project;
 
 import java.io.IOException;
+import java.util.Map;
 
 public class WriteProjectsToXmlAction implements Action {
     private ServiceLocator serviceLocator;
@@ -21,8 +23,11 @@ public class WriteProjectsToXmlAction implements Action {
     @Override
     public void execute() throws IOException {
         String answerNameFilePath = CommonReader.getNameFilePathForProjects();
-        serviceLocator.getProjectSerializationServiceImpl().writeObjectToXml(answerNameFilePath, serviceLocator.getProjectService().getRepository().getMap());
-        System.out.println("Успешно");
+        Map<String, Project> mapProjects = serviceLocator.getProjectService().getRepository().getMap();
+
+        if (mapProjects.size() != 0) {
+            serviceLocator.getProjectSerializationServiceImpl().writeObjectToXml(answerNameFilePath, mapProjects);
+        }
     }
 
     @Override

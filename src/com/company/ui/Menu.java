@@ -7,7 +7,6 @@ import com.company.model.User;
 
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.Map;
 
 public class Menu {
@@ -63,6 +62,8 @@ public class Menu {
                     startMenu();
                 }
             }
+        } else {
+            startMenu();
         }
     }
 

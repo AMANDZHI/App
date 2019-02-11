@@ -2,8 +2,12 @@ package com.company.actions;
 
 import com.company.api.Action;
 import com.company.api.ServiceLocator;
+import com.company.model.Project;
+import com.company.model.Task;
+import com.company.model.User;
 
 import java.io.IOException;
+import java.util.Map;
 
 public class WriteAllToFilesJsonAction implements Action {
     private ServiceLocator serviceLocator;
@@ -15,7 +19,7 @@ public class WriteAllToFilesJsonAction implements Action {
 
     @Override
     public String getDescription() {
-        return "serialization all data";
+        return "serialization all data to json";
     }
 
     @Override
@@ -24,10 +28,18 @@ public class WriteAllToFilesJsonAction implements Action {
         String filePathTasks = "tasks.json";
         String filePathProjects = "projects.json";
 
-        serviceLocator.getProjectSerializationServiceImpl().writeObjectToJson(filePathProjects, serviceLocator.getProjectService().getRepository().getMap());
-        serviceLocator.getProjectSerializationServiceImpl().writeObjectToJson(filePathUsers, serviceLocator.getUserService().getRepository().getMap());
-        serviceLocator.getProjectSerializationServiceImpl().writeObjectToJson(filePathTasks, serviceLocator.getTaskService().getRepository().getMap());
-        System.out.println("Успешно");
+        Map<String, Project> mapProjects = serviceLocator.getProjectService().getRepository().getMap();
+        Map<String, User> mapUsers = serviceLocator.getUserService().getRepository().getMap();
+        Map<String, Task> mapTasks = serviceLocator.getTaskService().getRepository().getMap();
+        if (mapProjects.size() != 0) {
+            serviceLocator.getProjectSerializationServiceImpl().writeObjectToJson(filePathProjects, mapProjects);
+        }
+        if (mapUsers.size() != 0) {
+            serviceLocator.getProjectSerializationServiceImpl().writeObjectToJson(filePathUsers, mapUsers);
+        }
+        if (mapTasks.size() != 0) {
+            serviceLocator.getProjectSerializationServiceImpl().writeObjectToJson(filePathTasks, mapUsers);
+        }
     }
 
     @Override

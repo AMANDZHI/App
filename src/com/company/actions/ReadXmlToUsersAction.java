@@ -18,7 +18,7 @@ public class ReadXmlToUsersAction implements Action {
 
     @Override
     public String getDescription() {
-        return "deserialization Xml to Users data";
+        return "deserialization users file Xml to Users data";
     }
 
     @Override

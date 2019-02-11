@@ -16,7 +16,7 @@ public class UserFindAction implements Action {
 
     @Override
     public String getDescription() {
-        return "find user";
+        return "findByLogin user";
     }
 
     @Override

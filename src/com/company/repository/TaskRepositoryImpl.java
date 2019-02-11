@@ -7,7 +7,7 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class TaskRepositoryImpl implements Repository<String, Task>, Serializable {
+public class TaskRepositoryImpl implements Repository<String, Task> {
     private Map<String, Task> map = new HashMap<>();
 
     @Override

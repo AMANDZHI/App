@@ -2,8 +2,12 @@ package com.company.actions;
 
 import com.company.api.Action;
 import com.company.api.ServiceLocator;
+import com.company.model.Project;
+import com.company.model.Task;
+import com.company.model.User;
 
 import java.io.IOException;
+import java.util.Map;
 
 public class WriteAllToFilesTxtAction implements Action {
     private ServiceLocator serviceLocator;
@@ -15,7 +19,7 @@ public class WriteAllToFilesTxtAction implements Action {
 
     @Override
     public String getDescription() {
-        return "serialization all data";
+        return "serialization all data to txt";
     }
 
     @Override
@@ -24,10 +28,19 @@ public class WriteAllToFilesTxtAction implements Action {
         String filePathTasks = "tasks.txt";
         String filePathProjects = "projects.txt";
 
-        serviceLocator.getProjectSerializationServiceImpl().writeObjectToFile(filePathProjects, serviceLocator.getProjectService().getRepository().getMap());
-        serviceLocator.getProjectSerializationServiceImpl().writeObjectToFile(filePathUsers, serviceLocator.getUserService().getRepository().getMap());
-        serviceLocator.getProjectSerializationServiceImpl().writeObjectToFile(filePathTasks, serviceLocator.getTaskService().getRepository().getMap());
-        System.out.println("Успешно");
+        Map<String, Project> mapProjects = serviceLocator.getProjectService().getRepository().getMap();
+        Map<String, User> mapUsers = serviceLocator.getUserService().getRepository().getMap();
+        Map<String, Task> mapTasks = serviceLocator.getTaskService().getRepository().getMap();
+
+        if (mapProjects.size() != 0) {
+            serviceLocator.getProjectSerializationServiceImpl().writeObjectToFile(filePathProjects, mapProjects);
+        }
+        if (mapUsers.size() != 0) {
+            serviceLocator.getProjectSerializationServiceImpl().writeObjectToFile(filePathUsers, mapUsers);
+        }
+        if (mapTasks.size() != 0) {
+            serviceLocator.getProjectSerializationServiceImpl().writeObjectToFile(filePathTasks, mapUsers);
+        }
     }
 
     @Override

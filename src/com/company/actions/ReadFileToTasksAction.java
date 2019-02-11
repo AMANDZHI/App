@@ -13,12 +13,12 @@ public class ReadFileToTasksAction implements Action {
 
     @Override
     public String getName() {
-        return "readFileToTasksRepo";
+        return "readFileTxtToTasksRepo";
     }
 
     @Override
     public String getDescription() {
-        return "deserialization Tasks data";
+        return "deserialization tasks file txt to Tasks data";
     }
 
     @Override

@@ -16,7 +16,7 @@ public class TaskRemoveAction implements Action {
 
     @Override
     public String getDescription() {
-        return "RemoveById your task";
+        return "RemoveByName your task";
     }
 
     @Override

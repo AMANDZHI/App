@@ -25,7 +25,7 @@ public class UserUpdateAction implements Action {
         String answerNewNameUser = CommonReader.getNewNameUser();
         String answerLoginUser = CommonReader.getLoginUser();
         String answerNewLoginUser = CommonReader.getNewLoginUser();
-        String answerPasswordUser = CommonReader.getPasswordUser();
+        String answerPasswordUser = CommonReader.getNewPasswordUser();
 
         User user = serviceLocator.getUserService().findByLogin(answerLoginUser);
         if (user != null) {

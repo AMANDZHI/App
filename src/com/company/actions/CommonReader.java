@@ -92,7 +92,7 @@ public class CommonReader {
         return reader.readLine();
     }
 
-    public static String getNewNamePassword() throws IOException {
+    public static String getNewPasswordUser() throws IOException {
         System.out.println("Введите новый password юзера");
         return reader.readLine();
     }

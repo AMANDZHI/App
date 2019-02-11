@@ -5,7 +5,6 @@ import com.company.api.ServiceLocator;
 import com.company.model.Project;
 
 import java.io.IOException;
-import java.util.UUID;
 
 public class ProjectCreateAction implements Action {
     private ServiceLocator serviceLocator;

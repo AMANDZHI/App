@@ -18,7 +18,7 @@ public class ReadJsonToUsersAction implements Action {
 
     @Override
     public String getDescription() {
-        return "deserialization json to Users data";
+        return "deserialization users file json to Users data";
     }
 
     @Override

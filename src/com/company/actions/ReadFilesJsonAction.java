@@ -15,12 +15,12 @@ public class ReadFilesJsonAction implements Action {
 
     @Override
     public String getName() {
-        return "readFileJsonToAllRepo";
+        return "readFilesJsonToAllRepo";
     }
 
     @Override
     public String getDescription() {
-        return "deserialization json data to objects";
+        return "deserialization files json data to objects";
     }
 
     @Override

@@ -20,12 +20,12 @@ public class ProjectSerializationServiceImpl implements SerializationService<Str
     }
 
     @Override
-    public void writeObjectToJson(String path, Map<String, Project> map) throws JsonMappingException {
+    public void writeObjectToJson(String path, Map<String, Project> map) {
         commonSerializationRepository.writeObjectToJson(path, map);
     }
 
     @Override
-    public void writeObjectToXml(String path, Map<String, Project> map) throws JsonMappingException {
+    public void writeObjectToXml(String path, Map<String, Project> map) {
         commonSerializationRepository.writeObjectToXml(path, map);
     }
 

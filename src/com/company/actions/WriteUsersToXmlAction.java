@@ -2,8 +2,10 @@ package com.company.actions;
 
 import com.company.api.Action;
 import com.company.api.ServiceLocator;
+import com.company.model.User;
 
 import java.io.IOException;
+import java.util.Map;
 
 public class WriteUsersToXmlAction implements Action {
     private ServiceLocator serviceLocator;
@@ -21,8 +23,11 @@ public class WriteUsersToXmlAction implements Action {
     @Override
     public void execute() throws IOException {
         String answerNameFilePath = CommonReader.getNameFilePathForUsers();
-        serviceLocator.getUserSerializationServiceImpl().writeObjectToXml(answerNameFilePath, serviceLocator.getUserService().getRepository().getMap());
-        System.out.println("Успешно");
+        Map<String, User> mapUsers = serviceLocator.getUserService().getRepository().getMap();
+
+        if (mapUsers.size() != 0) {
+            serviceLocator.getUserSerializationServiceImpl().writeObjectToXml(answerNameFilePath, mapUsers);
+        }
     }
 
     @Override

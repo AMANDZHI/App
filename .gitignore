@@ -6,3 +6,4 @@ out/
 *.json
 *.xml
 src/resources/*.properties
+libs/

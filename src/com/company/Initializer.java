@@ -19,16 +19,10 @@ import java.util.Map;
 
 public class Initializer implements ServiceLocator {
     private final ConnectionSupplier connectionSupplier = new ConnectionSupplier();
-    private final Repository<String, Project> projectRepository = new ProjectRepositoryImpl();
-    private final Repository<String, Task> taskRepository = new TaskRepositoryImpl();
-    private final UserRepository userRepository = new UserRepositoryImpl();
     private final SessionRepository sessionRepository = new SessionRepositoryImpl();
     private final UserRepositoryDB userRepositoryDB = new UserRepositoryDBImpl(connectionSupplier);
     private final RepositoryDB<String, Project> projectRepositoryDB = new ProjectRepositoryDBImpl(connectionSupplier, userRepositoryDB);
     private final RepositoryDB<String, Task> taskRepositoryDB = new TaskRepositoryDBImpl(connectionSupplier, projectRepositoryDB);
-    private final Service<String, Project> projectService = new ProjectServiceImpl(projectRepository, taskRepository);
-    private final Service<String, Task> taskService = new TaskServiceImpl(taskRepository);
-    private final UserService userService = new UserServiceImpl(userRepository);
     private final SessionService sessionService = new SessionServiceImpl(sessionRepository);
     private final ServiceDB<String, Project> projectServiceDB = new ProjectServiceDBImpl(projectRepositoryDB);
     private final ServiceDB<String, Task> taskServiceDB = new TaskServiceDBImpl(taskRepositoryDB);
@@ -49,21 +43,6 @@ public class Initializer implements ServiceLocator {
     private final SerializationService projectSerializationService = new ProjectSerializationServiceImpl(projectSerialization);
     private final SerializationService taskSerializationService = new TaskSerializationServiceImpl(taskSerialization);
     private final SerializationService userSerializationService = new TaskSerializationServiceImpl(userSerialization);
-
-    @Override
-    public Service<String, Project> getProjectService() {
-        return projectService;
-    }
-
-    @Override
-    public Service<String, Task> getTaskService() {
-        return taskService;
-    }
-
-    @Override
-    public UserService getUserService() {
-        return userService;
-    }
 
     @Override
     public SessionService getSessionService() {

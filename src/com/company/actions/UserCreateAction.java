@@ -3,6 +3,7 @@ package com.company.actions;
 import com.company.api.Action;
 import com.company.api.ServiceLocator;
 import com.company.model.User;
+import com.company.util.Role;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -37,6 +38,11 @@ public class UserCreateAction implements Action {
                 System.out.println("Не удалось сохранить в базу юзера");
             }
         }
+    }
+
+    @Override
+    public Role getRole() {
+        return Role.ADMIN;
     }
 
     @Override

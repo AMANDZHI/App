@@ -114,6 +114,8 @@ public class Initializer implements ServiceLocator {
     }
 
     public void init() {
+        Class[] classes = {ProjectCreateAction.class, ProjectFindAction.class, ProjectListAction.class, ProjectRemoveAction.class, ProjectUpdateAction.class, TaskCreateAction.class, TaskFindAction.class, TaskListAction.class, TaskRemoveAction.class, TaskUpdateAction.class,LogOutAction.class, LoginAction.class, RegistrationAction.class, UserCreateAction.class, UserFindAction.class, UserListAction.class, UserRemoveAction.class, UserUpdateAction.class, WriteAllToFilesTxtAction.class, WriteAllToFilesJsonAction.class, WriteAllToFilesXmlAction.class, ReadFilesTxtAction.class, ReadFilesJsonAction.class, ReadFilesXmlAction.class};
+
         try {
             listForAction.add(ProjectCreateAction.class.newInstance());
             listForAction.add(ProjectFindAction.class.newInstance());

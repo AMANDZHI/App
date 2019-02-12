@@ -3,6 +3,7 @@ package com.company.actions;
 import com.company.api.Action;
 import com.company.api.ServiceLocator;
 import com.company.model.User;
+import com.company.util.Role;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -38,6 +39,11 @@ public class UserRemoveAction implements Action {
         } else {
             System.out.println("Нет такого юзера");
         }
+    }
+
+    @Override
+    public Role getRole() {
+        return Role.ADMIN;
     }
 
     @Override

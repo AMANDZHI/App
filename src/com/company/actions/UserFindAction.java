@@ -3,6 +3,7 @@ package com.company.actions;
 import com.company.api.Action;
 import com.company.model.User;
 import com.company.api.ServiceLocator;
+import com.company.util.Role;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -29,6 +30,11 @@ public class UserFindAction implements Action {
         } else {
             System.out.println("Не найден юзер с таким логином");
         }
+    }
+
+    @Override
+    public Role getRole() {
+        return Role.ADMIN;
     }
 
     @Override

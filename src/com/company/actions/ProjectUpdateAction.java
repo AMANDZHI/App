@@ -3,6 +3,7 @@ package com.company.actions;
 import com.company.api.Action;
 import com.company.api.ServiceLocator;
 import com.company.model.Project;
+import com.company.util.Role;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -43,6 +44,11 @@ public class ProjectUpdateAction implements Action {
             System.out.println("Такое новое имя проекта уже используется");
         }
 
+    }
+
+    @Override
+    public Role getRole() {
+        return Role.USER;
     }
 
     @Override

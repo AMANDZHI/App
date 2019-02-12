@@ -3,6 +3,7 @@ package com.company.actions;
 import com.company.api.Action;
 import com.company.api.ServiceLocator;
 import com.company.model.Project;
+import com.company.util.Role;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -34,6 +35,11 @@ public class ProjectRemoveAction implements Action {
         } else {
             System.out.println("Такого проекта нет");
         }
+    }
+
+    @Override
+    public Role getRole() {
+        return Role.USER;
     }
 
     @Override

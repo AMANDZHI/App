@@ -5,6 +5,7 @@ import com.company.api.ServiceLocator;
 import com.company.model.Project;
 import com.company.model.Task;
 import com.company.model.User;
+import com.company.util.Role;
 
 import java.io.IOException;
 import java.util.List;
@@ -51,6 +52,11 @@ public class ReadFilesJsonAction implements Action {
         }
 
         System.out.println("Успешно");
+    }
+
+    @Override
+    public Role getRole() {
+        return Role.ADMIN;
     }
 
     @Override

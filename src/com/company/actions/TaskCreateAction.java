@@ -4,6 +4,7 @@ import com.company.api.Action;
 import com.company.api.ServiceLocator;
 import com.company.model.Project;
 import com.company.model.Task;
+import com.company.util.Role;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -47,6 +48,11 @@ public class TaskCreateAction implements Action {
         } else {
             System.out.println("Такое имя таска уже используется");
         }
+    }
+
+    @Override
+    public Role getRole() {
+        return Role.USER;
     }
 
     @Override

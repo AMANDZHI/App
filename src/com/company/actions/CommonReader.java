@@ -5,6 +5,10 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class CommonReader {
+//    lombok snackedroles
+//    максси классов и беги по ним
+//    енум
+//    секур флаг в экшн
     private final static BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
     public static String getNameProject() throws IOException {

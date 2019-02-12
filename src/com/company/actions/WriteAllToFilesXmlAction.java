@@ -5,6 +5,7 @@ import com.company.api.ServiceLocator;
 import com.company.model.Project;
 import com.company.model.Task;
 import com.company.model.User;
+import com.company.util.Role;
 
 import java.io.IOException;
 import java.util.List;
@@ -41,6 +42,11 @@ public class WriteAllToFilesXmlAction implements Action {
         if (listTasks.size() != 0) {
             serviceLocator.getTaskSerializationServiceImpl().writeObjectToXml(filePathTasks, listTasks);
         }
+    }
+
+    @Override
+    public Role getRole() {
+        return Role.ADMIN;
     }
 
     @Override

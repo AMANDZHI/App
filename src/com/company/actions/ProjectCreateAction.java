@@ -3,6 +3,7 @@ package com.company.actions;
 import com.company.api.Action;
 import com.company.api.ServiceLocator;
 import com.company.model.Project;
+import com.company.util.Role;
 
 import java.io.IOException;
 
@@ -34,6 +35,11 @@ public class ProjectCreateAction implements Action {
         } else {
             System.out.println("Уже есть проект с таким именем");
         }
+    }
+
+    @Override
+    public Role getRole() {
+        return Role.USER;
     }
 
     @Override

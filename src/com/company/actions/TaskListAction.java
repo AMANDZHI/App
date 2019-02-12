@@ -3,6 +3,7 @@ package com.company.actions;
 import com.company.api.Action;
 import com.company.api.ServiceLocator;
 import com.company.model.Task;
+import com.company.util.Role;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -31,6 +32,11 @@ public class TaskListAction implements Action {
             }
         }
         System.out.println(yourTasks);
+    }
+
+    @Override
+    public Role getRole() {
+        return Role.USER;
     }
 
     @Override

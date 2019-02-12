@@ -3,6 +3,7 @@ package com.company.actions;
 import com.company.api.Action;
 import com.company.api.ServiceLocator;
 import com.company.model.Project;
+import com.company.util.Role;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -34,6 +35,11 @@ public class ProjectFindAction implements Action {
             System.out.println("Не найден такой проект");
         }
 
+    }
+
+    @Override
+    public Role getRole() {
+        return Role.USER;
     }
 
     @Override

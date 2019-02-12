@@ -2,6 +2,7 @@ package com.company.actions;
 
 import com.company.api.Action;
 import com.company.api.ServiceLocator;
+import com.company.util.Role;
 
 import java.io.IOException;
 
@@ -21,6 +22,11 @@ public class UserListAction implements Action {
     @Override
     public void execute() throws IOException {
         System.out.println(serviceLocator.getUserServiceDB().getList());
+    }
+
+    @Override
+    public Role getRole() {
+        return Role.ADMIN;
     }
 
     @Override

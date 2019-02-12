@@ -5,6 +5,7 @@ import com.company.model.User;
 import com.company.api.ServiceLocator;
 
 import java.io.IOException;
+import java.util.Optional;
 
 public class RegistrationAction implements AuthAction {
     private ServiceLocator serviceLocator;
@@ -25,10 +26,15 @@ public class RegistrationAction implements AuthAction {
         String answerLoginUser = CommonReader.getLoginUser();
         String answerPasswordUser = CommonReader.getPasswordUser();
         User newUser = new User(answerNameUser, answerLoginUser, answerPasswordUser);
-        if (serviceLocator.getUserService().findByLogin(newUser.getLogin()) == null) {
-            serviceLocator.getUserService().save(newUser);
-            System.out.println(newUser);
-            return newUser;
+        Optional<User> optionalUser = serviceLocator.getUserServiceDB().findByLogin(newUser.getLogin());
+        if (optionalUser.isPresent()) {
+            if (serviceLocator.getUserServiceDB().save(newUser)) {
+                System.out.println(newUser);
+                return newUser;
+            } else {
+                System.out.println("Не удалось сохранить в базу");
+                return null;
+            }
         } else {
             System.out.println("Такой логин уже используется");
             return null;

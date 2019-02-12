@@ -3,11 +3,10 @@ package com.company.service;
 import com.company.api.CommonSerializationRepository;
 import com.company.api.SerializationService;
 import com.company.model.User;
-import com.fasterxml.jackson.databind.JsonMappingException;
 
-import java.util.Map;
+import java.util.List;
 
-public class UserSerializationServiceImpl implements SerializationService<String, User> {
+public class UserSerializationServiceImpl implements SerializationService<User> {
     private CommonSerializationRepository commonSerializationRepository;
 
     public UserSerializationServiceImpl(CommonSerializationRepository commonSerializationRepository) {
@@ -15,32 +14,32 @@ public class UserSerializationServiceImpl implements SerializationService<String
     }
 
     @Override
-    public void writeObjectToFile(String path, Map<String, User> map) {
-        commonSerializationRepository.writeObjectToFile(path, map);
+    public void writeObjectToFile(String path, List<User> list) {
+        commonSerializationRepository.writeObjectToFile(path, list);
     }
 
     @Override
-    public void writeObjectToJson(String path, Map<String, User> map) {
-        commonSerializationRepository.writeObjectToJson(path, map);
+    public List<User> readFileToObject(String path) {
+        return commonSerializationRepository.readFileToObject(path);
     }
 
     @Override
-    public void writeObjectToXml(String path, Map<String, User> map) {
-        commonSerializationRepository.writeObjectToXml(path, map);
+    public void writeObjectToJson(String path, List<User> list) {
+        commonSerializationRepository.writeObjectToJson(path, list);
     }
 
     @Override
-    public Map<String, User> readFileToObject(String path) {
-       return commonSerializationRepository.readFileToObject(path);
+    public void writeObjectToXml(String path, List<User> list) {
+        commonSerializationRepository.writeObjectToXml(path, list);
     }
 
     @Override
-    public Map<String, User> readJsonToObject(String path) {
+    public List<User> readJsonToObject(String path) {
         return commonSerializationRepository.readJsonToObject(path);
     }
 
     @Override
-    public Map<String, User> readXmlToObject(String path) {
+    public List<User> readXmlToObject(String path) {
         return commonSerializationRepository.readXmlToObject(path);
     }
 }

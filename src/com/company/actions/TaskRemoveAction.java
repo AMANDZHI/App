@@ -1,10 +1,11 @@
 package com.company.actions;
 
 import com.company.api.Action;
-import com.company.model.Task;
 import com.company.api.ServiceLocator;
+import com.company.model.Task;
 
 import java.io.IOException;
+import java.util.Optional;
 
 public class TaskRemoveAction implements Action {
     private ServiceLocator serviceLocator;
@@ -22,11 +23,14 @@ public class TaskRemoveAction implements Action {
     @Override
     public void execute() throws IOException {
         String answerNameTask = CommonReader.getNameTask();
-        Task task = serviceLocator.getTaskService().findByName(answerNameTask);
-        if (task != null) {
-            if (task.getProject().getUser().equals(serviceLocator.getSessionService().getSession().getUser()) || serviceLocator.getSessionService().getSession().getUser().isAdmin()) {
-                serviceLocator.getTaskService().removeByName(answerNameTask);
-                System.out.println("Успешно удалено");
+        Optional<Task> optionalTask = serviceLocator.getTaskServiceDB().findByName(answerNameTask);
+        if (optionalTask.isPresent()) {
+            if (optionalTask.get().getProject().getUser().equals(serviceLocator.getSessionService().getSession().getUser()) || serviceLocator.getSessionService().getSession().getUser().isAdmin()) {
+                if (serviceLocator.getTaskServiceDB().removeByName(answerNameTask)) {
+                    System.out.println("Успешно удалено");
+                } else {
+                    System.out.println("Не удалось удалить из базы");
+                }
             } else {
                 System.out.println("Не имеет прав для удаления таска");
             }

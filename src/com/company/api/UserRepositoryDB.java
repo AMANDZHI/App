@@ -3,12 +3,13 @@ package com.company.api;
 import com.company.model.User;
 
 import java.util.List;
+import java.util.Optional;
 
-//todo может и не нужен этот интерфейс
 public interface UserRepositoryDB {
-    User findByLogin(String login);
-    void save(User object);
-    User update(User object);
-    boolean removeByLogin(String name);
+    boolean save(User object);
+    boolean update(User object);
+    Optional<User> findByLogin(String login);
+    Optional<User> findById(String id);
+    boolean removeByLogin(String login);
     List<User> getList();
 }

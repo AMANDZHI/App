@@ -7,7 +7,6 @@ import com.company.model.Project;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class ProjectListAction implements Action {
     private ServiceLocator serviceLocator;
@@ -25,10 +24,11 @@ public class ProjectListAction implements Action {
     @Override
     public void execute() throws IOException {
         List<Project> yourProjects = new ArrayList<>();
-        Map<String, Project> map = serviceLocator.getProjectService().getMap();
-        for (Map.Entry<String, Project> pair : map.entrySet()) {
-            if (pair.getValue().getUser().equals(serviceLocator.getSessionService().getSession().getUser()) || serviceLocator.getSessionService().getSession().getUser().isAdmin()) {
-                yourProjects.add(pair.getValue());
+//        Map<String, Project> map = serviceLocator.getProjectService().getMap();
+        List<Project> list = serviceLocator.getProjectServiceDB().getList();
+        for (Project project : list) {
+            if (project.getUser().equals(serviceLocator.getSessionService().getSession().getUser()) || serviceLocator.getSessionService().getSession().getUser().isAdmin()) {
+                yourProjects.add(project);
             }
         }
         System.out.println(yourProjects);

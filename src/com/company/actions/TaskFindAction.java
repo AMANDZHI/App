@@ -1,10 +1,11 @@
 package com.company.actions;
 
 import com.company.api.Action;
-import com.company.model.Task;
 import com.company.api.ServiceLocator;
+import com.company.model.Task;
 
 import java.io.IOException;
+import java.util.Optional;
 
 public class TaskFindAction implements Action {
     private ServiceLocator serviceLocator;
@@ -22,10 +23,10 @@ public class TaskFindAction implements Action {
     @Override
     public void execute() throws IOException {
         String answerNameTask = CommonReader.getNameTask();
-        Task findTask = serviceLocator.getTaskService().findByName(answerNameTask);
-        if (findTask != null) {
-            if (findTask.getProject().getUser().equals(serviceLocator.getSessionService().getSession().getUser()) || serviceLocator.getSessionService().getSession().getUser().isAdmin()) {
-                System.out.println(findTask);
+        Optional<Task> optionalTask = serviceLocator.getTaskServiceDB().findByName(answerNameTask);
+        if (optionalTask.isPresent()) {
+            if (optionalTask.get().getProject().getUser().equals(serviceLocator.getSessionService().getSession().getUser()) || serviceLocator.getSessionService().getSession().getUser().isAdmin()) {
+                System.out.println(optionalTask.get());
             } else {
                 System.out.println("Данный таск не Ваш");
             }

@@ -2,6 +2,7 @@ package com.company;
 
 import com.company.actions.*;
 import com.company.api.*;
+import com.company.dao.ConnectionSupplier;
 import com.company.model.Project;
 import com.company.model.Task;
 import com.company.repository.*;
@@ -17,14 +18,21 @@ import java.util.List;
 import java.util.Map;
 
 public class Initializer implements ServiceLocator {
+    private final ConnectionSupplier connectionSupplier = new ConnectionSupplier();
     private final Repository<String, Project> projectRepository = new ProjectRepositoryImpl();
     private final Repository<String, Task> taskRepository = new TaskRepositoryImpl();
     private final UserRepository userRepository = new UserRepositoryImpl();
     private final SessionRepository sessionRepository = new SessionRepositoryImpl();
+    private final UserRepositoryDB userRepositoryDB = new UserRepositoryDBImpl(connectionSupplier);
+    private final RepositoryDB<String, Project> projectRepositoryDB = new ProjectRepositoryDBImpl(connectionSupplier, userRepositoryDB);
+    private final RepositoryDB<String, Task> taskRepositoryDB = new TaskRepositoryDBImpl(connectionSupplier, projectRepositoryDB);
     private final Service<String, Project> projectService = new ProjectServiceImpl(projectRepository, taskRepository);
     private final Service<String, Task> taskService = new TaskServiceImpl(taskRepository);
     private final UserService userService = new UserServiceImpl(userRepository);
     private final SessionService sessionService = new SessionServiceImpl(sessionRepository);
+    private final ServiceDB<String, Project> projectServiceDB = new ProjectServiceDBImpl(projectRepositoryDB);
+    private final ServiceDB<String, Task> taskServiceDB = new TaskServiceDBImpl(taskRepositoryDB);
+    private final UserServiceDB userServiceDB = new UserServiceDBImpl(userRepositoryDB);
     private final BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
     private final ServiceLocator serviceLocator = this;
     private final AppSecurity appSecurity = new AppSecurity(serviceLocator);
@@ -82,6 +90,21 @@ public class Initializer implements ServiceLocator {
         return userSerializationService;
     }
 
+    @Override
+    public ServiceDB<String, Project> getProjectServiceDB() {
+        return projectServiceDB;
+    }
+
+    @Override
+    public ServiceDB<String, Task> getTaskServiceDB() {
+        return taskServiceDB;
+    }
+
+    @Override
+    public UserServiceDB getUserServiceDB() {
+        return userServiceDB;
+    }
+
     {
         init();
     }
@@ -112,30 +135,12 @@ public class Initializer implements ServiceLocator {
             listForAdmAction.add(UserListAction.class.newInstance());
             listForAdmAction.add(UserRemoveAction.class.newInstance());
             listForAdmAction.add(UserUpdateAction.class.newInstance());
-            listForAdmAction.add(WriteProjectsToFileAction.class.newInstance());
-            listForAdmAction.add(WriteUsersToFileAction.class.newInstance());
-            listForAdmAction.add(WriteTasksToFileAction.class.newInstance());
             listForAdmAction.add(WriteAllToFilesTxtAction.class.newInstance());
-            listForAdmAction.add(WriteProjectsToJsonAction.class.newInstance());
-            listForAdmAction.add(WriteUsersToJsonAction.class.newInstance());
-            listForAdmAction.add(WriteTasksToJsonAction.class.newInstance());
-            listForAdmAction.add(WriteProjectsToXmlAction.class.newInstance());
-            listForAdmAction.add(WriteTasksToXmlAction.class.newInstance());
-            listForAdmAction.add(WriteUsersToXmlAction.class.newInstance());
             listForAdmAction.add(WriteAllToFilesJsonAction.class.newInstance());
             listForAdmAction.add(WriteAllToFilesXmlAction.class.newInstance());
-            listForAdmAction.add(ReadFileToProjectsAction.class.newInstance());
-            listForAdmAction.add(ReadFileToUsersAction.class.newInstance());
-            listForAdmAction.add(ReadFileToTasksAction.class.newInstance());
             listForAdmAction.add(ReadFilesTxtAction.class.newInstance());
-            listForAdmAction.add(ReadJsonToProjectsAction.class.newInstance());
-            listForAdmAction.add(ReadJsonToUsersAction.class.newInstance());
-            listForAdmAction.add(ReadJsonToTasksAction.class.newInstance());
             listForAdmAction.add(ReadFilesJsonAction.class.newInstance());
             listForAdmAction.add(ReadFilesXmlAction.class.newInstance());
-            listForAdmAction.add(ReadXmlToProjectsAction.class.newInstance());
-            listForAdmAction.add(ReadXmlToTasksAction.class.newInstance());
-            listForAdmAction.add(ReadXmlToUsersAction.class.newInstance());
             listForAdmAction.addAll(listForAction);
 
             for (Action action: listForAdmAction) {

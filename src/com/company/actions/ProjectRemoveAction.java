@@ -5,6 +5,7 @@ import com.company.api.ServiceLocator;
 import com.company.model.Project;
 
 import java.io.IOException;
+import java.util.Optional;
 
 public class ProjectRemoveAction implements Action {
     private ServiceLocator serviceLocator;
@@ -22,9 +23,10 @@ public class ProjectRemoveAction implements Action {
     @Override
     public void execute() throws IOException {
         String answerNameProject = CommonReader.getNameProject();
-        Project project = serviceLocator.getProjectService().findByName(answerNameProject);
-        if (project != null) {
-            if (project.getUser().equals(serviceLocator.getSessionService().getSession().getUser()) || serviceLocator.getSessionService().getSession().getUser().isAdmin()) {
+//        Project project = serviceLocator.getProjectService().findByName(answerNameProject);
+        Optional<Project> optionalProject = serviceLocator.getProjectServiceDB().findByName(answerNameProject);
+        if (optionalProject.isPresent()) {
+            if (optionalProject.get().getUser().equals(serviceLocator.getSessionService().getSession().getUser()) || serviceLocator.getSessionService().getSession().getUser().isAdmin()) {
                 serviceLocator.getProjectService().removeByName(answerNameProject);
                 System.out.println("Успешно");
             } else {

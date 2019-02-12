@@ -20,7 +20,7 @@ public class UserListAction implements Action {
 
     @Override
     public void execute() throws IOException {
-        System.out.println(serviceLocator.getUserService().getMap());
+        System.out.println(serviceLocator.getUserServiceDB().getList());
     }
 
     @Override

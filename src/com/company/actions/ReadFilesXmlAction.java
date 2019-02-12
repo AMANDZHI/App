@@ -8,6 +8,7 @@ import com.company.model.User;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ReadFilesXmlAction implements Action {
@@ -29,16 +30,24 @@ public class ReadFilesXmlAction implements Action {
         String filePathTasks = "tasks.Xml";
         String filePathProjects = "projects.Xml";
 
-        Map<String, Project> mapProjects = new HashMap<>();
-        Map<String, User> mapUsers = new HashMap<>();
-        Map<String, Task> mapTasks = new HashMap<>();
+        List<Project> listProjects = serviceLocator.getProjectSerializationServiceImpl().readXmlToObject(filePathProjects);
+        List<User> listUsers = serviceLocator.getUserSerializationServiceImpl().readXmlToObject(filePathUsers);
+        List<Task> listTasks = serviceLocator.getTaskSerializationServiceImpl().readXmlToObject(filePathTasks);
 
-        mapProjects = serviceLocator.getProjectSerializationServiceImpl().readXmlToObject(filePathProjects);
-        mapUsers = serviceLocator.getUserSerializationServiceImpl().readXmlToObject(filePathUsers);
-        mapTasks = serviceLocator.getTaskSerializationServiceImpl().readXmlToObject(filePathTasks);
-        serviceLocator.getProjectService().getRepository().setMap(mapProjects);
-        serviceLocator.getUserService().getRepository().setMap(mapUsers);
-        serviceLocator.getTaskService().getRepository().setMap(mapTasks);
+        for (User u: listUsers) {
+            if (!serviceLocator.getUserServiceDB().findByLogin(u.getLogin()).isPresent()) {
+                serviceLocator.getUserServiceDB().save(u);
+            }
+        }
+
+        for (Project p: listProjects) {
+            serviceLocator.getProjectServiceDB().save(p);
+        }
+
+        for (Task t: listTasks) {
+            serviceLocator.getTaskServiceDB().save(t);
+        }
+
         System.out.println("Успешно");
     }
 

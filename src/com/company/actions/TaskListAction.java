@@ -1,13 +1,12 @@
 package com.company.actions;
 
 import com.company.api.Action;
-import com.company.model.Task;
 import com.company.api.ServiceLocator;
+import com.company.model.Task;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class TaskListAction implements Action {
     private ServiceLocator serviceLocator;
@@ -25,10 +24,11 @@ public class TaskListAction implements Action {
     @Override
     public void execute() throws IOException {
         List<Task> yourTasks = new ArrayList<>();
-        Map<String, Task> map = serviceLocator.getTaskService().getMap();
-        for (Map.Entry<String, Task> pair: map.entrySet()) {
-            if (pair.getValue().getProject().getUser().equals(serviceLocator.getSessionService().getSession().getUser()) || serviceLocator.getSessionService().getSession().getUser().isAdmin()) {
-                yourTasks.add(pair.getValue());
+//        Map<String, Task> map = serviceLocator.getTaskService().getMap();
+        List<Task> list = serviceLocator.getTaskServiceDB().getList();
+        for (Task task: list) {
+            if (task.getProject().getUser().equals(serviceLocator.getSessionService().getSession().getUser()) || serviceLocator.getSessionService().getSession().getUser().isAdmin()) {
+                yourTasks.add(task);
             }
         }
         System.out.println(yourTasks);

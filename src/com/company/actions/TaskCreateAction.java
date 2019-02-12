@@ -1,11 +1,12 @@
 package com.company.actions;
 
 import com.company.api.Action;
+import com.company.api.ServiceLocator;
 import com.company.model.Project;
 import com.company.model.Task;
-import com.company.api.ServiceLocator;
 
 import java.io.IOException;
+import java.util.Optional;
 
 public class TaskCreateAction implements Action {
     private ServiceLocator serviceLocator;
@@ -25,12 +26,17 @@ public class TaskCreateAction implements Action {
         String answerNameTask = CommonReader.getNameTask();
         String answerDescrTask = CommonReader.getDescrTask();
         String answerProjectTask = CommonReader.getNameProject();
-        Project project = serviceLocator.getProjectService().findByName(answerProjectTask);
-        if (project != null) {
-            if (project.getUser().equals(serviceLocator.getSessionService().getSession().getUser()) || serviceLocator.getSessionService().getSession().getUser().isAdmin()) {
-                Task newTask = new Task(answerNameTask, answerDescrTask, project);
-                serviceLocator.getTaskService().save(newTask);
-                System.out.println(newTask);
+//        Project project = serviceLocator.getProjectService().findByName(answerProjectTask);
+        Optional<Project> optionalProject = serviceLocator.getProjectServiceDB().findByName(answerProjectTask);
+        if (optionalProject.isPresent()) {
+            if (optionalProject.get().getUser().equals(serviceLocator.getSessionService().getSession().getUser()) || serviceLocator.getSessionService().getSession().getUser().isAdmin()) {
+                Task newTask = new Task(answerNameTask, answerDescrTask, optionalProject.get());
+                if (serviceLocator.getTaskServiceDB().save(newTask)) {
+                    System.out.println(newTask);
+                } else {
+                    System.out.println("Не удалось сохранить таск в базу");
+                }
+
             } else {
                 System.out.println("Вы не можете создавать задачу для этого проекта");
             }

@@ -6,6 +6,7 @@ import com.company.model.User;
 import com.company.api.ServiceLocator;
 
 import java.io.IOException;
+import java.util.Optional;
 
 public class UserUpdateAction implements Action {
     private ServiceLocator serviceLocator;
@@ -27,21 +28,29 @@ public class UserUpdateAction implements Action {
         String answerNewLoginUser = CommonReader.getNewLoginUser();
         String answerPasswordUser = CommonReader.getNewPasswordUser();
 
-        User user = serviceLocator.getUserService().findByLogin(answerLoginUser);
-        if (user != null) {
+        Optional<User> optionalUser = serviceLocator.getUserServiceDB().findByLogin(answerLoginUser);
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
             if (!user.equals(serviceLocator.getSessionService().getSession().getUser())) {
                 user.setName(answerNewNameUser);
                 user.setLogin(answerNewLoginUser);
                 user.setPassword(answerPasswordUser);
-                serviceLocator.getUserService().update(user);
-                System.out.println(user);
+                if (serviceLocator.getUserServiceDB().update(user)) {
+                    System.out.println(user);
+                } else {
+                    System.out.println("Не удалось обновить юзера в базе");
+                }
             } else {
                 user.setName(answerNewNameUser);
                 user.setLogin(answerNewLoginUser);
                 user.setPassword(answerPasswordUser);
-                serviceLocator.getUserService().update(user);
-                serviceLocator.getSessionService().save(new Session(user));
-                System.out.println(user);
+                 if (serviceLocator.getUserServiceDB().update(user)) {
+                     serviceLocator.getSessionService().save(new Session(user));
+                     System.out.println(user);
+                 } else {
+                     System.out.println("Не удалось обновить юзера в базе");
+                 }
+
             }
         } else {
             System.out.println("Не найден юзер с таким логином");

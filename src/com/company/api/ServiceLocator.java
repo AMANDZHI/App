@@ -13,4 +13,7 @@ public interface ServiceLocator {
     SerializationService getProjectSerializationServiceImpl();
     SerializationService getTaskSerializationServiceImpl();
     SerializationService getUserSerializationServiceImpl();
+    ServiceDB<String, Project> getProjectServiceDB();
+    ServiceDB<String, Task> getTaskServiceDB();
+    UserServiceDB getUserServiceDB();
 }

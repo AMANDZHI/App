@@ -7,8 +7,7 @@ import com.company.model.Task;
 import com.company.model.User;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
 public class ReadFilesJsonAction implements Action {
     private ServiceLocator serviceLocator;
@@ -29,16 +28,22 @@ public class ReadFilesJsonAction implements Action {
         String filePathTasks = "tasks.json";
         String filePathProjects = "projects.json";
 
-        Map<String, Project> mapProjects = new HashMap<>();
-        Map<String, User> mapUsers = new HashMap<>();
-        Map<String, Task> mapTasks = new HashMap<>();
+        List<Project> listProjects = serviceLocator.getProjectSerializationServiceImpl().readJsonToObject(filePathProjects);
+        List<User> listUsers = serviceLocator.getUserSerializationServiceImpl().readJsonToObject(filePathUsers);
+        List<Task> listTasks = serviceLocator.getTaskSerializationServiceImpl().readJsonToObject(filePathTasks);
 
-        mapProjects = serviceLocator.getProjectSerializationServiceImpl().readJsonToObject(filePathProjects);
-        mapUsers = serviceLocator.getUserSerializationServiceImpl().readJsonToObject(filePathUsers);
-        mapTasks = serviceLocator.getTaskSerializationServiceImpl().readJsonToObject(filePathTasks);
-        serviceLocator.getProjectService().getRepository().setMap(mapProjects);
-        serviceLocator.getUserService().getRepository().setMap(mapUsers);
-        serviceLocator.getTaskService().getRepository().setMap(mapTasks);
+        for (User u: listUsers) {
+            serviceLocator.getUserServiceDB().save(u);
+        }
+
+        for (Project p: listProjects) {
+            serviceLocator.getProjectServiceDB().save(p);
+        }
+
+        for (Task t: listTasks) {
+            serviceLocator.getTaskServiceDB().save(t);
+        }
+
         System.out.println("Успешно");
     }
 

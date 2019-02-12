@@ -5,6 +5,7 @@ import com.company.model.User;
 import com.company.api.ServiceLocator;
 
 import java.io.IOException;
+import java.util.Optional;
 
 public class UserFindAction implements Action {
     private ServiceLocator serviceLocator;
@@ -22,13 +23,12 @@ public class UserFindAction implements Action {
     @Override
     public void execute() throws IOException {
         String answerLoginUser = CommonReader.getLoginUser();
-        User findUser = serviceLocator.getUserService().findByLogin(answerLoginUser);
-        if (findUser != null) {
-            System.out.println(findUser);
+        Optional<User> optionalUser = serviceLocator.getUserServiceDB().findByLogin(answerLoginUser);
+        if (optionalUser.isPresent()) {
+            System.out.println(optionalUser.get());
         } else {
             System.out.println("Не найден юзер с таким логином");
         }
-
     }
 
     @Override

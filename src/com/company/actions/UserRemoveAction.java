@@ -1,10 +1,11 @@
 package com.company.actions;
 
 import com.company.api.Action;
-import com.company.model.User;
 import com.company.api.ServiceLocator;
+import com.company.model.User;
 
 import java.io.IOException;
+import java.util.Optional;
 
 public class UserRemoveAction implements Action {
     private ServiceLocator serviceLocator;
@@ -23,11 +24,14 @@ public class UserRemoveAction implements Action {
     public void execute() throws IOException {
         String answerLoginUser = CommonReader.getLoginUser();
 
-        User user = serviceLocator.getUserService().findByLogin(answerLoginUser);
-        if (user != null) {
-            if (!user.equals(serviceLocator.getSessionService().getSession().getUser())) {
-                serviceLocator.getUserService().removeByLogin(answerLoginUser);
-                System.out.println("Удален юзер");
+        Optional<User> optionalUser = serviceLocator.getUserServiceDB().findByLogin(answerLoginUser);
+        if (optionalUser.isPresent()) {
+            if (!optionalUser.get().equals(serviceLocator.getSessionService().getSession().getUser())) {
+                if (serviceLocator.getUserServiceDB().removeByLogin(answerLoginUser)) {
+                    System.out.println("Удален юзер");
+                } else {
+                    System.out.println("Не удалось удалить юзера из базы");
+                }
             } else {
                 System.out.println("Нельзя удалить себя");
             }

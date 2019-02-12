@@ -6,6 +6,7 @@ import com.company.model.Project;
 import com.company.model.Task;
 
 import java.io.IOException;
+import java.util.Optional;
 
 public class TaskUpdateAction implements Action {
     private ServiceLocator serviceLocator;
@@ -26,14 +27,19 @@ public class TaskUpdateAction implements Action {
         String answerNewNameTask = CommonReader.getNewNameTask();
         String answerDescrTask = CommonReader.getNewDescrTask();
         String answerProjectTask = CommonReader.getNewNameProjectTask();
-        Project project = serviceLocator.getProjectService().findByName(answerProjectTask);
-        Task task = serviceLocator.getTaskService().findByName(answerNameTask);
-        if (project != null && task != null) {
-            if (project.getUser().equals(serviceLocator.getSessionService().getSession().getUser()) || serviceLocator.getSessionService().getSession().getUser().isAdmin()) {
-                task.setName(answerNewNameTask);
-                task.setDescription(answerDescrTask);
-                task.setProject(project);
-                serviceLocator.getTaskService().update(task);
+//        Project project = serviceLocator.getProjectService().findByName(answerProjectTask);
+        Optional<Project> optionalProject = serviceLocator.getProjectServiceDB().findByName(answerProjectTask);
+        Optional<Task> optionalTask = serviceLocator.getTaskServiceDB().findByName(answerNameTask);
+        if (optionalProject.isPresent() && optionalTask.isPresent()) {
+            if (optionalProject.get().getUser().equals(serviceLocator.getSessionService().getSession().getUser()) || serviceLocator.getSessionService().getSession().getUser().isAdmin()) {
+                optionalTask.get().setName(answerNewNameTask);
+                optionalTask.get().setDescription(answerDescrTask);
+                optionalTask.get().setProject(optionalProject.get());
+                if (serviceLocator.getTaskServiceDB().update(optionalTask.get())) {
+                    System.out.println("Успешно обновлено");
+                } else {
+                    System.out.println("Не удалось обновить в базе");
+                }
             }
             else {
                 System.out.println("Нет прав для обновления задачи - нет доступа к указанному проекту");

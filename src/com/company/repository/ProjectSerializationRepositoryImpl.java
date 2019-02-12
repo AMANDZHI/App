@@ -8,22 +8,16 @@ import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-public class ProjectSerializationRepositoryImpl implements CommonSerializationRepository<String, Project> {
+public class ProjectSerializationRepositoryImpl implements CommonSerializationRepository<Project> {
 
     @Override
-    public Map<String, Project> readFileToObject(String path) {
+    public List<Project> readFileToObject(String path) {
         try (ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(path))) {
             List<Project> list = new ArrayList<>();
             list =((ArrayList<Project>)objectInputStream.readObject());
-            Map<String, Project> map = new HashMap<>();
-            for (Project p: list) {
-                map.put(p.getName(), p);
-            }
-            return map;
+            return list;
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -31,13 +25,9 @@ public class ProjectSerializationRepositoryImpl implements CommonSerializationRe
     }
 
     @Override
-    public void writeObjectToJson(String path, Map<String, Project> map) {
+    public void writeObjectToJson(String path, List<Project> list) {
         try {
             ObjectMapper mapper = new ObjectMapper();
-            List<Project> list = new ArrayList<>();
-            for (Map.Entry<String, Project> pair: map.entrySet()) {
-                list.add(pair.getValue());
-            }
             mapper.writeValue(new File(path), list);
         }
         catch (IOException e) {
@@ -46,13 +36,9 @@ public class ProjectSerializationRepositoryImpl implements CommonSerializationRe
     }
 
     @Override
-    public void writeObjectToXml(String path, Map<String, Project> map) {
+    public void writeObjectToXml(String path, List<Project> list) {
         try {
             ObjectMapper mapper = new XmlMapper();
-            List<Project> list = new ArrayList<>();
-            for (Map.Entry<String, Project> pair: map.entrySet()) {
-                list.add(pair.getValue());
-            }
             mapper.writeValue(new File(path), list);
         } catch (IOException e) {
             e.printStackTrace();
@@ -60,16 +46,11 @@ public class ProjectSerializationRepositoryImpl implements CommonSerializationRe
     }
 
     @Override
-    public Map<String, Project> readJsonToObject(String path) {
+    public List<Project> readJsonToObject(String path) {
         try {
             ObjectMapper mapper = new ObjectMapper();
-            List<Project> list = mapper.readValue(new File(path), new TypeReference<List<Project>>(){});
-
-            Map<String, Project> map = new HashMap<>();
-            for (Project p: list) {
-                map.put(p.getId(), p);
-            }
-            return map;
+            return mapper.readValue(new File(path), new TypeReference<List<Project>>() {
+            });
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -77,16 +58,10 @@ public class ProjectSerializationRepositoryImpl implements CommonSerializationRe
     }
 
     @Override
-    public Map<String, Project> readXmlToObject(String path) {
+    public List<Project> readXmlToObject(String path) {
         try {
             ObjectMapper mapper = new XmlMapper();
-            List<Project> list = mapper.readValue(new File(path), new TypeReference<List<Project>>(){});
-
-            Map<String, Project> map = new HashMap<>();
-            for (Project p: list) {
-                map.put(p.getId(), p);
-            }
-            return map;
+            return mapper.readValue(new File(path), new TypeReference<List<Project>>(){});
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -94,12 +69,8 @@ public class ProjectSerializationRepositoryImpl implements CommonSerializationRe
     }
 
     @Override
-    public void writeObjectToFile(String path, Map<String, Project> map) {
+    public void writeObjectToFile(String path, List<Project> list) {
         try (ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(path))) {
-            List<Project> list = new ArrayList<>();
-            for (Map.Entry<String, Project> pair: map.entrySet()) {
-                list.add(pair.getValue());
-            }
             objectOutputStream.writeObject(list);
         } catch (IOException e) {
             e.printStackTrace();

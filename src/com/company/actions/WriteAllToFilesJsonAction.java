@@ -7,7 +7,7 @@ import com.company.model.Task;
 import com.company.model.User;
 
 import java.io.IOException;
-import java.util.Map;
+import java.util.List;
 
 public class WriteAllToFilesJsonAction implements Action {
     private ServiceLocator serviceLocator;
@@ -28,17 +28,17 @@ public class WriteAllToFilesJsonAction implements Action {
         String filePathTasks = "tasks.json";
         String filePathProjects = "projects.json";
 
-        Map<String, Project> mapProjects = serviceLocator.getProjectService().getRepository().getMap();
-        Map<String, User> mapUsers = serviceLocator.getUserService().getRepository().getMap();
-        Map<String, Task> mapTasks = serviceLocator.getTaskService().getRepository().getMap();
-        if (mapProjects.size() != 0) {
-            serviceLocator.getProjectSerializationServiceImpl().writeObjectToJson(filePathProjects, mapProjects);
+        List<Project> listProjects = serviceLocator.getProjectServiceDB().getList();
+        List<User> listUsers = serviceLocator.getUserServiceDB().getList();
+        List<Task> listTasks = serviceLocator.getTaskServiceDB().getList();
+        if (listProjects.size() != 0) {
+            serviceLocator.getProjectSerializationServiceImpl().writeObjectToJson(filePathProjects, listProjects);
         }
-        if (mapUsers.size() != 0) {
-            serviceLocator.getProjectSerializationServiceImpl().writeObjectToJson(filePathUsers, mapUsers);
+        if (listUsers.size() != 0) {
+            serviceLocator.getUserSerializationServiceImpl().writeObjectToJson(filePathUsers, listUsers);
         }
-        if (mapTasks.size() != 0) {
-            serviceLocator.getProjectSerializationServiceImpl().writeObjectToJson(filePathTasks, mapUsers);
+        if (listTasks.size() != 0) {
+            serviceLocator.getTaskSerializationServiceImpl().writeObjectToJson(filePathTasks, listTasks);
         }
     }
 

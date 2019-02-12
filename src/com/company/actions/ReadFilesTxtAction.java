@@ -8,6 +8,7 @@ import com.company.model.User;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ReadFilesTxtAction implements Action {
@@ -29,16 +30,22 @@ public class ReadFilesTxtAction implements Action {
         String filePathTasks = "tasks.txt";
         String filePathProjects = "projects.txt";
 
-        Map<String, Project> mapProjects = new HashMap<>();
-        Map<String, User> mapUsers = new HashMap<>();
-        Map<String, Task> mapTasks = new HashMap<>();
+        List<Project> listProjects = serviceLocator.getProjectSerializationServiceImpl().readFileToObject(filePathProjects);
+        List<User> listUsers = serviceLocator.getUserSerializationServiceImpl().readFileToObject(filePathUsers);
+        List<Task> listTasks = serviceLocator.getTaskSerializationServiceImpl().readFileToObject(filePathTasks);
 
-        mapProjects = serviceLocator.getProjectSerializationServiceImpl().readFileToObject(filePathProjects);
-        mapUsers = serviceLocator.getUserSerializationServiceImpl().readFileToObject(filePathUsers);
-        mapTasks = serviceLocator.getTaskSerializationServiceImpl().readFileToObject(filePathTasks);
-        serviceLocator.getProjectService().getRepository().setMap(mapProjects);
-        serviceLocator.getUserService().getRepository().setMap(mapUsers);
-        serviceLocator.getTaskService().getRepository().setMap(mapTasks);
+        for (User u: listUsers) {
+            serviceLocator.getUserServiceDB().save(u);
+        }
+
+        for (Project p: listProjects) {
+            serviceLocator.getProjectServiceDB().save(p);
+        }
+
+        for (Task t: listTasks) {
+            serviceLocator.getTaskServiceDB().save(t);
+        }
+
         System.out.println("Успешно");
     }
 

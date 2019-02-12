@@ -3,11 +3,10 @@ package com.company.service;
 import com.company.api.CommonSerializationRepository;
 import com.company.api.SerializationService;
 import com.company.model.Project;
-import com.fasterxml.jackson.databind.JsonMappingException;
 
-import java.util.Map;
+import java.util.List;
 
-public class ProjectSerializationServiceImpl implements SerializationService<String, Project> {
+public class ProjectSerializationServiceImpl implements SerializationService<Project> {
     private CommonSerializationRepository commonSerializationRepository;
 
     public ProjectSerializationServiceImpl(CommonSerializationRepository commonSerializationRepository) {
@@ -15,32 +14,32 @@ public class ProjectSerializationServiceImpl implements SerializationService<Str
     }
 
     @Override
-    public void writeObjectToFile(String path, Map<String, Project> map) {
-        commonSerializationRepository.writeObjectToFile(path, map);
+    public void writeObjectToFile(String path, List<Project> list) {
+        commonSerializationRepository.writeObjectToFile(path, list);
     }
 
     @Override
-    public void writeObjectToJson(String path, Map<String, Project> map) {
-        commonSerializationRepository.writeObjectToJson(path, map);
+    public List<Project> readFileToObject(String path) {
+        return commonSerializationRepository.readFileToObject(path);
     }
 
     @Override
-    public void writeObjectToXml(String path, Map<String, Project> map) {
-        commonSerializationRepository.writeObjectToXml(path, map);
+    public void writeObjectToJson(String path, List<Project> list) {
+        commonSerializationRepository.writeObjectToJson(path, list);
     }
 
     @Override
-    public Map<String, Project> readFileToObject(String path) {
-       return commonSerializationRepository.readFileToObject(path);
+    public void writeObjectToXml(String path, List<Project> list) {
+        commonSerializationRepository.writeObjectToXml(path, list);
     }
 
     @Override
-    public Map<String, Project> readJsonToObject(String path) {
+    public List<Project> readJsonToObject(String path) {
         return commonSerializationRepository.readJsonToObject(path);
     }
 
     @Override
-    public Map<String, Project> readXmlToObject(String path) {
+    public List<Project> readXmlToObject(String path) {
         return commonSerializationRepository.readXmlToObject(path);
     }
 }

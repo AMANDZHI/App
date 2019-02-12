@@ -1,12 +1,12 @@
 package com.company.api;
 
-import java.util.Map;
+import java.util.List;
 
-public interface CommonSerializationRepository<T, M> {
-    void writeObjectToFile(String path, Map<T, M> map);
-    Map<T, M> readFileToObject(String path);
-    void writeObjectToJson(String path, Map<T, M> map);
-    void writeObjectToXml(String path, Map<T, M> map);
-    Map<T, M> readJsonToObject(String path);
-    Map<T, M> readXmlToObject(String path);
+public interface CommonSerializationRepository<T> {
+    void writeObjectToFile(String path, List<T> list);
+    List<T> readFileToObject(String path);
+    void writeObjectToJson(String path, List<T> list);
+    void writeObjectToXml(String path, List<T> list);
+    List<T> readJsonToObject(String path);
+    List<T> readXmlToObject(String path);
 }

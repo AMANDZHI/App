@@ -24,7 +24,6 @@ public class TaskListAction implements Action {
     @Override
     public void execute() throws IOException {
         List<Task> yourTasks = new ArrayList<>();
-//        Map<String, Task> map = serviceLocator.getTaskService().getMap();
         List<Task> list = serviceLocator.getTaskServiceDB().getList();
         for (Task task: list) {
             if (task.getProject().getUser().equals(serviceLocator.getSessionService().getSession().getUser()) || serviceLocator.getSessionService().getSession().getUser().isAdmin()) {

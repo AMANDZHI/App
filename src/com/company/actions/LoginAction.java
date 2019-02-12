@@ -26,7 +26,6 @@ public class LoginAction implements AuthAction {
         String answerPassword = CommonReader.getPasswordUser();
         User user = new User(answerLogin, answerPassword);
         if (serviceLocator.getAppSecurity().authorization(user)) {
-//            return serviceLocator.getUserService().findByLogin(answerLogin);
             Optional<User> optionalUser = serviceLocator.getUserServiceDB().findByLogin(answerLogin);
             return optionalUser.orElse(null);
         }

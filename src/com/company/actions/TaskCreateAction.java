@@ -26,25 +26,27 @@ public class TaskCreateAction implements Action {
         String answerNameTask = CommonReader.getNameTask();
         String answerDescrTask = CommonReader.getDescrTask();
         String answerProjectTask = CommonReader.getNameProject();
-//        Project project = serviceLocator.getProjectService().findByName(answerProjectTask);
-        Optional<Project> optionalProject = serviceLocator.getProjectServiceDB().findByName(answerProjectTask);
-        if (optionalProject.isPresent()) {
-            if (optionalProject.get().getUser().equals(serviceLocator.getSessionService().getSession().getUser()) || serviceLocator.getSessionService().getSession().getUser().isAdmin()) {
-                Task newTask = new Task(answerNameTask, answerDescrTask, optionalProject.get());
-                if (serviceLocator.getTaskServiceDB().save(newTask)) {
-                    System.out.println(newTask);
+        if (!serviceLocator.getTaskServiceDB().findByName(answerNameTask).isPresent()) {
+            Optional<Project> optionalProject = serviceLocator.getProjectServiceDB().findByName(answerProjectTask);
+            if (optionalProject.isPresent()) {
+                if (optionalProject.get().getUser().equals(serviceLocator.getSessionService().getSession().getUser()) || serviceLocator.getSessionService().getSession().getUser().isAdmin()) {
+                    Task newTask = new Task(answerNameTask, answerDescrTask, optionalProject.get());
+                    if (serviceLocator.getTaskServiceDB().save(newTask)) {
+                        System.out.println(newTask);
+                    } else {
+                        System.out.println("Не удалось сохранить таск в базу");
+                    }
+
                 } else {
-                    System.out.println("Не удалось сохранить таск в базу");
+                    System.out.println("Вы не можете создавать задачу для этого проекта");
                 }
 
             } else {
-                System.out.println("Вы не можете создавать задачу для этого проекта");
+                System.out.println("не найден проект с таким именем");
             }
-
         } else {
-            System.out.println("не найден проект с таким именем");
+            System.out.println("Такое имя таска уже используется");
         }
-
     }
 
     @Override

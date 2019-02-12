@@ -23,7 +23,6 @@ public class ProjectRemoveAction implements Action {
     @Override
     public void execute() throws IOException {
         String answerNameProject = CommonReader.getNameProject();
-//        Project project = serviceLocator.getProjectService().findByName(answerNameProject);
         Optional<Project> optionalProject = serviceLocator.getProjectServiceDB().findByName(answerNameProject);
         if (optionalProject.isPresent()) {
             if (optionalProject.get().getUser().equals(serviceLocator.getSessionService().getSession().getUser()) || serviceLocator.getSessionService().getSession().getUser().isAdmin()) {

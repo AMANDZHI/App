@@ -35,15 +35,21 @@ public class ReadFilesTxtAction implements Action {
         List<Task> listTasks = serviceLocator.getTaskSerializationServiceImpl().readFileToObject(filePathTasks);
 
         for (User u: listUsers) {
-            serviceLocator.getUserServiceDB().save(u);
+            if (!serviceLocator.getUserServiceDB().findByLogin(u.getLogin()).isPresent()) {
+                serviceLocator.getUserServiceDB().save(u);
+            }
         }
 
         for (Project p: listProjects) {
-            serviceLocator.getProjectServiceDB().save(p);
+            if (!serviceLocator.getProjectServiceDB().findById(p.getId()).isPresent()) {
+                serviceLocator.getProjectServiceDB().save(p);
+            }
         }
 
         for (Task t: listTasks) {
-            serviceLocator.getTaskServiceDB().save(t);
+            if (!serviceLocator.getTaskServiceDB().findById(t.getId()).isPresent()) {
+                serviceLocator.getTaskServiceDB().save(t);
+            }
         }
 
         System.out.println("Успешно");

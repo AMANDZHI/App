@@ -28,32 +28,36 @@ public class UserUpdateAction implements Action {
         String answerNewLoginUser = CommonReader.getNewLoginUser();
         String answerPasswordUser = CommonReader.getNewPasswordUser();
 
-        Optional<User> optionalUser = serviceLocator.getUserServiceDB().findByLogin(answerLoginUser);
-        if (optionalUser.isPresent()) {
-            User user = optionalUser.get();
-            if (!user.equals(serviceLocator.getSessionService().getSession().getUser())) {
-                user.setName(answerNewNameUser);
-                user.setLogin(answerNewLoginUser);
-                user.setPassword(answerPasswordUser);
-                if (serviceLocator.getUserServiceDB().update(user)) {
-                    System.out.println(user);
+        if (serviceLocator.getUserServiceDB().findByLogin(answerNewLoginUser).isPresent()) {
+            Optional<User> optionalUser = serviceLocator.getUserServiceDB().findByLogin(answerLoginUser);
+            if (optionalUser.isPresent()) {
+                User user = optionalUser.get();
+                if (!user.equals(serviceLocator.getSessionService().getSession().getUser())) {
+                    user.setName(answerNewNameUser);
+                    user.setLogin(answerNewLoginUser);
+                    user.setPassword(answerPasswordUser);
+                    if (serviceLocator.getUserServiceDB().update(user)) {
+                        System.out.println(user);
+                    } else {
+                        System.out.println("Не удалось обновить юзера в базе");
+                    }
                 } else {
-                    System.out.println("Не удалось обновить юзера в базе");
+                    user.setName(answerNewNameUser);
+                    user.setLogin(answerNewLoginUser);
+                    user.setPassword(answerPasswordUser);
+                    if (serviceLocator.getUserServiceDB().update(user)) {
+                        serviceLocator.getSessionService().save(new Session(user));
+                        System.out.println(user);
+                    } else {
+                        System.out.println("Не удалось обновить юзера в базе");
+                    }
+
                 }
             } else {
-                user.setName(answerNewNameUser);
-                user.setLogin(answerNewLoginUser);
-                user.setPassword(answerPasswordUser);
-                 if (serviceLocator.getUserServiceDB().update(user)) {
-                     serviceLocator.getSessionService().save(new Session(user));
-                     System.out.println(user);
-                 } else {
-                     System.out.println("Не удалось обновить юзера в базе");
-                 }
-
+                System.out.println("Не найден юзер с таким логином");
             }
         } else {
-            System.out.println("Не найден юзер с таким логином");
+            System.out.println("Такой новый логин уже используется");
         }
     }
 

@@ -24,7 +24,6 @@ public class ProjectListAction implements Action {
     @Override
     public void execute() throws IOException {
         List<Project> yourProjects = new ArrayList<>();
-//        Map<String, Project> map = serviceLocator.getProjectService().getMap();
         List<Project> list = serviceLocator.getProjectServiceDB().getList();
         for (Project project : list) {
             if (project.getUser().equals(serviceLocator.getSessionService().getSession().getUser()) || serviceLocator.getSessionService().getSession().getUser().isAdmin()) {

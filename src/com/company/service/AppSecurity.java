@@ -15,13 +15,11 @@ public class AppSecurity {
     }
 
     public boolean authorization(User user) {
-//        Map<String, User> map = serviceLocator.getUserService().getMap();
         List<User> list = serviceLocator.getUserServiceDB().getList();
         boolean check = false;
         for (User u: list) {
             if (u.getLogin().equals(user.getLogin()) && u.getPassword().equals(user.getPassword())) {
                 check = true;
-//                User findUser = serviceLocator.getUserService().findByLogin(user.getLogin());
                 Optional<User> optionalUser = serviceLocator.getUserServiceDB().findByLogin(user.getLogin());
                 serviceLocator.getSessionService().save(new Session(optionalUser.get()));
             }

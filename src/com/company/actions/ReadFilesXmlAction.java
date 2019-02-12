@@ -41,11 +41,15 @@ public class ReadFilesXmlAction implements Action {
         }
 
         for (Project p: listProjects) {
-            serviceLocator.getProjectServiceDB().save(p);
+            if (!serviceLocator.getProjectServiceDB().findById(p.getId()).isPresent()) {
+                serviceLocator.getProjectServiceDB().save(p);
+            }
         }
 
         for (Task t: listTasks) {
-            serviceLocator.getTaskServiceDB().save(t);
+            if (!serviceLocator.getTaskServiceDB().findById(t.getId()).isPresent()) {
+                serviceLocator.getTaskServiceDB().save(t);
+            }
         }
 
         System.out.println("Успешно");

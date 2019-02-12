@@ -24,13 +24,16 @@ public class ProjectCreateAction implements Action {
         String answerNameProject = CommonReader.getNameProject();
         String answerDescrProject = CommonReader.getDescrProject();
         Project newProject = new Project(answerNameProject, answerDescrProject, serviceLocator.getSessionService().getSession().getUser());
-//        serviceLocator.getProjectService().save(newProject);
-        if (serviceLocator.getProjectServiceDB().save(newProject)) {
-            System.out.println(newProject);
-        } else {
-            System.out.println("Не удалось сохранить проект в базу");
-        }
 
+        if (!serviceLocator.getProjectServiceDB().findByName(newProject.getName()).isPresent()) {
+            if (serviceLocator.getProjectServiceDB().save(newProject)) {
+                System.out.println(newProject);
+            } else {
+                System.out.println("Не удалось сохранить проект в базу");
+            }
+        } else {
+            System.out.println("Уже есть проект с таким именем");
+        }
     }
 
     @Override

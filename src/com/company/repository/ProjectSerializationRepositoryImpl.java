@@ -27,7 +27,8 @@ public class ProjectSerializationRepositoryImpl implements CommonSerializationRe
     @SneakyThrows
     public void writeObjectToJson(String path, List<Project> list) {
         ObjectMapper mapper = new ObjectMapper();
-        mapper.writeValue(new File(path), list);
+        String s = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(list);
+        mapper.writeValue(new File(path), s);
     }
 
     @Override

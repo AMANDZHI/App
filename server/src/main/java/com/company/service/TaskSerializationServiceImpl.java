@@ -3,12 +3,10 @@ package com.company.service;
 import com.company.api.CommonSerializationRepository;
 import com.company.api.SerializationService;
 import com.company.model.Task;
-import com.company.model.Task;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import lombok.SneakyThrows;
 
 import java.util.List;
-import java.util.Map;
 
 public class TaskSerializationServiceImpl implements SerializationService<Task> {
     private final CommonSerializationRepository commonSerializationRepository;

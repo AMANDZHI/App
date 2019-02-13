@@ -4,9 +4,11 @@ import com.company.api.Action;
 import com.company.api.ServiceLocator;
 import com.company.model.Project;
 import com.company.model.Task;
-import com.company.util.Role;
+import com.company.util.ActionRole;
+import com.company.util.UserRole;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.Optional;
 
 public class TaskCreateAction implements Action {
@@ -23,14 +25,14 @@ public class TaskCreateAction implements Action {
     }
 
     @Override
-    public boolean execute() throws IOException {
+    public boolean execute() throws IOException, SQLException {
         String answerNameTask = CommonReader.getNameTask();
         String answerDescrTask = CommonReader.getDescrTask();
         String answerProjectTask = CommonReader.getNameProject();
         if (!serviceLocator.getTaskServiceDB().findByName(answerNameTask).isPresent()) {
             Optional<Project> optionalProject = serviceLocator.getProjectServiceDB().findByName(answerProjectTask);
             if (optionalProject.isPresent()) {
-                if (optionalProject.get().getUser().equals(serviceLocator.getSessionService().getSession().getUser()) || serviceLocator.getSessionService().getSession().getUser().isAdmin()) {
+                if (optionalProject.get().getUser().equals(serviceLocator.getSessionService().getSession().getUser()) || serviceLocator.getSessionService().getSession().getUser().getRole().equals(UserRole.ADMIN)) {
                     Task newTask = new Task(answerNameTask, answerDescrTask, optionalProject.get());
                     if (serviceLocator.getTaskServiceDB().save(newTask)) {
                         System.out.println(newTask);
@@ -56,8 +58,8 @@ public class TaskCreateAction implements Action {
     }
 
     @Override
-    public Role getRole() {
-        return Role.USER;
+    public ActionRole getRole() {
+        return ActionRole.USER;
     }
 
     @Override

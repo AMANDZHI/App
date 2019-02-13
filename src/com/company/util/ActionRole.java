@@ -1,5 +1,5 @@
 package com.company.util;
 
-public enum Role {
+public enum ActionRole {
     ADMIN, USER, GUEST
 }

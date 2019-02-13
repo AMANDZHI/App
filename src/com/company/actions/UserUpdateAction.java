@@ -4,11 +4,11 @@ import com.company.api.Action;
 import com.company.model.Session;
 import com.company.model.User;
 import com.company.api.ServiceLocator;
-import com.company.util.Role;
+import com.company.util.ActionRole;
+import com.company.util.UserRole;
 
 import java.io.IOException;
 import java.util.Optional;
-//todo проверь как идет обновление
 public class UserUpdateAction implements Action {
     private ServiceLocator serviceLocator;
 
@@ -28,6 +28,7 @@ public class UserUpdateAction implements Action {
         String answerLoginUser = CommonReader.getLoginUser();
         String answerNewLoginUser = CommonReader.getNewLoginUser();
         String answerPasswordUser = CommonReader.getNewPasswordUser();
+        String answerRoleUser = CommonReader.getRoleUser();
 
         if (serviceLocator.getUserServiceDB().findByLogin(answerNewLoginUser).isPresent()) {
             Optional<User> optionalUser = serviceLocator.getUserServiceDB().findByLogin(answerLoginUser);
@@ -37,6 +38,7 @@ public class UserUpdateAction implements Action {
                     user.setName(answerNewNameUser);
                     user.setLogin(answerNewLoginUser);
                     user.setPassword(answerPasswordUser);
+                    user.setRole(UserRole.valueOf(answerRoleUser));
                     if (serviceLocator.getUserServiceDB().update(user)) {
                         System.out.println(user);
                         return true;
@@ -69,8 +71,8 @@ public class UserUpdateAction implements Action {
     }
 
     @Override
-    public Role getRole() {
-        return Role.ADMIN;
+    public ActionRole getRole() {
+        return ActionRole.ADMIN;
     }
 
     @Override

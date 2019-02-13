@@ -2,7 +2,7 @@ package com.company.actions;
 
 import com.company.api.Action;
 import com.company.api.ServiceLocator;
-import com.company.util.Role;
+import com.company.util.ActionRole;
 
 import java.io.IOException;
 
@@ -26,8 +26,8 @@ public class UserListAction implements Action {
     }
 
     @Override
-    public Role getRole() {
-        return Role.ADMIN;
+    public ActionRole getRole() {
+        return ActionRole.ADMIN;
     }
 
     @Override

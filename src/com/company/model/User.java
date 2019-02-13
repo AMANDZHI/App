@@ -1,6 +1,7 @@
 package com.company.model;
 
 import com.company.util.Encryption;
+import com.company.util.UserRole;
 
 import java.io.Serializable;
 import java.util.UUID;
@@ -10,7 +11,7 @@ public class User implements Serializable {
     private String name;
     private String login;
     private String password;
-    private boolean admin;
+    private UserRole role;
 
     public User() {
     }
@@ -27,11 +28,11 @@ public class User implements Serializable {
         this.id = UUID.randomUUID().toString();
     }
 
-    public User(String name, String login, String password, boolean admin) {
+    public User(String name, String login, String password, UserRole role) {
         this.name = name;
         this.login = login;
         this.password = Encryption.md5Custom(password);
-        this.admin = admin;
+        this.role = role;
         this.id = UUID.randomUUID().toString();
     }
 
@@ -67,22 +68,22 @@ public class User implements Serializable {
         this.password = password;
     }
 
-    public boolean isAdmin() {
-        return admin;
+    public UserRole getRole() {
+        return role;
     }
 
-    public void setAdmin(boolean admin) {
-        this.admin = admin;
+    public void setRole(UserRole role) {
+        this.role = role;
     }
 
     @Override
     public String toString() {
         return "User{" +
-                "id=" + id +
+                "id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 ", login='" + login + '\'' +
                 ", password='" + password + '\'' +
-                ", admin=" + admin +
+                ", role=" + role +
                 '}';
     }
 }

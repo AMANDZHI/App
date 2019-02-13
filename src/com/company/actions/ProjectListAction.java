@@ -3,7 +3,8 @@ package com.company.actions;
 import com.company.api.Action;
 import com.company.api.ServiceLocator;
 import com.company.model.Project;
-import com.company.util.Role;
+import com.company.util.ActionRole;
+import com.company.util.UserRole;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -27,7 +28,7 @@ public class ProjectListAction implements Action {
         List<Project> yourProjects = new ArrayList<>();
         List<Project> list = serviceLocator.getProjectServiceDB().getList();
         for (Project project : list) {
-            if (project.getUser().equals(serviceLocator.getSessionService().getSession().getUser()) || serviceLocator.getSessionService().getSession().getUser().isAdmin()) {
+            if (project.getUser().equals(serviceLocator.getSessionService().getSession().getUser()) || serviceLocator.getSessionService().getSession().getUser().getRole().equals(UserRole.ADMIN)) {
                 yourProjects.add(project);
             }
         }
@@ -36,8 +37,8 @@ public class ProjectListAction implements Action {
     }
 
     @Override
-    public Role getRole() {
-        return Role.USER;
+    public ActionRole getRole() {
+        return ActionRole.USER;
     }
 
     @Override

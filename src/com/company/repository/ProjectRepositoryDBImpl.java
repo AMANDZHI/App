@@ -5,11 +5,11 @@ import com.company.api.UserRepositoryDB;
 import com.company.dao.ConnectionSupplier;
 import com.company.model.Project;
 import com.company.model.User;
+import lombok.SneakyThrows;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -21,8 +21,8 @@ public class ProjectRepositoryDBImpl implements RepositoryDB<String, Project> {
     private final static String UPDATE = "UPDATE project_tbl SET name = ?, description = ?, userId = ? WHERE id = ?";
     private final static String REMOVE_BY_NAME = "DELETE FROM project_tbl WHERE name = ?";
     private final static String FIND_ALL = "SELECT * FROM project_tbl";
-    private ConnectionSupplier connectionSupplier;
-    private UserRepositoryDB userRepositoryDB;
+    private final ConnectionSupplier connectionSupplier;
+    private final UserRepositoryDB userRepositoryDB;
 
     public ProjectRepositoryDBImpl(ConnectionSupplier connectionSupplier, UserRepositoryDB userRepositoryDB) {
         this.connectionSupplier = connectionSupplier;
@@ -30,26 +30,24 @@ public class ProjectRepositoryDBImpl implements RepositoryDB<String, Project> {
     }
 
     @Override
+    @SneakyThrows
     public boolean save(Project object) {
-        try(Connection connection = connectionSupplier.getConnection()) {
-            PreparedStatement preparedStatement =  connection.prepareStatement(INSERT);
+        try (Connection connection = connectionSupplier.getConnection()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(INSERT);
             preparedStatement.setString(1, object.getId());
             preparedStatement.setString(2, object.getName());
             preparedStatement.setString(3, object.getDescription());
             preparedStatement.setString(4, object.getUser().getId());
-
             int i = preparedStatement.executeUpdate();
             return i > 0;
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
-        return false;
     }
 
     @Override
+    @SneakyThrows
     public Optional<Project> findByName(String name) {
-        try(Connection connection = connectionSupplier.getConnection()) {
-            PreparedStatement preparedStatement =  connection.prepareStatement(FIND_BY_NAME);
+        try (Connection connection = connectionSupplier.getConnection()) {
+            PreparedStatement preparedStatement = connection.prepareStatement(FIND_BY_NAME);
             preparedStatement.setString(1, name);
 
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -62,16 +60,14 @@ public class ProjectRepositoryDBImpl implements RepositoryDB<String, Project> {
                 optionalUser.ifPresent(project::setUser);
                 return Optional.of(project);
             } else {
-                Optional.empty();
+                return Optional.empty();
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
-        return Optional.empty();
     }
 
     @Override
-    public Optional<Project> findById(String id) {
+    @SneakyThrows
+    public Optional<Project> findById(String id){
         try(Connection connection = connectionSupplier.getConnection()) {
             PreparedStatement preparedStatement =  connection.prepareStatement(FIND_BY_ID);
             preparedStatement.setString(1, id);
@@ -86,18 +82,16 @@ public class ProjectRepositoryDBImpl implements RepositoryDB<String, Project> {
                 optionalUser.ifPresent(project::setUser);
                 return Optional.of(project);
             } else {
-                Optional.empty();
+                return Optional.empty();
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
-        return Optional.empty();
     }
 
     @Override
+    @SneakyThrows
     public boolean update(Project object) {
         try(Connection connection = connectionSupplier.getConnection()) {
-            PreparedStatement preparedStatement =  connection.prepareStatement(UPDATE);
+            PreparedStatement preparedStatement = connection.prepareStatement(UPDATE);
             preparedStatement.setString(1, object.getName());
             preparedStatement.setString(2, object.getDescription());
             preparedStatement.setString(3, object.getUser().getId());
@@ -105,32 +99,27 @@ public class ProjectRepositoryDBImpl implements RepositoryDB<String, Project> {
 
             int i = preparedStatement.executeUpdate();
             return i > 0;
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
-        return false;
     }
 
     @Override
+    @SneakyThrows
     public boolean removeByName(String name) {
         try(Connection connection = connectionSupplier.getConnection()) {
-            PreparedStatement preparedStatement =  connection.prepareStatement(REMOVE_BY_NAME);
+            PreparedStatement preparedStatement = connection.prepareStatement(REMOVE_BY_NAME);
             preparedStatement.setString(1, name);
 
             int i = preparedStatement.executeUpdate();
             return i > 0;
-
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
-        return false;
     }
 
     @Override
+    @SneakyThrows
     public List<Project> getList() {
         List<Project> list = new ArrayList<>();
         try(Connection connection = connectionSupplier.getConnection()) {
-            PreparedStatement preparedStatement =  connection.prepareStatement(FIND_ALL);
+            PreparedStatement preparedStatement = connection.prepareStatement(FIND_ALL);
 
             ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -143,8 +132,6 @@ public class ProjectRepositoryDBImpl implements RepositoryDB<String, Project> {
                 optionalUser.ifPresent(project::setUser);
                 list.add(project);
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
         return list;
     }

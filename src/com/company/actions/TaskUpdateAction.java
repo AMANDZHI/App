@@ -4,7 +4,8 @@ import com.company.api.Action;
 import com.company.api.ServiceLocator;
 import com.company.model.Project;
 import com.company.model.Task;
-import com.company.util.Role;
+import com.company.util.ActionRole;
+import com.company.util.UserRole;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -32,7 +33,7 @@ public class TaskUpdateAction implements Action {
             Optional<Project> optionalProject = serviceLocator.getProjectServiceDB().findByName(answerProjectTask);
             Optional<Task> optionalTask = serviceLocator.getTaskServiceDB().findByName(answerNameTask);
             if (optionalProject.isPresent() && optionalTask.isPresent()) {
-                if (optionalProject.get().getUser().equals(serviceLocator.getSessionService().getSession().getUser()) || serviceLocator.getSessionService().getSession().getUser().isAdmin()) {
+                if (optionalProject.get().getUser().equals(serviceLocator.getSessionService().getSession().getUser()) || serviceLocator.getSessionService().getSession().getUser().getRole().equals(UserRole.ADMIN)) {
                     optionalTask.get().setName(answerNewNameTask);
                     optionalTask.get().setDescription(answerDescrTask);
                     optionalTask.get().setProject(optionalProject.get());
@@ -59,8 +60,8 @@ public class TaskUpdateAction implements Action {
     }
 
     @Override
-    public Role getRole() {
-        return Role.USER;
+    public ActionRole getRole() {
+        return ActionRole.USER;
     }
 
     @Override

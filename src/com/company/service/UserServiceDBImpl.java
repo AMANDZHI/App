@@ -3,18 +3,20 @@ package com.company.service;
 import com.company.api.UserRepositoryDB;
 import com.company.api.UserServiceDB;
 import com.company.model.User;
+import lombok.SneakyThrows;
 
 import java.util.List;
 import java.util.Optional;
 
 public class UserServiceDBImpl implements UserServiceDB {
-    private UserRepositoryDB userRepositoryDB;
+    private final UserRepositoryDB userRepositoryDB;
 
     public UserServiceDBImpl(UserRepositoryDB userRepositoryDB) {
         this.userRepositoryDB = userRepositoryDB;
     }
 
     @Override
+    @SneakyThrows
     public boolean save(User object) {
         return userRepositoryDB.save(object);
     }

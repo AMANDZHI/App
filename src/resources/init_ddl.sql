@@ -3,7 +3,7 @@ CREATE TABLE user_tbl (
   name varchar(30) NOT NULL,
   login varchar(30) NOT NULL UNIQUE,
   password varchar(100) NOT NULL,
-  admin varchar(5) NOT NULL,
+  role varchar(10) NOT NULL,
   PRIMARY KEY (id)
 );
 

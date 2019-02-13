@@ -3,7 +3,8 @@ package com.company.actions;
 import com.company.api.Action;
 import com.company.api.ServiceLocator;
 import com.company.model.User;
-import com.company.util.Role;
+import com.company.util.ActionRole;
+import com.company.util.UserRole;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -26,8 +27,8 @@ public class UserCreateAction implements Action {
         String answerNameUser = CommonReader.getNameUser();
         String answerLoginUser = CommonReader.getLoginUser();
         String answerPasswordUser = CommonReader.getPasswordUser();
-        String answerAdminUser = CommonReader.getAdminUser();
-        User newUser = new User(answerNameUser, answerLoginUser, answerPasswordUser, Boolean.parseBoolean(answerAdminUser));
+        String answerRoleUser = CommonReader.getRoleUser();
+        User newUser = new User(answerNameUser, answerLoginUser, answerPasswordUser, UserRole.valueOf(answerRoleUser));
         Optional<User> optionalUser = serviceLocator.getUserServiceDB().findByLogin(newUser.getLogin());
         if (optionalUser.isPresent()) {
             System.out.println("Такой логин уже используется");
@@ -44,8 +45,8 @@ public class UserCreateAction implements Action {
     }
 
     @Override
-    public Role getRole() {
-        return Role.ADMIN;
+    public ActionRole getRole() {
+        return ActionRole.ADMIN;
     }
 
     @Override

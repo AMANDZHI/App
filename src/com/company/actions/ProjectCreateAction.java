@@ -3,9 +3,10 @@ package com.company.actions;
 import com.company.api.Action;
 import com.company.api.ServiceLocator;
 import com.company.model.Project;
-import com.company.util.Role;
+import com.company.util.ActionRole;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 public class ProjectCreateAction implements Action {
     private ServiceLocator serviceLocator;
@@ -21,7 +22,7 @@ public class ProjectCreateAction implements Action {
     }
 
     @Override
-    public boolean execute() throws IOException {
+    public boolean execute() throws IOException, SQLException {
         String answerNameProject = CommonReader.getNameProject();
         String answerDescrProject = CommonReader.getDescrProject();
         Project newProject = new Project(answerNameProject, answerDescrProject, serviceLocator.getSessionService().getSession().getUser());
@@ -41,8 +42,8 @@ public class ProjectCreateAction implements Action {
     }
 
     @Override
-    public Role getRole() {
-        return Role.USER;
+    public ActionRole getRole() {
+        return ActionRole.USER;
     }
 
     @Override

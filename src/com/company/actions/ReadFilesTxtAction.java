@@ -5,12 +5,11 @@ import com.company.api.ServiceLocator;
 import com.company.model.Project;
 import com.company.model.Task;
 import com.company.model.User;
-import com.company.util.Role;
+import com.company.util.ActionRole;
 
 import java.io.IOException;
-import java.util.HashMap;
+import java.sql.SQLException;
 import java.util.List;
-import java.util.Map;
 
 public class ReadFilesTxtAction implements Action {
     private ServiceLocator serviceLocator;
@@ -26,7 +25,7 @@ public class ReadFilesTxtAction implements Action {
     }
 
     @Override
-    public boolean execute() throws IOException {
+    public boolean execute() throws IOException, SQLException {
         String filePathUsers = "users.txt";
         String filePathTasks = "tasks.txt";
         String filePathProjects = "projects.txt";
@@ -58,8 +57,8 @@ public class ReadFilesTxtAction implements Action {
     }
 
     @Override
-    public Role getRole() {
-        return Role.ADMIN;
+    public ActionRole getRole() {
+        return ActionRole.ADMIN;
     }
 
     @Override

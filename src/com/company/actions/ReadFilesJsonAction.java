@@ -5,7 +5,8 @@ import com.company.api.ServiceLocator;
 import com.company.model.Project;
 import com.company.model.Task;
 import com.company.model.User;
-import com.company.util.Role;
+import com.company.util.ActionRole;
+import lombok.SneakyThrows;
 
 import java.io.IOException;
 import java.util.List;
@@ -24,6 +25,7 @@ public class ReadFilesJsonAction implements Action {
     }
 
     @Override
+    @SneakyThrows
     public boolean execute() throws IOException {
         String filePathUsers = "users.json";
         String filePathTasks = "tasks.json";
@@ -56,8 +58,8 @@ public class ReadFilesJsonAction implements Action {
     }
 
     @Override
-    public Role getRole() {
-        return Role.ADMIN;
+    public ActionRole getRole() {
+        return ActionRole.ADMIN;
     }
 
     @Override

@@ -5,10 +5,6 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 public class CommonReader {
-//    lombok snackedroles
-//    максси классов и беги по ним
-//    енум
-//    секур флаг в экшн
     private final static BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
     public static String getNameProject() throws IOException {
@@ -71,19 +67,19 @@ public class CommonReader {
         return reader.readLine();
     }
 
-    public static String getAdminUser() throws IOException {
-        System.out.println("Введите true если хотите сделать юзера админом, или false если юзером");
+    public static String getRoleUser() throws IOException {
+        System.out.println("Введите ADMIN если хотите сделать юзера админом, или USER если юзером");
         boolean f = true;
         String str = null;
         while(f) {
             str = reader.readLine();
-            if (str.equals("true") || str.equals("false")) {
+            if (str.equals("ADMIN") || str.equals("USER")) {
                 f = false;
             } else {
-                System.out.println("Введите true если хотите сделать юзера админом, или false если юзером");
+                System.out.println("Введите ADMIN если хотите сделать юзера админом, или USER если юзером");
             }
         }
-        return str;
+        return str.toUpperCase();
     }
 
     public static String getNewNameUser() throws IOException {

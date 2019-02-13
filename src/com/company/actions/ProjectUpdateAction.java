@@ -3,7 +3,8 @@ package com.company.actions;
 import com.company.api.Action;
 import com.company.api.ServiceLocator;
 import com.company.model.Project;
-import com.company.util.Role;
+import com.company.util.ActionRole;
+import com.company.util.UserRole;
 
 import java.io.IOException;
 import java.util.Optional;
@@ -29,7 +30,7 @@ public class ProjectUpdateAction implements Action {
         if (!serviceLocator.getProjectServiceDB().findByName(answerNewNameProject).isPresent()) {
             Optional<Project> optionalProject = serviceLocator.getProjectServiceDB().findByName(answerNameProject);
             if (optionalProject.isPresent()) {
-                if (optionalProject.get().getUser().equals(serviceLocator.getSessionService().getSession().getUser()) || serviceLocator.getSessionService().getSession().getUser().isAdmin()) {
+                if (optionalProject.get().getUser().equals(serviceLocator.getSessionService().getSession().getUser()) || serviceLocator.getSessionService().getSession().getUser().getRole().equals(UserRole.ADMIN)) {
                     optionalProject.get().setName(answerNewNameProject);
                     optionalProject.get().setDescription(answerDescrProject);
                     serviceLocator.getProjectServiceDB().update(optionalProject.get());
@@ -51,8 +52,8 @@ public class ProjectUpdateAction implements Action {
     }
 
     @Override
-    public Role getRole() {
-        return Role.USER;
+    public ActionRole getRole() {
+        return ActionRole.USER;
     }
 
     @Override

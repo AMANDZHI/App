@@ -1,6 +1,5 @@
 package com.company;
 
-import com.company.actions.*;
 import com.company.api.*;
 import com.company.dao.ConnectionSupplier;
 import com.company.model.Project;
@@ -10,7 +9,6 @@ import com.company.service.*;
 import com.company.ui.Menu;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,12 +29,8 @@ public class Initializer implements ServiceLocator {
     private final ServiceLocator serviceLocator = this;
     private final AppSecurity appSecurity = new AppSecurity(serviceLocator);
     private final Map<String, Action> map = new HashMap<>();
-    private final Map<String, AuthAction> mapAuth = new HashMap<>();
-    private final Map<String, Action> mapAdmAction = new HashMap<>();
-    private final Menu menu = new Menu(reader, map, mapAuth, mapAdmAction, serviceLocator);
+    private final Menu menu = new Menu(reader, map, serviceLocator);
     private final List<Action> listForAction = new ArrayList<>();
-    private final List<AuthAction> listForAuth = new ArrayList<>();
-    private final List<Action> listForAdmAction = new ArrayList<>();
     private final CommonSerializationRepository projectSerialization = new ProjectSerializationRepositoryImpl();
     private final CommonSerializationRepository taskSerialization = new TaskSerializationRepositoryImpl();
     private final CommonSerializationRepository userSerialization = new UserSerializationRepositoryImpl();
@@ -84,71 +78,23 @@ public class Initializer implements ServiceLocator {
         return userServiceDB;
     }
 
-    {
-        init();
-    }
 
-    public void run() throws IOException {
+    public void run(Class[] classes) {
+        init(classes);
         menu.startMenu();
     }
 
-    public void init() {
-        Class[] classes = {ProjectCreateAction.class, ProjectFindAction.class, ProjectListAction.class, ProjectRemoveAction.class, ProjectUpdateAction.class, TaskCreateAction.class, TaskFindAction.class, TaskListAction.class, TaskRemoveAction.class, TaskUpdateAction.class,LogOutAction.class, LoginAction.class, RegistrationAction.class, UserCreateAction.class, UserFindAction.class, UserListAction.class, UserRemoveAction.class, UserUpdateAction.class, WriteAllToFilesTxtAction.class, WriteAllToFilesJsonAction.class, WriteAllToFilesXmlAction.class, ReadFilesTxtAction.class, ReadFilesJsonAction.class, ReadFilesXmlAction.class};
-
+    private void init(Class[] classes) {
         try {
-            for (int i = 0; i < classes.length; i++) {
-                Action action = (Action)classes[i].newInstance();
-                action.setServiceLocator(serviceLocator);
-            }
-
-            listForAction.add(ProjectCreateAction.class.newInstance());
-            listForAction.add(ProjectFindAction.class.newInstance());
-            listForAction.add(ProjectListAction.class.newInstance());
-            listForAction.add(ProjectRemoveAction.class.newInstance());
-            listForAction.add(ProjectUpdateAction.class.newInstance());
-            listForAction.add(TaskCreateAction.class.newInstance());
-            listForAction.add(TaskFindAction.class.newInstance());
-            listForAction.add(TaskListAction.class.newInstance());
-            listForAction.add(TaskRemoveAction.class.newInstance());
-            listForAction.add(TaskUpdateAction.class.newInstance());
-            listForAction.add(LogOutAction.class.newInstance());
-
-            listForAuth.add(LoginAction.class.newInstance());
-            listForAuth.add(RegistrationAction.class.newInstance());
-
-            listForAdmAction.add(UserCreateAction.class.newInstance());
-            listForAdmAction.add(UserFindAction.class.newInstance());
-            listForAdmAction.add(UserListAction.class.newInstance());
-            listForAdmAction.add(UserRemoveAction.class.newInstance());
-            listForAdmAction.add(UserUpdateAction.class.newInstance());
-            listForAdmAction.add(WriteAllToFilesTxtAction.class.newInstance());
-            listForAdmAction.add(WriteAllToFilesJsonAction.class.newInstance());
-            listForAdmAction.add(WriteAllToFilesXmlAction.class.newInstance());
-            listForAdmAction.add(ReadFilesTxtAction.class.newInstance());
-            listForAdmAction.add(ReadFilesJsonAction.class.newInstance());
-            listForAdmAction.add(ReadFilesXmlAction.class.newInstance());
-            listForAdmAction.addAll(listForAction);
-
-            for (Action action: listForAdmAction) {
-                action.setServiceLocator(serviceLocator);
-            }
-
-            for (AuthAction action: listForAuth) {
-                action.setServiceLocator(serviceLocator);
+            for (Class aClass : classes) {
+                Action o = (Action) aClass.newInstance();
+                o.setServiceLocator(serviceLocator);
+                listForAction.add(o);
             }
 
             for (Action action: listForAction) {
                 map.put(action.getName(), action);
             }
-
-            for (AuthAction action: listForAuth) {
-                mapAuth.put(action.getName(), action);
-            }
-
-            for (Action action: listForAdmAction) {
-                mapAdmAction.put(action.getName(), action);
-            }
-
         } catch (InstantiationException | IllegalAccessException e) {
             e.printStackTrace();
         }

@@ -1,13 +1,11 @@
 package com.company.actions;
 
 import com.company.api.Action;
-import com.company.api.AuthAction;
 import com.company.api.ServiceLocator;
 import com.company.model.User;
-import com.company.util.Role;
+import com.company.util.ActionRole;
 
 import java.io.IOException;
-import java.util.Optional;
 
 public class LoginAction implements Action {
     private ServiceLocator serviceLocator;
@@ -34,8 +32,8 @@ public class LoginAction implements Action {
     }
 
     @Override
-    public Role getRole() {
-        return Role.GUEST;
+    public ActionRole getRole() {
+        return ActionRole.GUEST;
     }
 
     @Override

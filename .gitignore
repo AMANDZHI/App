@@ -4,7 +4,8 @@ target/
 out/
 *.txt
 *.json
-*.xml
 src/resources/*.properties
 libs/
 *.md
+exportData/
+server/target/

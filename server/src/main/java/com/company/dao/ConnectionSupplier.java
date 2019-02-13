@@ -2,8 +2,10 @@ package com.company.dao;
 
 import lombok.SneakyThrows;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
@@ -17,7 +19,7 @@ public class ConnectionSupplier {
     @SneakyThrows
     public Connection getConnection() {
         Properties property = new Properties();
-        FileInputStream fis = new FileInputStream("src/resources/config.properties");
+        FileInputStream fis = new FileInputStream("server/src/main/resources/config.properties");
         property.load(fis);
         url_db = property.getProperty("db.host");
         login_db = property.getProperty("db.login");

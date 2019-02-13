@@ -24,7 +24,7 @@ public class WriteAllToFilesXmlAction implements Action {
     }
 
     @Override
-    public void execute() throws IOException {
+    public boolean execute() throws IOException {
         String filePathUsers = "users.xml";
         String filePathTasks = "tasks.xml";
         String filePathProjects = "projects.xml";
@@ -42,6 +42,7 @@ public class WriteAllToFilesXmlAction implements Action {
         if (listTasks.size() != 0) {
             serviceLocator.getTaskSerializationServiceImpl().writeObjectToXml(filePathTasks, listTasks);
         }
+        return true;
     }
 
     @Override

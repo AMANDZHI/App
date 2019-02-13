@@ -24,7 +24,7 @@ public class WriteAllToFilesTxtAction implements Action {
     }
 
     @Override
-    public void execute() throws IOException {
+    public boolean execute() throws IOException {
         String filePathUsers = "users.txt";
         String filePathTasks = "tasks.txt";
         String filePathProjects = "projects.txt";
@@ -42,6 +42,7 @@ public class WriteAllToFilesTxtAction implements Action {
         if (listTasks.size() != 0) {
             serviceLocator.getTaskSerializationServiceImpl().writeObjectToFile(filePathTasks, listUsers);
         }
+        return true;
     }
 
     @Override

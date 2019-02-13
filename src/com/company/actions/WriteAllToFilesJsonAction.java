@@ -24,7 +24,7 @@ public class WriteAllToFilesJsonAction implements Action {
     }
 
     @Override
-    public void execute() throws IOException {
+    public boolean execute() throws IOException {
         String filePathUsers = "users.json";
         String filePathTasks = "tasks.json";
         String filePathProjects = "projects.json";
@@ -41,6 +41,7 @@ public class WriteAllToFilesJsonAction implements Action {
         if (listTasks.size() != 0) {
             serviceLocator.getTaskSerializationServiceImpl().writeObjectToJson(filePathTasks, listTasks);
         }
+        return true;
     }
 
     @Override

@@ -22,7 +22,7 @@ public class UserCreateAction implements Action {
     }
 
     @Override
-    public void execute() throws IOException {
+    public boolean execute() throws IOException {
         String answerNameUser = CommonReader.getNameUser();
         String answerLoginUser = CommonReader.getLoginUser();
         String answerPasswordUser = CommonReader.getPasswordUser();
@@ -31,11 +31,14 @@ public class UserCreateAction implements Action {
         Optional<User> optionalUser = serviceLocator.getUserServiceDB().findByLogin(newUser.getLogin());
         if (optionalUser.isPresent()) {
             System.out.println("Такой логин уже используется");
+            return false;
         } else {
             if (serviceLocator.getUserServiceDB().save(newUser)) {
                 System.out.println(newUser);
+                return true;
             } else {
                 System.out.println("Не удалось сохранить в базу юзера");
+                return false;
             }
         }
     }

@@ -26,7 +26,7 @@ public class ReadFilesXmlAction implements Action {
     }
 
     @Override
-    public void execute() throws IOException {
+    public boolean execute() throws IOException {
         String filePathUsers = "users.Xml";
         String filePathTasks = "tasks.Xml";
         String filePathProjects = "projects.Xml";
@@ -54,6 +54,7 @@ public class ReadFilesXmlAction implements Action {
         }
 
         System.out.println("Успешно");
+        return true;
     }
 
     @Override

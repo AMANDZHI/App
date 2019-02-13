@@ -22,7 +22,7 @@ public class UserRemoveAction implements Action {
     }
 
     @Override
-    public void execute() throws IOException {
+    public boolean execute() throws IOException {
         String answerLoginUser = CommonReader.getLoginUser();
 
         Optional<User> optionalUser = serviceLocator.getUserServiceDB().findByLogin(answerLoginUser);
@@ -30,14 +30,18 @@ public class UserRemoveAction implements Action {
             if (!optionalUser.get().equals(serviceLocator.getSessionService().getSession().getUser())) {
                 if (serviceLocator.getUserServiceDB().removeByLogin(answerLoginUser)) {
                     System.out.println("Удален юзер");
+                    return true;
                 } else {
                     System.out.println("Не удалось удалить юзера из базы");
+                    return false;
                 }
             } else {
                 System.out.println("Нельзя удалить себя");
+                return false;
             }
         } else {
             System.out.println("Нет такого юзера");
+            return false;
         }
     }
 

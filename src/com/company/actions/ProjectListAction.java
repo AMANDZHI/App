@@ -23,7 +23,7 @@ public class ProjectListAction implements Action {
     }
 
     @Override
-    public void execute() throws IOException {
+    public boolean execute() throws IOException {
         List<Project> yourProjects = new ArrayList<>();
         List<Project> list = serviceLocator.getProjectServiceDB().getList();
         for (Project project : list) {
@@ -32,6 +32,7 @@ public class ProjectListAction implements Action {
             }
         }
         System.out.println(yourProjects);
+        return true;
     }
 
     @Override

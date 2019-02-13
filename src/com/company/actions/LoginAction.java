@@ -1,13 +1,15 @@
 package com.company.actions;
 
+import com.company.api.Action;
 import com.company.api.AuthAction;
 import com.company.api.ServiceLocator;
 import com.company.model.User;
+import com.company.util.Role;
 
 import java.io.IOException;
 import java.util.Optional;
 
-public class LoginAction implements AuthAction {
+public class LoginAction implements Action {
     private ServiceLocator serviceLocator;
 
     @Override
@@ -21,15 +23,19 @@ public class LoginAction implements AuthAction {
     }
 
     @Override
-    public User execute() throws IOException {
+    public boolean execute() throws IOException {
         String answerLogin = CommonReader.getLoginUser();
         String answerPassword = CommonReader.getPasswordUser();
         User user = new User(answerLogin, answerPassword);
         if (serviceLocator.getAppSecurity().authorization(user)) {
-            Optional<User> optionalUser = serviceLocator.getUserServiceDB().findByLogin(answerLogin);
-            return optionalUser.orElse(null);
+            return true;
         }
-        return null;
+        return false;
+    }
+
+    @Override
+    public Role getRole() {
+        return Role.GUEST;
     }
 
     @Override

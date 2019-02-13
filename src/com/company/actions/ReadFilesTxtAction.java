@@ -26,7 +26,7 @@ public class ReadFilesTxtAction implements Action {
     }
 
     @Override
-    public void execute() throws IOException {
+    public boolean execute() throws IOException {
         String filePathUsers = "users.txt";
         String filePathTasks = "tasks.txt";
         String filePathProjects = "projects.txt";
@@ -54,6 +54,7 @@ public class ReadFilesTxtAction implements Action {
         }
 
         System.out.println("Успешно");
+        return true;
     }
 
     @Override

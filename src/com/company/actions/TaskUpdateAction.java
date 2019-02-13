@@ -23,7 +23,7 @@ public class TaskUpdateAction implements Action {
     }
 
     @Override
-    public void execute() throws IOException {
+    public boolean execute() throws IOException {
         String answerNameTask = CommonReader.getNameTask();
         String answerNewNameTask = CommonReader.getNewNameTask();
         String answerDescrTask = CommonReader.getNewDescrTask();
@@ -38,18 +38,23 @@ public class TaskUpdateAction implements Action {
                     optionalTask.get().setProject(optionalProject.get());
                     if (serviceLocator.getTaskServiceDB().update(optionalTask.get())) {
                         System.out.println("Успешно обновлено");
+                        return true;
                     } else {
                         System.out.println("Не удалось обновить в базе");
+                        return false;
                     }
                 }
                 else {
                     System.out.println("Нет прав для обновления задачи - нет доступа к указанному проекту");
+                    return false;
                 }
             } else {
                 System.out.println("не найден указанный вами проект или таск ");
+                return false;
             }
         } else {
             System.out.println("Такое новое имя таска уже используется");
+            return false;
         }
     }
 

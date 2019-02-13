@@ -22,17 +22,20 @@ public class TaskFindAction implements Action {
     }
 
     @Override
-    public void execute() throws IOException {
+    public boolean execute() throws IOException {
         String answerNameTask = CommonReader.getNameTask();
         Optional<Task> optionalTask = serviceLocator.getTaskServiceDB().findByName(answerNameTask);
         if (optionalTask.isPresent()) {
             if (optionalTask.get().getProject().getUser().equals(serviceLocator.getSessionService().getSession().getUser()) || serviceLocator.getSessionService().getSession().getUser().isAdmin()) {
                 System.out.println(optionalTask.get());
+                return true;
             } else {
                 System.out.println("Данный таск не Ваш");
+                return false;
             }
         } else {
             System.out.println("не найден таск с таким именем");
+            return false;
         }
     }
 

@@ -22,13 +22,15 @@ public class UserFindAction implements Action {
     }
 
     @Override
-    public void execute() throws IOException {
+    public boolean execute() throws IOException {
         String answerLoginUser = CommonReader.getLoginUser();
         Optional<User> optionalUser = serviceLocator.getUserServiceDB().findByLogin(answerLoginUser);
         if (optionalUser.isPresent()) {
             System.out.println(optionalUser.get());
+            return true;
         } else {
             System.out.println("Не найден юзер с таким логином");
+            return false;
         }
     }
 

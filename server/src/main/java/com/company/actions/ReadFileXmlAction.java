@@ -2,6 +2,7 @@ package com.company.actions;
 
 import com.company.api.Action;
 import com.company.api.ServiceLocator;
+import com.company.model.Domain;
 import com.company.model.Project;
 import com.company.model.Task;
 import com.company.model.User;
@@ -11,30 +12,29 @@ import lombok.SneakyThrows;
 import java.io.IOException;
 import java.util.List;
 
-public class ReadFilesJsonAction implements Action {
+public class ReadFileXmlAction implements Action {
     private ServiceLocator serviceLocator;
 
     @Override
     public String getName() {
-        return "readFilesJsonToAllRepo";
+        return "readFileXmlToAllRepo";
     }
 
     @Override
     public String getDescription() {
-        return "deserialization files json data to objects";
+        return "deserialization file Xml data to objects";
     }
 
     @Override
     @SneakyThrows
     public boolean execute() throws IOException {
-        String filePathUsers = "users.json";
-        String filePathTasks = "tasks.json";
-        String filePathProjects = "projects.json";
+        String filePath = "exportData/all.xml";
 
-        List<Project> listProjects = serviceLocator.getProjectSerializationServiceImpl().readJsonToObject(filePathProjects);
-        List<User> listUsers = serviceLocator.getUserSerializationServiceImpl().readJsonToObject(filePathUsers);
-        List<Task> listTasks = serviceLocator.getTaskSerializationServiceImpl().readJsonToObject(filePathTasks);
+        Domain domain = serviceLocator.getSerializationServiceImpl().readXmlToObjects(filePath);
 
+        List<User> listUsers = domain.getUserList();
+        List<Project> listProjects = domain.getProjectList();
+        List<Task> listTasks = domain.getTaskList();
         for (User u: listUsers) {
             if (!serviceLocator.getUserServiceDB().findByLogin(u.getLogin()).isPresent()) {
                 serviceLocator.getUserServiceDB().save(u);

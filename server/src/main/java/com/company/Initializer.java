@@ -21,22 +21,20 @@ public class Initializer implements ServiceLocator {
     private final UserRepositoryDB userRepositoryDB = new UserRepositoryDBImpl(connectionSupplier);
     private final RepositoryDB<String, Project> projectRepositoryDB = new ProjectRepositoryDBImpl(connectionSupplier, userRepositoryDB);
     private final RepositoryDB<String, Task> taskRepositoryDB = new TaskRepositoryDBImpl(connectionSupplier, projectRepositoryDB);
+    private final DomainRepository domainRepository = new DomainRepositoryImpl(projectRepositoryDB, userRepositoryDB, taskRepositoryDB);
     private final SessionService sessionService = new SessionServiceImpl(sessionRepository);
     private final ServiceDB<String, Project> projectServiceDB = new ProjectServiceDBImpl(projectRepositoryDB);
     private final ServiceDB<String, Task> taskServiceDB = new TaskServiceDBImpl(taskRepositoryDB);
     private final UserServiceDB userServiceDB = new UserServiceDBImpl(userRepositoryDB);
+    private final DomainService domainService = new DomainServiceImpl(domainRepository);
     private final BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
     private final ServiceLocator serviceLocator = this;
     private final AppSecurity appSecurity = new AppSecurity(serviceLocator);
     private final Map<String, Action> map = new HashMap<>();
     private final Menu menu = new Menu(reader, map, serviceLocator);
     private final List<Action> listForAction = new ArrayList<>();
-    private final CommonSerializationRepository projectSerialization = new ProjectSerializationRepositoryImpl();
-    private final CommonSerializationRepository taskSerialization = new TaskSerializationRepositoryImpl();
-    private final CommonSerializationRepository userSerialization = new UserSerializationRepositoryImpl();
-    private final SerializationService projectSerializationService = new ProjectSerializationServiceImpl(projectSerialization);
-    private final SerializationService taskSerializationService = new TaskSerializationServiceImpl(taskSerialization);
-    private final SerializationService userSerializationService = new TaskSerializationServiceImpl(userSerialization);
+    private final CommonSerializationRepository commonSerializationRepository = new DomainSerializationRepositoryImpl();
+    private final SerializationService serializationService = new DomainSerializationServiceImpl(commonSerializationRepository);
 
     @Override
     public SessionService getSessionService() {
@@ -49,18 +47,8 @@ public class Initializer implements ServiceLocator {
     }
 
     @Override
-    public SerializationService getProjectSerializationServiceImpl() {
-        return projectSerializationService;
-    }
-
-    @Override
-    public SerializationService getTaskSerializationServiceImpl() {
-        return taskSerializationService;
-    }
-
-    @Override
-    public SerializationService getUserSerializationServiceImpl() {
-        return userSerializationService;
+    public SerializationService getSerializationServiceImpl() {
+        return serializationService;
     }
 
     @Override
@@ -76,6 +64,11 @@ public class Initializer implements ServiceLocator {
     @Override
     public UserServiceDB getUserServiceDB() {
         return userServiceDB;
+    }
+
+    @Override
+    public DomainService getDomainServiceImpl() {
+        return domainService;
     }
 
 

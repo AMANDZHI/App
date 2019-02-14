@@ -34,13 +34,13 @@ public class WriteAllToFilesTxtAction implements Action {
         List<Task> listTasks = serviceLocator.getTaskServiceDB().getList();
 
         if (listProjects.size() != 0) {
-            serviceLocator.getProjectSerializationServiceImpl().writeObjectToFile(filePathProjects, listProjects);
+            serviceLocator.getSerializationServiceImpl().writeObjectToFile(filePathProjects, listProjects);
         }
         if (listUsers.size() != 0) {
-            serviceLocator.getUserSerializationServiceImpl().writeObjectToFile(filePathUsers, listUsers);
+            serviceLocator.getSerializationServiceImpl().writeObjectToFile(filePathUsers, listUsers);
         }
         if (listTasks.size() != 0) {
-            serviceLocator.getTaskSerializationServiceImpl().writeObjectToFile(filePathTasks, listUsers);
+            serviceLocator.getSerializationServiceImpl().writeObjectToFile(filePathTasks, listTasks);
         }
         return true;
     }

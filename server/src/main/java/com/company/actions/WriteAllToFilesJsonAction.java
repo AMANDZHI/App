@@ -2,6 +2,7 @@ package com.company.actions;
 
 import com.company.api.Action;
 import com.company.api.ServiceLocator;
+import com.company.model.Domain;
 import com.company.model.Project;
 import com.company.model.Task;
 import com.company.model.User;
@@ -15,7 +16,7 @@ public class WriteAllToFilesJsonAction implements Action {
 
     @Override
     public String getName() {
-        return "writeAllToFilesJson";
+        return "writeAllToFileJson";
     }
 
     @Override
@@ -25,22 +26,10 @@ public class WriteAllToFilesJsonAction implements Action {
 
     @Override
     public boolean execute() throws IOException {
-        String filePathUsers = "exportData/users.json";
-        String filePathTasks = "exportData/tasks.json";
-        String filePathProjects = "exportData/projects.json";
-
-        List<Project> listProjects = serviceLocator.getProjectServiceDB().getList();
-        List<User> listUsers = serviceLocator.getUserServiceDB().getList();
-        List<Task> listTasks = serviceLocator.getTaskServiceDB().getList();
-        if (listProjects.size() != 0) {
-            serviceLocator.getProjectSerializationServiceImpl().writeObjectToJson(filePathProjects, listProjects);
-        }
-        if (listUsers.size() != 0) {
-            serviceLocator.getUserSerializationServiceImpl().writeObjectToJson(filePathUsers, listUsers);
-        }
-        if (listTasks.size() != 0) {
-            serviceLocator.getTaskSerializationServiceImpl().writeObjectToJson(filePathTasks, listTasks);
-        }
+        String filePath = "exportData/all.json";
+        Domain domain = serviceLocator.getDomainServiceImpl().getDomain();
+        serviceLocator.getSerializationServiceImpl().writeAllToJson(filePath, domain);
+        System.out.println(filePath);
         return true;
     }
 

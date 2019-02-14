@@ -7,10 +7,9 @@ import com.company.service.AppSecurity;
 public interface ServiceLocator {
     SessionService getSessionService();
     AppSecurity getAppSecurity();
-    SerializationService getProjectSerializationServiceImpl();
-    SerializationService getTaskSerializationServiceImpl();
-    SerializationService getUserSerializationServiceImpl();
+    SerializationService getSerializationServiceImpl();
     ServiceDB<String, Project> getProjectServiceDB();
     ServiceDB<String, Task> getTaskServiceDB();
     UserServiceDB getUserServiceDB();
+    DomainService getDomainServiceImpl();
 }

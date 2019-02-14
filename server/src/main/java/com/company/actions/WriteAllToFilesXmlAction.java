@@ -2,6 +2,7 @@ package com.company.actions;
 
 import com.company.api.Action;
 import com.company.api.ServiceLocator;
+import com.company.model.Domain;
 import com.company.model.Project;
 import com.company.model.Task;
 import com.company.model.User;
@@ -15,7 +16,7 @@ public class WriteAllToFilesXmlAction implements Action {
 
     @Override
     public String getName() {
-        return "writeAllToFilesXml";
+        return "writeAllToFileXml";
     }
 
     @Override
@@ -25,23 +26,10 @@ public class WriteAllToFilesXmlAction implements Action {
 
     @Override
     public boolean execute() throws IOException {
-        String filePathUsers = "exportData/users.xml";
-        String filePathTasks = "exportData/tasks.xml";
-        String filePathProjects = "exportData/projects.xml";
-
-        List<Project> listProjects = serviceLocator.getProjectServiceDB().getList();
-        List<User> listUsers = serviceLocator.getUserServiceDB().getList();
-        List<Task> listTasks = serviceLocator.getTaskServiceDB().getList();
-
-        if (listProjects.size() != 0) {
-            serviceLocator.getProjectSerializationServiceImpl().writeObjectToXml(filePathProjects, listProjects);
-        }
-        if (listUsers.size() != 0) {
-            serviceLocator.getUserSerializationServiceImpl().writeObjectToXml(filePathUsers, listUsers);
-        }
-        if (listTasks.size() != 0) {
-            serviceLocator.getTaskSerializationServiceImpl().writeObjectToXml(filePathTasks, listTasks);
-        }
+        String filePath = "exportData/all.xml";
+        Domain domain = serviceLocator.getDomainServiceImpl().getDomain();
+        serviceLocator.getSerializationServiceImpl().writeAllToXml(filePath, domain);
+        System.out.println(filePath);
         return true;
     }
 

@@ -1,8 +1,8 @@
 package com.company.repository;
 
 import com.company.api.CommonSerializationRepository;
+import com.company.model.Domain;
 import com.company.model.Project;
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
@@ -12,11 +12,19 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProjectSerializationRepositoryImpl implements CommonSerializationRepository<Project> {
+public class DomainSerializationRepositoryImpl implements CommonSerializationRepository {
 
     @Override
     @SneakyThrows
-    public List<Project> readFileToObject(String path) {
+    public void writeObjectToFile(String path, List list) {
+        try(ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(path))) {
+            objectOutputStream.writeObject(list);
+        }
+    }
+
+    @Override
+    @SneakyThrows
+    public List readFileToObject(String path) {
         try(ObjectInputStream objectInputStream = new ObjectInputStream(new FileInputStream(path))) {
             List<Project> list = new ArrayList<>();
             list = ((ArrayList<Project>) objectInputStream.readObject());
@@ -26,41 +34,33 @@ public class ProjectSerializationRepositoryImpl implements CommonSerializationRe
 
     @Override
     @SneakyThrows
-    public void writeObjectToJson(String path, List<Project> list) {
+    public void writeAllToJson(String path, Domain domain) {
         ObjectMapper mapper = new ObjectMapper();
         FileOutputStream fileOutputStream = new FileOutputStream(new File(path));
         ObjectWriter objectWriter = mapper.writerWithDefaultPrettyPrinter();
-        objectWriter.writeValue(fileOutputStream, list);
+        objectWriter.writeValue(fileOutputStream, domain);
     }
 
     @Override
     @SneakyThrows
-    public void writeObjectToXml(String path, List<Project> list) {
+    public void writeAllToXml(String path, Domain domain) {
         ObjectMapper mapper = new XmlMapper();
         FileOutputStream fileOutputStream = new FileOutputStream(new File(path));
         ObjectWriter objectWriter = mapper.writerWithDefaultPrettyPrinter();
-        objectWriter.writeValue(fileOutputStream, list);
+        objectWriter.writeValue(fileOutputStream, domain);
     }
 
     @Override
     @SneakyThrows
-    public List<Project> readJsonToObject(String path){
+    public Domain readJsonToObjects(String path) {
         ObjectMapper mapper = new ObjectMapper();
-        return mapper.readValue(new File(path), new TypeReference<List<Project>>(){});
+        return mapper.readValue(new File(path), Domain.class);
     }
 
     @Override
     @SneakyThrows
-    public List<Project> readXmlToObject(String path) {
-            ObjectMapper mapper = new XmlMapper();
-            return mapper.readValue(new File(path), new TypeReference<List<Project>>(){});
-    }
-
-    @Override
-    @SneakyThrows
-    public void writeObjectToFile(String path, List<Project> list) {
-        try(ObjectOutputStream objectOutputStream = new ObjectOutputStream(new FileOutputStream(path))) {
-            objectOutputStream.writeObject(list);
-        }
+    public Domain readXmlToObjects(String path) {
+        ObjectMapper mapper = new XmlMapper();
+        return mapper.readValue(new File(path), Domain.class);
     }
 }

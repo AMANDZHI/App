@@ -26,13 +26,13 @@ public class ReadFilesTxtAction implements Action {
 
     @Override
     public boolean execute() throws IOException, SQLException {
-        String filePathUsers = "users.txt";
-        String filePathTasks = "tasks.txt";
-        String filePathProjects = "projects.txt";
+        String filePathUsers = "exportData/users.txt";
+        String filePathTasks = "exportData/tasks.txt";
+        String filePathProjects = "exportData/projects.txt";
 
-        List<Project> listProjects = serviceLocator.getProjectSerializationServiceImpl().readFileToObject(filePathProjects);
-        List<User> listUsers = serviceLocator.getUserSerializationServiceImpl().readFileToObject(filePathUsers);
-        List<Task> listTasks = serviceLocator.getTaskSerializationServiceImpl().readFileToObject(filePathTasks);
+        List<Project> listProjects = serviceLocator.getSerializationServiceImpl().readFileToObject(filePathProjects);
+        List<User> listUsers = serviceLocator.getSerializationServiceImpl().readFileToObject(filePathUsers);
+        List<Task> listTasks = serviceLocator.getSerializationServiceImpl().readFileToObject(filePathTasks);
 
         for (User u: listUsers) {
             if (!serviceLocator.getUserServiceDB().findByLogin(u.getLogin()).isPresent()) {

@@ -4,6 +4,7 @@ import com.company.api.CommonSerializationRepository;
 import com.company.model.User;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import lombok.SneakyThrows;
 
@@ -27,14 +28,18 @@ public class UserSerializationRepositoryImpl implements CommonSerializationRepos
     @SneakyThrows
     public void writeObjectToJson(String path, List<User> list) {
         ObjectMapper mapper = new ObjectMapper();
-        mapper.writeValue(new FileOutputStream(path), list);
+        FileOutputStream fileOutputStream = new FileOutputStream(new File(path));
+        ObjectWriter objectWriter = mapper.writerWithDefaultPrettyPrinter();
+        objectWriter.writeValue(fileOutputStream, list);
     }
 
     @Override
     @SneakyThrows
     public void writeObjectToXml(String path, List<User> list) {
         ObjectMapper mapper = new XmlMapper();
-        mapper.writeValue(new File(path), list);
+        FileOutputStream fileOutputStream = new FileOutputStream(new File(path));
+        ObjectWriter objectWriter = mapper.writerWithDefaultPrettyPrinter();
+        objectWriter.writeValue(fileOutputStream, list);
     }
 
     @Override

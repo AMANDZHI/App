@@ -4,6 +4,7 @@ import com.company.api.CommonSerializationRepository;
 import com.company.model.Project;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import lombok.SneakyThrows;
 
@@ -27,15 +28,18 @@ public class ProjectSerializationRepositoryImpl implements CommonSerializationRe
     @SneakyThrows
     public void writeObjectToJson(String path, List<Project> list) {
         ObjectMapper mapper = new ObjectMapper();
-        String s = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(list);
-        mapper.writeValue(new File(path), s);
+        FileOutputStream fileOutputStream = new FileOutputStream(new File(path));
+        ObjectWriter objectWriter = mapper.writerWithDefaultPrettyPrinter();
+        objectWriter.writeValue(fileOutputStream, list);
     }
 
     @Override
     @SneakyThrows
     public void writeObjectToXml(String path, List<Project> list) {
         ObjectMapper mapper = new XmlMapper();
-        mapper.writeValue(new File(path), list);
+        FileOutputStream fileOutputStream = new FileOutputStream(new File(path));
+        ObjectWriter objectWriter = mapper.writerWithDefaultPrettyPrinter();
+        objectWriter.writeValue(fileOutputStream, list);
     }
 
     @Override

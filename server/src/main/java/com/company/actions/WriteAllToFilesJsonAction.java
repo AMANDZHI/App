@@ -25,9 +25,9 @@ public class WriteAllToFilesJsonAction implements Action {
 
     @Override
     public boolean execute() throws IOException {
-        String filePathUsers = "users.json";
-        String filePathTasks = "tasks.json";
-        String filePathProjects = "projects.json";
+        String filePathUsers = "exportData/users.json";
+        String filePathTasks = "exportData/tasks.json";
+        String filePathProjects = "exportData/projects.json";
 
         List<Project> listProjects = serviceLocator.getProjectServiceDB().getList();
         List<User> listUsers = serviceLocator.getUserServiceDB().getList();

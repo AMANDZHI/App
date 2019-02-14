@@ -25,9 +25,9 @@ public class WriteAllToFilesXmlAction implements Action {
 
     @Override
     public boolean execute() throws IOException {
-        String filePathUsers = "users.xml";
-        String filePathTasks = "tasks.xml";
-        String filePathProjects = "projects.xml";
+        String filePathUsers = "exportData/users.xml";
+        String filePathTasks = "exportData/tasks.xml";
+        String filePathProjects = "exportData/projects.xml";
 
         List<Project> listProjects = serviceLocator.getProjectServiceDB().getList();
         List<User> listUsers = serviceLocator.getUserServiceDB().getList();

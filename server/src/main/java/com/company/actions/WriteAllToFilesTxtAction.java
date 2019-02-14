@@ -25,9 +25,9 @@ public class WriteAllToFilesTxtAction implements Action {
 
     @Override
     public boolean execute() throws IOException {
-        String filePathUsers = "users.txt";
-        String filePathTasks = "tasks.txt";
-        String filePathProjects = "projects.txt";
+        String filePathUsers = "exportData/users.txt";
+        String filePathTasks = "exportData/tasks.txt";
+        String filePathProjects = "exportData/projects.txt";
 
         List<Project> listProjects = serviceLocator.getProjectServiceDB().getList();
         List<User> listUsers = serviceLocator.getUserServiceDB().getList();

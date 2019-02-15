@@ -20,9 +20,8 @@ public class UserListAction implements Action {
     }
 
     @Override
-    public boolean execute() throws IOException {
+    public void execute() throws IOException {
         System.out.println(serviceLocator.getUserServiceDB().getList());
-        return true;
     }
 
     @Override

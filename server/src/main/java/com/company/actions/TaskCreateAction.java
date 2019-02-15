@@ -25,7 +25,7 @@ public class TaskCreateAction implements Action {
     }
 
     @Override
-    public boolean execute() throws IOException, SQLException {
+    public void execute() throws IOException, SQLException {
         String answerNameTask = CommonReader.getNameTask();
         String answerDescrTask = CommonReader.getDescrTask();
         String answerProjectTask = CommonReader.getNameProject();
@@ -36,24 +36,19 @@ public class TaskCreateAction implements Action {
                     Task newTask = new Task(answerNameTask, answerDescrTask, optionalProject.get());
                     if (serviceLocator.getTaskServiceDB().save(newTask)) {
                         System.out.println(newTask);
-                        return true;
                     } else {
                         System.out.println("Не удалось сохранить таск в базу");
-                        return false;
                     }
 
                 } else {
                     System.out.println("Вы не можете создавать задачу для этого проекта");
-                    return false;
                 }
 
             } else {
                 System.out.println("не найден проект с таким именем");
-                return false;
             }
         } else {
             System.out.println("Такое имя таска уже используется");
-            return false;
         }
     }
 

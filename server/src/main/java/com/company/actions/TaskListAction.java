@@ -24,7 +24,7 @@ public class TaskListAction implements Action {
     }
 
     @Override
-    public boolean execute() throws IOException {
+    public void execute() throws IOException {
         List<Task> yourTasks = new ArrayList<>();
         List<Task> list = serviceLocator.getTaskServiceDB().getList();
         for (Task task: list) {
@@ -33,7 +33,6 @@ public class TaskListAction implements Action {
             }
         }
         System.out.println(yourTasks);
-        return true;
     }
 
     @Override

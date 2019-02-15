@@ -23,7 +23,7 @@ public class RegistrationAction implements Action {
     }
 
     @Override
-    public boolean execute() throws IOException {
+    public void execute() throws IOException {
         String answerNameUser = CommonReader.getNameUser();
         String answerLoginUser = CommonReader.getLoginUser();
         String answerPasswordUser = CommonReader.getPasswordUser();
@@ -33,14 +33,11 @@ public class RegistrationAction implements Action {
             if (serviceLocator.getUserServiceDB().save(newUser)) {
                 System.out.println(newUser);
                 serviceLocator.getSessionService().getSession().setUser(serviceLocator.getUserServiceDB().findByLogin(newUser.getLogin()).get());
-                return true;
             } else {
                 System.out.println("Не удалось сохранить в базу");
-                return false;
             }
         } else {
             System.out.println("Такой логин уже используется");
-            return false;
         }
     }
 

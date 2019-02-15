@@ -23,20 +23,17 @@ public class ProjectFindAction implements Action {
     }
 
     @Override
-    public boolean execute() throws IOException {
+    public void execute() throws IOException {
         String answerNameProject = CommonReader.getNameProject();
         Optional<Project> optionalProject = serviceLocator.getProjectServiceDB().findByName(answerNameProject);
         if (optionalProject.isPresent()) {
             if (optionalProject.get().getUser().equals(serviceLocator.getSessionService().getSession().getUser()) || serviceLocator.getSessionService().getSession().getUser().getRole().equals(UserRole.ADMIN)) {
                 System.out.println(optionalProject.get());
-                return true;
             } else {
                 System.out.println("Нет прав для просмотра проекта");
-                return false;
             }
         } else {
             System.out.println("Не найден такой проект");
-            return false;
         }
 
     }

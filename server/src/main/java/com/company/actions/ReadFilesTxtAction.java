@@ -25,7 +25,7 @@ public class ReadFilesTxtAction implements Action {
     }
 
     @Override
-    public boolean execute() throws IOException, SQLException {
+    public  void execute() throws IOException, SQLException {
         String filePathUsers = "exportData/users.txt";
         String filePathTasks = "exportData/tasks.txt";
         String filePathProjects = "exportData/projects.txt";
@@ -53,7 +53,6 @@ public class ReadFilesTxtAction implements Action {
         }
 
         System.out.println("Успешно");
-        return true;
     }
 
     @Override

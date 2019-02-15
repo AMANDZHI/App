@@ -27,7 +27,7 @@ public class ReadFileXmlAction implements Action {
 
     @Override
     @SneakyThrows
-    public boolean execute() throws IOException {
+    public void execute() throws IOException {
         String filePath = "exportData/all.xml";
 
         Domain domain = serviceLocator.getSerializationServiceImpl().readXmlToObjects(filePath);
@@ -54,7 +54,6 @@ public class ReadFileXmlAction implements Action {
         }
 
         System.out.println("Успешно");
-        return true;
     }
 
     @Override

@@ -20,9 +20,9 @@ public class LogOutAction implements Action {
     }
 
     @Override
-    public boolean execute() throws IOException {
-        serviceLocator.getAppSecurity().logOut();
-        return true;
+    public void execute() throws IOException {
+        serviceLocator.getSessionService().invalidate();
+        System.out.println("Вышли из системы");
     }
 
     @Override

@@ -27,7 +27,7 @@ public class ReadFileJsonAction implements Action {
 
     @Override
     @SneakyThrows
-    public boolean execute() throws IOException {
+    public void execute() throws IOException {
         String filePath = "exportData/all.json";
 
         Domain domain = serviceLocator.getSerializationServiceImpl().readJsonToObjects(filePath);
@@ -53,7 +53,6 @@ public class ReadFileJsonAction implements Action {
         }
 
         System.out.println("Успешно");
-        return true;
     }
 
     @Override

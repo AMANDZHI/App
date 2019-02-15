@@ -23,7 +23,7 @@ public class ProjectUpdateAction implements Action {
     }
 
     @Override
-    public boolean execute() throws IOException {
+    public void execute() throws IOException {
         String answerNameProject = CommonReader.getNameProject();
         String answerNewNameProject = CommonReader.getNewNameProject();
         String answerDescrProject = CommonReader.getNewDescrProject();
@@ -35,18 +35,14 @@ public class ProjectUpdateAction implements Action {
                     optionalProject.get().setDescription(answerDescrProject);
                     serviceLocator.getProjectServiceDB().update(optionalProject.get());
                     System.out.println(optionalProject.get());
-                    return true;
                 } else {
                     System.out.println("Не имеете прав для обновления проекта с таким именем");
-                    return false;
                 }
             } else {
                 System.out.println("Не найден проект с таким именем");
-                return false;
             }
         } else {
             System.out.println("Такое новое имя проекта уже используется");
-            return false;
         }
 
     }

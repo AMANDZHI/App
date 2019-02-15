@@ -25,12 +25,11 @@ public class WriteAllToFilesXmlAction implements Action {
     }
 
     @Override
-    public boolean execute() throws IOException {
+    public void execute() throws IOException {
         String filePath = "exportData/all.xml";
         Domain domain = serviceLocator.getDomainServiceImpl().getDomain();
         serviceLocator.getSerializationServiceImpl().writeAllToXml(filePath, domain);
         System.out.println(filePath);
-        return true;
     }
 
     @Override

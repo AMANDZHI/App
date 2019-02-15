@@ -25,12 +25,11 @@ public class WriteAllToFilesJsonAction implements Action {
     }
 
     @Override
-    public boolean execute() throws IOException {
+    public void execute() throws IOException {
         String filePath = "exportData/all.json";
         Domain domain = serviceLocator.getDomainServiceImpl().getDomain();
         serviceLocator.getSerializationServiceImpl().writeAllToJson(filePath, domain);
         System.out.println(filePath);
-        return true;
     }
 
     @Override

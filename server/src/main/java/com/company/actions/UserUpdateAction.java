@@ -23,7 +23,7 @@ public class UserUpdateAction implements Action {
     }
 
     @Override
-    public boolean execute() throws IOException {
+    public void execute() throws IOException {
         String answerNewNameUser = CommonReader.getNewNameUser();
         String answerLoginUser = CommonReader.getLoginUser();
         String answerNewLoginUser = CommonReader.getNewLoginUser();
@@ -41,10 +41,8 @@ public class UserUpdateAction implements Action {
                     user.setRole(UserRole.valueOf(answerRoleUser));
                     if (serviceLocator.getUserServiceDB().update(user)) {
                         System.out.println(user);
-                        return true;
                     } else {
                         System.out.println("Не удалось обновить юзера в базе");
-                        return false;
                     }
                 } else {
                     user.setName(answerNewNameUser);
@@ -53,20 +51,16 @@ public class UserUpdateAction implements Action {
                     if (serviceLocator.getUserServiceDB().update(user)) {
                         serviceLocator.getSessionService().save(new Session(user));
                         System.out.println(user);
-                        return true;
                     } else {
                         System.out.println("Не удалось обновить юзера в базе");
-                        return false;
                     }
 
                 }
             } else {
                 System.out.println("Не найден юзер с таким логином");
-                return false;
             }
         } else {
             System.out.println("Такой новый логин уже используется");
-            return false;
         }
     }
 

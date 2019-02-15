@@ -45,8 +45,8 @@ public class Menu {
             }
 
             if (map.get(answerAction).equals(map.get("login"))) {
-                boolean access = map.get(answerAction).execute();
-                if (access) {
+                map.get(answerAction).execute();
+                if (serviceLocator.getSessionService().getSession().getUser() != null) {
                     User user = serviceLocator.getSessionService().getSession().getUser();
                     authMenu(user);
                 } else {
@@ -54,8 +54,8 @@ public class Menu {
                 }
 
             } else if (map.get(answerAction).equals(map.get("registration"))) {
-                boolean access = map.get(answerAction).execute();
-                if (access) {
+                map.get(answerAction).execute();
+                if (serviceLocator.getSessionService().getSession().getUser() != null) {
                     User user = serviceLocator.getSessionService().getSession().getUser();
                     authMenu(user);
                 } else {

@@ -22,7 +22,7 @@ public class ProjectCreateAction implements Action {
     }
 
     @Override
-    public boolean execute() throws IOException, SQLException {
+    public void execute() throws IOException, SQLException {
         String answerNameProject = CommonReader.getNameProject();
         String answerDescrProject = CommonReader.getDescrProject();
         Project newProject = new Project(answerNameProject, answerDescrProject, serviceLocator.getSessionService().getSession().getUser());
@@ -30,14 +30,11 @@ public class ProjectCreateAction implements Action {
         if (!serviceLocator.getProjectServiceDB().findByName(newProject.getName()).isPresent()) {
             if (serviceLocator.getProjectServiceDB().save(newProject)) {
                 System.out.println(newProject);
-                return true;
             } else {
                 System.out.println("Не удалось сохранить проект в базу");
-                return false;
             }
         } else {
             System.out.println("Уже есть проект с таким именем");
-            return false;
         }
     }
 

@@ -29,7 +29,6 @@ public class Initializer implements ServiceLocator {
     private final DomainService domainService = new DomainServiceImpl(domainRepository);
     private final BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
     private final ServiceLocator serviceLocator = this;
-    private final AppSecurity appSecurity = new AppSecurity(serviceLocator);
     private final Map<String, Action> map = new HashMap<>();
     private final Menu menu = new Menu(reader, map, serviceLocator);
     private final List<Action> listForAction = new ArrayList<>();
@@ -39,11 +38,6 @@ public class Initializer implements ServiceLocator {
     @Override
     public SessionService getSessionService() {
         return sessionService;
-    }
-
-    @Override
-    public AppSecurity getAppSecurity() {
-        return appSecurity;
     }
 
     @Override

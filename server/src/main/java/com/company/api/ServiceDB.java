@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ServiceDB<T, M> {
-    boolean save(M object) throws IOException, SQLException;
+    boolean save(M object);
     Optional<M> findByName(T name);
     Optional<M> findById(T id);
     boolean update(M object);

@@ -8,7 +8,7 @@ import java.sql.SQLException;
 public interface Action {
     String getName();
     String getDescription();
-    void execute() throws IOException, SQLException;
+    void execute();
     ActionRole getRole();
     void setServiceLocator(ServiceLocator serviceLocator);
 }

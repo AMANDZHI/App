@@ -18,7 +18,7 @@ public class TaskServiceDBImpl implements ServiceDB<String, Task> {
     }
 
     @Override
-    public boolean save(Task object) throws IOException, SQLException {
+    public boolean save(Task object) {
         return taskRepositoryDB.save(object);
     }
 

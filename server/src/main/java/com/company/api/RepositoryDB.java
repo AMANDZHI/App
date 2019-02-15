@@ -1,7 +1,5 @@
 package com.company.api;
 
-import java.io.IOException;
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 

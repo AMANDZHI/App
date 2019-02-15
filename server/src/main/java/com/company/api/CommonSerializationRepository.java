@@ -2,7 +2,6 @@ package com.company.api;
 
 import com.company.model.Domain;
 
-import java.io.IOException;
 import java.util.List;
 
 public interface CommonSerializationRepository<T> {

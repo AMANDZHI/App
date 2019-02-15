@@ -5,8 +5,6 @@ import com.company.api.ServiceDB;
 import com.company.model.Task;
 import lombok.SneakyThrows;
 
-import java.io.IOException;
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Optional;
 

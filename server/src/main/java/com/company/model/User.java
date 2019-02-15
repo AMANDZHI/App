@@ -16,11 +16,6 @@ public class User implements Serializable {
     public User() {
     }
 
-    public User(String login, String password) {
-        this.login = login;
-        this.password = Encryption.md5Custom(password);
-    }
-
     public User(String name, String login, String password) {
         this.name = name;
         this.login = login;

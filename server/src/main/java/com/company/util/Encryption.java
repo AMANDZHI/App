@@ -1,10 +1,22 @@
 package com.company.util;
 
+import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
+import lombok.SneakyThrows;
+
+import javax.crypto.Cipher;
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.PBEKeySpec;
+import javax.crypto.spec.SecretKeySpec;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
+import java.security.spec.KeySpec;
+import java.util.Random;
 
 public class Encryption {
+
     public static String md5Custom(String st) {
         MessageDigest messageDigest = null;
         byte[] digest = new byte[0];
@@ -24,5 +36,19 @@ public class Encryption {
             md5Hex = "0" + md5Hex;
         }
         return md5Hex;
+    }
+
+    @SneakyThrows
+    public static String encryptAes(String sessionId, String userId) {
+        byte[] iv = new byte[16];
+        byte[] salt = new byte[16];
+        String value = sessionId + userId;
+        IvParameterSpec ivP = new IvParameterSpec(iv);
+        SecretKeySpec skeySpec = new SecretKeySpec(salt, "AES");
+        Cipher cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING");
+        cipher.init(Cipher.ENCRYPT_MODE, skeySpec, ivP);
+
+        byte[] encrypted = cipher.doFinal(value.getBytes());
+        return Base64.encode(encrypted);
     }
 }

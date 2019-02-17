@@ -42,6 +42,9 @@ public class Encryption {
     public static String encryptAes(String sessionId, String userId) {
         byte[] iv = new byte[16];
         byte[] salt = new byte[16];
+        for (int i = 0; i < 16; i++) {
+            salt[i] = (byte)(i + 2*i);
+        }
         String value = sessionId + userId;
         IvParameterSpec ivP = new IvParameterSpec(iv);
         SecretKeySpec skeySpec = new SecretKeySpec(salt, "AES");

@@ -5,6 +5,7 @@ import com.company.api.UserServiceDB;
 import com.company.api.UserWebServiceEndpoint;
 import com.company.model.Session;
 import com.company.model.User;
+import com.company.util.Encryption;
 import com.company.util.UserRole;
 
 import javax.jws.WebMethod;
@@ -18,6 +19,9 @@ public class UserWebServiceEndpointImpl implements UserWebServiceEndpoint {
     private UserServiceDB userServiceDB;
     private SessionService sessionService;
 
+    public UserWebServiceEndpointImpl() {
+    }
+
     public UserWebServiceEndpointImpl(UserServiceDB userServiceDB, SessionService sessionService) {
         this.userServiceDB = userServiceDB;
         this.sessionService = sessionService;
@@ -25,8 +29,9 @@ public class UserWebServiceEndpointImpl implements UserWebServiceEndpoint {
 
     @WebMethod
     @Override
-    public boolean save(@WebParam(name="user") User object, @WebParam(name="session")Session session) {
+    public boolean saveUser(@WebParam(name="user") User object, @WebParam(name="session")Session session) {
         if (sessionService.checkSession(session)) {
+            object.setPassword(Encryption.md5Custom(object.getPassword()));
             if (userServiceDB.findById(session.getUserId()).get().getRole().equals(UserRole.ADMIN)) {
                 return userServiceDB.save(object);
             }
@@ -36,8 +41,9 @@ public class UserWebServiceEndpointImpl implements UserWebServiceEndpoint {
 
     @WebMethod
     @Override
-    public boolean update(@WebParam(name="user") User object, @WebParam(name="session")Session session) {
+    public boolean updateUser(@WebParam(name="user") User object, @WebParam(name="session")Session session) {
         if (sessionService.checkSession(session)) {
+            object.setPassword(Encryption.md5Custom(object.getPassword()));
             if (userServiceDB.findById(session.getUserId()).get().getRole().equals(UserRole.ADMIN)) {
                 return userServiceDB.update(object);
             }
@@ -47,7 +53,7 @@ public class UserWebServiceEndpointImpl implements UserWebServiceEndpoint {
 
     @WebMethod
     @Override
-    public User findByLogin(@WebParam(name="user_login") String login, @WebParam(name="session")Session session) {
+    public User findByLoginUser(@WebParam(name="user_login") String login, @WebParam(name="session")Session session) {
         if (sessionService.checkSession(session)) {
             if (userServiceDB.findById(session.getUserId()).get().getRole().equals(UserRole.ADMIN)) {
                 Optional<User> optionalLogin = userServiceDB.findByLogin(login);
@@ -59,11 +65,16 @@ public class UserWebServiceEndpointImpl implements UserWebServiceEndpoint {
 
     @WebMethod
     @Override
-    public User findById(@WebParam(name="user_id") String id,@WebParam(name="session")Session session) {
+    public User findByIdUser(@WebParam(name="user_id") String id,@WebParam(name="session")Session session) {
         if (sessionService.checkSession(session)) {
-            if (userServiceDB.findById(session.getUserId()).get().getRole().equals(UserRole.ADMIN)) {
-                Optional<User> optionalUser = userServiceDB.findById(id);
-                return optionalUser.orElse(null);
+            Optional<User> optionalUser = userServiceDB.findById(id);
+            System.out.println(optionalUser.get());
+            if (!optionalUser.isPresent()) {return null;}
+            if (optionalUser.get().getRole().equals(UserRole.ADMIN)) {
+                return optionalUser.get();
+            }
+            if (session.getUserId().equals(optionalUser.get().getId())) {
+                return optionalUser.get();
             }
         }
         return null;
@@ -71,7 +82,7 @@ public class UserWebServiceEndpointImpl implements UserWebServiceEndpoint {
 
     @WebMethod
     @Override
-    public boolean removeByLogin(@WebParam(name="user_login") String login, @WebParam(name="session")Session session) {
+    public boolean removeByLoginUser(@WebParam(name="user_login") String login, @WebParam(name="session")Session session) {
         if (sessionService.checkSession(session)) {
             if (userServiceDB.findById(session.getUserId()).get().getRole().equals(UserRole.ADMIN)) {
                 return userServiceDB.removeByLogin(login);
@@ -82,7 +93,7 @@ public class UserWebServiceEndpointImpl implements UserWebServiceEndpoint {
 
     @WebMethod
     @Override
-    public List<User> getList(@WebParam(name="session")Session session) {
+    public List<User> getListUser(@WebParam(name="session")Session session) {
         if (sessionService.checkSession(session)) {
             if (userServiceDB.findById(session.getUserId()).get().getRole().equals(UserRole.ADMIN)) {
                 return userServiceDB.getList();

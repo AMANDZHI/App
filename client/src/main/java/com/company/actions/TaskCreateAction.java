@@ -1,66 +1,58 @@
-//package com.company.actions;
-//
-//import com.company.api.Action;
-//import com.company.api.ServiceLocator;
-//import com.company.model.Project;
-//import com.company.model.Task;
-//import com.company.util.ActionRole;
-//import com.company.util.UserRole;
-//import lombok.SneakyThrows;
-//
-//import java.io.IOException;
-//import java.sql.SQLException;
-//import java.util.Optional;
-//
-//public class TaskCreateAction implements Action {
-//    private ServiceLocator serviceLocator;
-//
-//    @Override
-//    public String getName() {
-//        return "saveTask";
-//    }
-//
-//    @Override
-//    public String getDescription() {
-//        return "Save your task";
-//    }
-//
-//    @Override
-//    @SneakyThrows
-//    public void execute() {
-//        String answerNameTask = CommonReader.getNameTask();
-//        String answerDescrTask = CommonReader.getDescrTask();
-//        String answerProjectTask = CommonReader.getNameProject();
-//        if (!serviceLocator.getTaskServiceDB().findByName(answerNameTask).isPresent()) {
-//            Optional<Project> optionalProject = serviceLocator.getProjectServiceDB().findByName(answerProjectTask);
-//            if (optionalProject.isPresent()) {
-//                if (optionalProject.get().getUser().equals(serviceLocator.getSessionService().getSession().getUser()) || serviceLocator.getSessionService().getSession().getUser().getRole().equals(UserRole.ADMIN)) {
-//                    Task newTask = new Task(answerNameTask, answerDescrTask, optionalProject.get());
-//                    if (serviceLocator.getTaskServiceDB().save(newTask)) {
-//                        System.out.println(newTask);
-//                    } else {
-//                        System.out.println("Не удалось сохранить таск в базу");
-//                    }
-//
-//                } else {
-//                    System.out.println("Вы не можете создавать задачу для этого проекта");
-//                }
-//
-//            } else {
-//                System.out.println("не найден проект с таким именем");
-//            }
-//        } else {
-//            System.out.println("Такое имя таска уже используется");
-//        }
-//    }
-//
-//    @Override
-//    public ActionRole getRole() {
-//        return ActionRole.USER;
-//    }
-//
-//    @Override
-//    public void setServiceLocator(ServiceLocator serviceLocator) {
-//        this.serviceLocator = serviceLocator;
-//    }
-//}
+package com.company.actions;
+
+import com.company.ActionRole;
+import com.company.apiClient.Action;
+import com.company.apiClient.ServiceLocatorEndpoint;
+import com.company.api.Project;
+import com.company.api.Session;
+import com.company.api.Task;
+import lombok.SneakyThrows;
+
+public class TaskCreateAction implements Action {
+    private ServiceLocatorEndpoint serviceLocatorEndpoint;
+
+    @Override
+    public String getName() {
+        return "saveTask";
+    }
+
+    @Override
+    public String getDescription() {
+        return "Save your task";
+    }
+
+    @Override
+    @SneakyThrows
+    public void execute() {
+        String answerNameTask = CommonReader.getNameTask();
+        String answerDescrTask = CommonReader.getDescrTask();
+        String answerProjectTask = CommonReader.getNameProject();
+
+        Session session = serviceLocatorEndpoint.getClientSessionService().getSession();
+        Task task = new Task();
+        task.setName(answerNameTask);
+        task.setDescription(answerDescrTask);
+        Project project = serviceLocatorEndpoint.getProjectWebService().findByNameProject(answerProjectTask, session);
+        if (project != null) {
+            task.setProject(project);
+            boolean answerSave = serviceLocatorEndpoint.getTaskWebService().saveTask(task, session);
+            if (answerSave) {
+                System.out.println("Успещно");
+            } else {
+                System.out.println("Неудачно");
+            }
+        } else {
+            System.out.println("Не найден такой проект");
+        }
+    }
+
+    @Override
+    public void setServiceLocatorEndpoint(ServiceLocatorEndpoint serviceLocatorEndpoint) {
+        this.serviceLocatorEndpoint = serviceLocatorEndpoint;
+    }
+
+    @Override
+    public ActionRole getRole() {
+        return ActionRole.USER;
+    }
+}

@@ -33,7 +33,7 @@ public class SessionServiceImpl implements SessionService {
     public boolean checkSession(Session session) {
         Date currentTime = new Date();
         long expireTime = (currentTime.getTime() - session.getDate().getTime())/ 1000;
-        if (expireTime > 30) {
+        if (expireTime > 120) {
             return false;
         }
 

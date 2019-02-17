@@ -1,9 +1,13 @@
 package com.company.model;
 
-import java.time.LocalDateTime;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.Date;
 import java.util.UUID;
 
+@Getter
+@Setter
 public class Session {
     private String sessionId;
     private String userId;
@@ -11,43 +15,12 @@ public class Session {
     private String token;
 
     public Session() {
+        this.sessionId = UUID.randomUUID().toString();
     }
 
     public Session(String userId) {
         this.userId = userId;
         this.sessionId = UUID.randomUUID().toString();
         this.date = new Date();
-    }
-
-    public String getSessionId() {
-        return sessionId;
-    }
-
-    public void setSessionId(String sessionId) {
-        this.sessionId = sessionId;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
     }
 }

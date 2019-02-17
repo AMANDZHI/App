@@ -9,10 +9,10 @@ import com.company.model.Task;
 import lombok.SneakyThrows;
 
 public class DomainRepositoryImpl implements DomainRepository {
-    private Domain domain = new Domain();
-    private RepositoryDB<String, Project> projectRepository;
-    private UserRepositoryDB userRepository;
-    private RepositoryDB<String, Task> taskRepository;
+    private final Domain domain = new Domain();
+    private final RepositoryDB<String, Project> projectRepository;
+    private final UserRepositoryDB userRepository;
+    private final RepositoryDB<String, Task> taskRepository;
 
     public DomainRepositoryImpl(RepositoryDB<String, Project> projectRepository, UserRepositoryDB userRepository, RepositoryDB<String, Task> taskRepository) {
         this.projectRepository = projectRepository;

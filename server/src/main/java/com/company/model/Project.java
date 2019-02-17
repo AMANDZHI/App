@@ -10,6 +10,7 @@ public class Project implements Serializable {
     private User user;
 
     public Project() {
+        this.id = UUID.randomUUID().toString();
     }
 
     public Project(String name, String description, User user) {

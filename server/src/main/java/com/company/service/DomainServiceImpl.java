@@ -5,7 +5,7 @@ import com.company.api.DomainService;
 import com.company.model.Domain;
 
 public class DomainServiceImpl implements DomainService {
-    private DomainRepository domainRepository;
+    private final DomainRepository domainRepository;
 
     public DomainServiceImpl(DomainRepository domainRepository) {
         this.domainRepository = domainRepository;

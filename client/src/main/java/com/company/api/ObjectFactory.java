@@ -24,10 +24,18 @@ import javax.xml.namespace.QName;
 @XmlRegistry
 public class ObjectFactory {
 
-    private final static QName _CheckSession_QNAME = new QName("http://api.company.com/", "checkSession");
-    private final static QName _CheckSessionResponse_QNAME = new QName("http://api.company.com/", "checkSessionResponse");
-    private final static QName _OpenSession_QNAME = new QName("http://api.company.com/", "openSession");
-    private final static QName _OpenSessionResponse_QNAME = new QName("http://api.company.com/", "openSessionResponse");
+    private final static QName _ReadFilesToObjects_QNAME = new QName("http://api.company.com/", "readFilesToObjects");
+    private final static QName _ReadFilesToObjectsResponse_QNAME = new QName("http://api.company.com/", "readFilesToObjectsResponse");
+    private final static QName _ReadJsonToObjects_QNAME = new QName("http://api.company.com/", "readJsonToObjects");
+    private final static QName _ReadJsonToObjectsResponse_QNAME = new QName("http://api.company.com/", "readJsonToObjectsResponse");
+    private final static QName _ReadXmlToObjects_QNAME = new QName("http://api.company.com/", "readXmlToObjects");
+    private final static QName _ReadXmlToObjectsResponse_QNAME = new QName("http://api.company.com/", "readXmlToObjectsResponse");
+    private final static QName _WriteAllToJson_QNAME = new QName("http://api.company.com/", "writeAllToJson");
+    private final static QName _WriteAllToJsonResponse_QNAME = new QName("http://api.company.com/", "writeAllToJsonResponse");
+    private final static QName _WriteAllToXml_QNAME = new QName("http://api.company.com/", "writeAllToXml");
+    private final static QName _WriteAllToXmlResponse_QNAME = new QName("http://api.company.com/", "writeAllToXmlResponse");
+    private final static QName _WriteObjectsToFiles_QNAME = new QName("http://api.company.com/", "writeObjectsToFiles");
+    private final static QName _WriteObjectsToFilesResponse_QNAME = new QName("http://api.company.com/", "writeObjectsToFilesResponse");
 
     /**
      * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: com.company.api
@@ -37,95 +45,255 @@ public class ObjectFactory {
     }
 
     /**
-     * Create an instance of {@link CheckSession }
+     * Create an instance of {@link ReadFilesToObjects }
      * 
      */
-    public CheckSession createCheckSession() {
-        return new CheckSession();
+    public ReadFilesToObjects createReadFilesToObjects() {
+        return new ReadFilesToObjects();
     }
 
     /**
-     * Create an instance of {@link CheckSessionResponse }
+     * Create an instance of {@link ReadFilesToObjectsResponse }
      * 
      */
-    public CheckSessionResponse createCheckSessionResponse() {
-        return new CheckSessionResponse();
+    public ReadFilesToObjectsResponse createReadFilesToObjectsResponse() {
+        return new ReadFilesToObjectsResponse();
     }
 
     /**
-     * Create an instance of {@link OpenSession }
+     * Create an instance of {@link ReadJsonToObjects }
      * 
      */
-    public OpenSession createOpenSession() {
-        return new OpenSession();
+    public ReadJsonToObjects createReadJsonToObjects() {
+        return new ReadJsonToObjects();
     }
 
     /**
-     * Create an instance of {@link OpenSessionResponse }
+     * Create an instance of {@link ReadJsonToObjectsResponse }
      * 
      */
-    public OpenSessionResponse createOpenSessionResponse() {
-        return new OpenSessionResponse();
+    public ReadJsonToObjectsResponse createReadJsonToObjectsResponse() {
+        return new ReadJsonToObjectsResponse();
     }
 
     /**
-     * Create an instance of {@link Session }
+     * Create an instance of {@link ReadXmlToObjects }
      * 
      */
-    public Session createSession() {
-        return new Session();
+    public ReadXmlToObjects createReadXmlToObjects() {
+        return new ReadXmlToObjects();
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link CheckSession }{@code >}
+     * Create an instance of {@link ReadXmlToObjectsResponse }
+     * 
+     */
+    public ReadXmlToObjectsResponse createReadXmlToObjectsResponse() {
+        return new ReadXmlToObjectsResponse();
+    }
+
+    /**
+     * Create an instance of {@link WriteAllToJson }
+     * 
+     */
+    public WriteAllToJson createWriteAllToJson() {
+        return new WriteAllToJson();
+    }
+
+    /**
+     * Create an instance of {@link WriteAllToJsonResponse }
+     * 
+     */
+    public WriteAllToJsonResponse createWriteAllToJsonResponse() {
+        return new WriteAllToJsonResponse();
+    }
+
+    /**
+     * Create an instance of {@link WriteAllToXml }
+     * 
+     */
+    public WriteAllToXml createWriteAllToXml() {
+        return new WriteAllToXml();
+    }
+
+    /**
+     * Create an instance of {@link WriteAllToXmlResponse }
+     * 
+     */
+    public WriteAllToXmlResponse createWriteAllToXmlResponse() {
+        return new WriteAllToXmlResponse();
+    }
+
+    /**
+     * Create an instance of {@link WriteObjectsToFiles }
+     * 
+     */
+    public WriteObjectsToFiles createWriteObjectsToFiles() {
+        return new WriteObjectsToFiles();
+    }
+
+    /**
+     * Create an instance of {@link WriteObjectsToFilesResponse }
+     * 
+     */
+    public WriteObjectsToFilesResponse createWriteObjectsToFilesResponse() {
+        return new WriteObjectsToFilesResponse();
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link ReadFilesToObjects }{@code >}
      * 
      * @param value
      *     Java instance representing xml element's value.
      * @return
-     *     the new instance of {@link JAXBElement }{@code <}{@link CheckSession }{@code >}
+     *     the new instance of {@link JAXBElement }{@code <}{@link ReadFilesToObjects }{@code >}
      */
-    @XmlElementDecl(namespace = "http://api.company.com/", name = "checkSession")
-    public JAXBElement<CheckSession> createCheckSession(CheckSession value) {
-        return new JAXBElement<CheckSession>(_CheckSession_QNAME, CheckSession.class, null, value);
+    @XmlElementDecl(namespace = "http://api.company.com/", name = "readFilesToObjects")
+    public JAXBElement<ReadFilesToObjects> createReadFilesToObjects(ReadFilesToObjects value) {
+        return new JAXBElement<ReadFilesToObjects>(_ReadFilesToObjects_QNAME, ReadFilesToObjects.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link CheckSessionResponse }{@code >}
+     * Create an instance of {@link JAXBElement }{@code <}{@link ReadFilesToObjectsResponse }{@code >}
      * 
      * @param value
      *     Java instance representing xml element's value.
      * @return
-     *     the new instance of {@link JAXBElement }{@code <}{@link CheckSessionResponse }{@code >}
+     *     the new instance of {@link JAXBElement }{@code <}{@link ReadFilesToObjectsResponse }{@code >}
      */
-    @XmlElementDecl(namespace = "http://api.company.com/", name = "checkSessionResponse")
-    public JAXBElement<CheckSessionResponse> createCheckSessionResponse(CheckSessionResponse value) {
-        return new JAXBElement<CheckSessionResponse>(_CheckSessionResponse_QNAME, CheckSessionResponse.class, null, value);
+    @XmlElementDecl(namespace = "http://api.company.com/", name = "readFilesToObjectsResponse")
+    public JAXBElement<ReadFilesToObjectsResponse> createReadFilesToObjectsResponse(ReadFilesToObjectsResponse value) {
+        return new JAXBElement<ReadFilesToObjectsResponse>(_ReadFilesToObjectsResponse_QNAME, ReadFilesToObjectsResponse.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link OpenSession }{@code >}
+     * Create an instance of {@link JAXBElement }{@code <}{@link ReadJsonToObjects }{@code >}
      * 
      * @param value
      *     Java instance representing xml element's value.
      * @return
-     *     the new instance of {@link JAXBElement }{@code <}{@link OpenSession }{@code >}
+     *     the new instance of {@link JAXBElement }{@code <}{@link ReadJsonToObjects }{@code >}
      */
-    @XmlElementDecl(namespace = "http://api.company.com/", name = "openSession")
-    public JAXBElement<OpenSession> createOpenSession(OpenSession value) {
-        return new JAXBElement<OpenSession>(_OpenSession_QNAME, OpenSession.class, null, value);
+    @XmlElementDecl(namespace = "http://api.company.com/", name = "readJsonToObjects")
+    public JAXBElement<ReadJsonToObjects> createReadJsonToObjects(ReadJsonToObjects value) {
+        return new JAXBElement<ReadJsonToObjects>(_ReadJsonToObjects_QNAME, ReadJsonToObjects.class, null, value);
     }
 
     /**
-     * Create an instance of {@link JAXBElement }{@code <}{@link OpenSessionResponse }{@code >}
+     * Create an instance of {@link JAXBElement }{@code <}{@link ReadJsonToObjectsResponse }{@code >}
      * 
      * @param value
      *     Java instance representing xml element's value.
      * @return
-     *     the new instance of {@link JAXBElement }{@code <}{@link OpenSessionResponse }{@code >}
+     *     the new instance of {@link JAXBElement }{@code <}{@link ReadJsonToObjectsResponse }{@code >}
      */
-    @XmlElementDecl(namespace = "http://api.company.com/", name = "openSessionResponse")
-    public JAXBElement<OpenSessionResponse> createOpenSessionResponse(OpenSessionResponse value) {
-        return new JAXBElement<OpenSessionResponse>(_OpenSessionResponse_QNAME, OpenSessionResponse.class, null, value);
+    @XmlElementDecl(namespace = "http://api.company.com/", name = "readJsonToObjectsResponse")
+    public JAXBElement<ReadJsonToObjectsResponse> createReadJsonToObjectsResponse(ReadJsonToObjectsResponse value) {
+        return new JAXBElement<ReadJsonToObjectsResponse>(_ReadJsonToObjectsResponse_QNAME, ReadJsonToObjectsResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link ReadXmlToObjects }{@code >}
+     * 
+     * @param value
+     *     Java instance representing xml element's value.
+     * @return
+     *     the new instance of {@link JAXBElement }{@code <}{@link ReadXmlToObjects }{@code >}
+     */
+    @XmlElementDecl(namespace = "http://api.company.com/", name = "readXmlToObjects")
+    public JAXBElement<ReadXmlToObjects> createReadXmlToObjects(ReadXmlToObjects value) {
+        return new JAXBElement<ReadXmlToObjects>(_ReadXmlToObjects_QNAME, ReadXmlToObjects.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link ReadXmlToObjectsResponse }{@code >}
+     * 
+     * @param value
+     *     Java instance representing xml element's value.
+     * @return
+     *     the new instance of {@link JAXBElement }{@code <}{@link ReadXmlToObjectsResponse }{@code >}
+     */
+    @XmlElementDecl(namespace = "http://api.company.com/", name = "readXmlToObjectsResponse")
+    public JAXBElement<ReadXmlToObjectsResponse> createReadXmlToObjectsResponse(ReadXmlToObjectsResponse value) {
+        return new JAXBElement<ReadXmlToObjectsResponse>(_ReadXmlToObjectsResponse_QNAME, ReadXmlToObjectsResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link WriteAllToJson }{@code >}
+     * 
+     * @param value
+     *     Java instance representing xml element's value.
+     * @return
+     *     the new instance of {@link JAXBElement }{@code <}{@link WriteAllToJson }{@code >}
+     */
+    @XmlElementDecl(namespace = "http://api.company.com/", name = "writeAllToJson")
+    public JAXBElement<WriteAllToJson> createWriteAllToJson(WriteAllToJson value) {
+        return new JAXBElement<WriteAllToJson>(_WriteAllToJson_QNAME, WriteAllToJson.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link WriteAllToJsonResponse }{@code >}
+     * 
+     * @param value
+     *     Java instance representing xml element's value.
+     * @return
+     *     the new instance of {@link JAXBElement }{@code <}{@link WriteAllToJsonResponse }{@code >}
+     */
+    @XmlElementDecl(namespace = "http://api.company.com/", name = "writeAllToJsonResponse")
+    public JAXBElement<WriteAllToJsonResponse> createWriteAllToJsonResponse(WriteAllToJsonResponse value) {
+        return new JAXBElement<WriteAllToJsonResponse>(_WriteAllToJsonResponse_QNAME, WriteAllToJsonResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link WriteAllToXml }{@code >}
+     * 
+     * @param value
+     *     Java instance representing xml element's value.
+     * @return
+     *     the new instance of {@link JAXBElement }{@code <}{@link WriteAllToXml }{@code >}
+     */
+    @XmlElementDecl(namespace = "http://api.company.com/", name = "writeAllToXml")
+    public JAXBElement<WriteAllToXml> createWriteAllToXml(WriteAllToXml value) {
+        return new JAXBElement<WriteAllToXml>(_WriteAllToXml_QNAME, WriteAllToXml.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link WriteAllToXmlResponse }{@code >}
+     * 
+     * @param value
+     *     Java instance representing xml element's value.
+     * @return
+     *     the new instance of {@link JAXBElement }{@code <}{@link WriteAllToXmlResponse }{@code >}
+     */
+    @XmlElementDecl(namespace = "http://api.company.com/", name = "writeAllToXmlResponse")
+    public JAXBElement<WriteAllToXmlResponse> createWriteAllToXmlResponse(WriteAllToXmlResponse value) {
+        return new JAXBElement<WriteAllToXmlResponse>(_WriteAllToXmlResponse_QNAME, WriteAllToXmlResponse.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link WriteObjectsToFiles }{@code >}
+     * 
+     * @param value
+     *     Java instance representing xml element's value.
+     * @return
+     *     the new instance of {@link JAXBElement }{@code <}{@link WriteObjectsToFiles }{@code >}
+     */
+    @XmlElementDecl(namespace = "http://api.company.com/", name = "writeObjectsToFiles")
+    public JAXBElement<WriteObjectsToFiles> createWriteObjectsToFiles(WriteObjectsToFiles value) {
+        return new JAXBElement<WriteObjectsToFiles>(_WriteObjectsToFiles_QNAME, WriteObjectsToFiles.class, null, value);
+    }
+
+    /**
+     * Create an instance of {@link JAXBElement }{@code <}{@link WriteObjectsToFilesResponse }{@code >}
+     * 
+     * @param value
+     *     Java instance representing xml element's value.
+     * @return
+     *     the new instance of {@link JAXBElement }{@code <}{@link WriteObjectsToFilesResponse }{@code >}
+     */
+    @XmlElementDecl(namespace = "http://api.company.com/", name = "writeObjectsToFilesResponse")
+    public JAXBElement<WriteObjectsToFilesResponse> createWriteObjectsToFilesResponse(WriteObjectsToFilesResponse value) {
+        return new JAXBElement<WriteObjectsToFilesResponse>(_WriteObjectsToFilesResponse_QNAME, WriteObjectsToFilesResponse.class, null, value);
     }
 
 }

@@ -1,55 +1,57 @@
-//package com.company.actions;
-//
-//import com.company.api.Action;
-//import com.company.api.ServiceLocator;
-//import com.company.model.User;
-//import com.company.util.ActionRole;
-//import com.company.util.UserRole;
-//import lombok.SneakyThrows;
-//
-//import java.io.IOException;
-//import java.util.Optional;
-//
-//public class UserCreateAction implements Action {
-//    private ServiceLocator serviceLocator;
-//
-//    @Override
-//    public String getName() {
-//        return "saveUser";
-//    }
-//
-//    @Override
-//    public String getDescription() {
-//        return "save your user";
-//    }
-//
-//    @Override
-//    @SneakyThrows
-//    public void execute() {
-//        String answerNameUser = CommonReader.getNameUser();
-//        String answerLoginUser = CommonReader.getLoginUser();
-//        String answerPasswordUser = CommonReader.getPasswordUser();
-//        String answerRoleUser = CommonReader.getRoleUser();
-//        User newUser = new User(answerNameUser, answerLoginUser, answerPasswordUser, UserRole.valueOf(answerRoleUser));
-//        Optional<User> optionalUser = serviceLocator.getUserServiceDB().findByLogin(newUser.getLogin());
-//        if (optionalUser.isPresent()) {
-//            System.out.println("Такой логин уже используется");
-//        } else {
-//            if (serviceLocator.getUserServiceDB().save(newUser)) {
-//                System.out.println(newUser);
-//            } else {
-//                System.out.println("Не удалось сохранить в базу юзера");
-//            }
-//        }
-//    }
-//
-//    @Override
-//    public ActionRole getRole() {
-//        return ActionRole.ADMIN;
-//    }
-//
-//    @Override
-//    public void setServiceLocator(ServiceLocator serviceLocator) {
-//        this.serviceLocator = serviceLocator;
-//    }
-//}
+package com.company.actions;
+
+import com.company.ActionRole;
+import com.company.apiClient.Action;
+import com.company.apiClient.ServiceLocatorEndpoint;
+import com.company.api.Session;
+import com.company.api.User;
+import com.company.api.UserRole;
+import lombok.SneakyThrows;
+
+public class UserCreateAction implements Action {
+    private ServiceLocatorEndpoint serviceLocatorEndpoint;
+
+    @Override
+    public String getName() {
+        return "saveUser";
+    }
+
+    @Override
+    public String getDescription() {
+        return "save your user";
+    }
+
+    @Override
+    @SneakyThrows
+    public void execute() {
+        String answerNameUser = CommonReader.getNameUser();
+        String answerLoginUser = CommonReader.getLoginUser();
+        String answerPasswordUser = CommonReader.getPasswordUser();
+        String answerRoleUser = CommonReader.getRoleUser();
+
+        Session session = serviceLocatorEndpoint.getClientSessionService().getSession();
+
+        User newUser = new User();
+        newUser.setName(answerNameUser);
+        newUser.setLogin(answerLoginUser);
+        newUser.setPassword(answerPasswordUser);
+        newUser.setRole(UserRole.valueOf(answerRoleUser));
+
+        boolean answerSave = serviceLocatorEndpoint.getUserWebService().saveUser(newUser, session);
+        if (answerSave) {
+            System.out.println("Удачно");
+        } else {
+            System.out.println("Неудачно");
+        }
+    }
+
+    @Override
+    public void setServiceLocatorEndpoint(ServiceLocatorEndpoint serviceLocatorEndpoint) {
+        this.serviceLocatorEndpoint = serviceLocatorEndpoint;
+    }
+
+    @Override
+    public ActionRole getRole() {
+        return ActionRole.ADMIN;
+    }
+}

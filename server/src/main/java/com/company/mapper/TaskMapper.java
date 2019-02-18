@@ -1,5 +1,6 @@
-package com.company.api;
+package com.company.mapper;
 
+import com.company.model.Project;
 import com.company.model.Task;
 import org.apache.ibatis.annotations.*;
 
@@ -18,7 +19,7 @@ public interface TaskMapper {
             @Result(property = "id", column = "id"),
             @Result(property = "name", column = "name"),
             @Result(property = "description", column = "description"),
-            @Result(property = "project.id", column = "projectId")
+            @Result(property = "project", column = "projectId", javaType= Project.class, one=@One(select="com.company.mapper.ProjectMapper.findById"))
     })
     List<Task> getList();
 
@@ -27,7 +28,7 @@ public interface TaskMapper {
             @Result(property = "id", column = "id"),
             @Result(property = "name", column = "name"),
             @Result(property = "description", column = "description"),
-            @Result(property = "project.id", column = "projectId")
+            @Result(property = "project", column = "projectId", javaType= Project.class, one=@One(select="com.company.mapper.ProjectMapper.findById"))
     })
     Task findByName(String name);
 
@@ -36,12 +37,11 @@ public interface TaskMapper {
             @Result(property = "id", column = "id"),
             @Result(property = "name", column = "name"),
             @Result(property = "description", column = "description"),
-            @Result(property = "project.id", column = "projectId")
+            @Result(property = "project", column = "projectId", javaType= Project.class, one=@One(select="com.company.mapper.ProjectMapper.findById"))
     })
     Task findById(String id);
 
     @Insert(INSERT)
-//    @Options(useGeneratedKeys = true, keyProperty = "id")
     void save(Task object);
 
     @Update(UPDATE)

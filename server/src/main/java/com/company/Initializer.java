@@ -15,8 +15,8 @@ import java.util.List;
 public class Initializer implements ServiceLocator {
     private final ConnectionSupplier connectionSupplier = new ConnectionSupplier();
     private final UserRepositoryDB userRepositoryDB = new UserRepositoryDBImpl(connectionSupplier);
-    private final RepositoryDB<String, Project> projectRepositoryDB = new ProjectRepositoryDBImpl(connectionSupplier, userRepositoryDB);
-    private final RepositoryDB<String, Task> taskRepositoryDB = new TaskRepositoryDBImpl(connectionSupplier, projectRepositoryDB);
+    private final RepositoryDB<String, Project> projectRepositoryDB = new ProjectRepositoryDBImpl(connectionSupplier);
+    private final RepositoryDB<String, Task> taskRepositoryDB = new TaskRepositoryDBImpl(connectionSupplier);
     private final DomainRepository domainRepository = new DomainRepositoryImpl(projectRepositoryDB, userRepositoryDB, taskRepositoryDB);
     private final ServiceDB<String, Project> projectServiceDB = new ProjectServiceDBImpl(projectRepositoryDB);
     private final ServiceDB<String, Task> taskServiceDB = new TaskServiceDBImpl(taskRepositoryDB);
@@ -64,18 +64,6 @@ public class Initializer implements ServiceLocator {
     }
 
     public void run() {
-        Session session = sessionWebServiceEndpoint.openSession("admin", "admin");
-        List<Project> listProject = projectServiceEndpoint.getListProject(session);
-        for (Project p: listProject) {
-            System.out.println(p);
-        }
-
-        List<Task> listTask = taskServiceEndpoint.getListTask(session);
-        for (Task t: listTask) {
-            System.out.println(t);
-        }
-
-
         Endpoint.publish("http://localhost:1986/wss/project", projectServiceEndpoint);
         Endpoint.publish("http://localhost:1987/wss/task", taskServiceEndpoint);
         Endpoint.publish("http://localhost:1988/wss/user", userWebServiceEndpoint);

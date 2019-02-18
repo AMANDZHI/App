@@ -1,8 +1,5 @@
 package com.company.dao;
 
-import com.company.api.ProjectMapper;
-import com.company.api.TaskMapper;
-import com.company.api.UserMapper;
 import lombok.SneakyThrows;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
@@ -36,9 +33,6 @@ public class ConnectionSupplier {
         Reader reader = Resources.getResourceAsReader("mybatis-config.xml");
         SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
         SqlSession session = sqlSessionFactory.openSession();
-//        session.getConfiguration().addMapper(UserMapper.class);
-//        session.getConfiguration().addMapper(ProjectMapper.class);
-//        session.getConfiguration().addMapper(TaskMapper.class);
        return session;
     }
 }

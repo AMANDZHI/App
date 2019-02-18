@@ -1,4 +1,4 @@
-package com.company.api;
+package com.company.mapper;
 
 import com.company.model.User;
 import org.apache.ibatis.annotations.*;

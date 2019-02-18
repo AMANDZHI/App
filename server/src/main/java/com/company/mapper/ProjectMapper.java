@@ -1,4 +1,4 @@
-package com.company.api;
+package com.company.mapper;
 
 import com.company.model.Project;
 import com.company.model.User;
@@ -19,7 +19,7 @@ public interface ProjectMapper {
             @Result(property = "id", column = "id"),
             @Result(property = "name", column = "name"),
             @Result(property = "description", column = "description"),
-            @Result(property = "user", column = "userId", javaType= User.class, one=@One(select="com.company.api.UserMapper.findById"))
+            @Result(property = "user", column = "userId", javaType= User.class, one=@One(select="com.company.mapper.UserMapper.findById"))
     })
     List<Project> getList();
 
@@ -28,7 +28,7 @@ public interface ProjectMapper {
             @Result(property = "id", column = "id"),
             @Result(property = "name", column = "name"),
             @Result(property = "description", column = "description"),
-            @Result(property = "user.id", column = "userId")
+            @Result(property = "user", column = "userId", javaType= User.class, one=@One(select="com.company.mapper.UserMapper.findById"))
     })
     Project findByName(String name);
 
@@ -37,12 +37,11 @@ public interface ProjectMapper {
             @Result(property = "id", column = "id"),
             @Result(property = "name", column = "name"),
             @Result(property = "description", column = "description"),
-            @Result(property = "user.id", column = "userId")
+            @Result(property = "user", column = "userId", javaType= User.class, one=@One(select="com.company.mapper.UserMapper.findById"))
     })
     Project findById(String id);
 
     @Insert(INSERT)
-//    @Options(useGeneratedKeys = true, keyProperty = "id")
     void save(Project object);
 
     @Update(UPDATE)

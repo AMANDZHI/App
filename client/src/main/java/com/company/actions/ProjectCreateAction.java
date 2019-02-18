@@ -28,6 +28,7 @@ public class ProjectCreateAction implements Action {
         String answerDescrProject = CommonReader.getDescrProject();
         Session session = serviceLocatorEndpoint.getClientSessionService().getSession();
         User findUser = serviceLocatorEndpoint.getUserWebService().findByIdUser(session.getUserId(), session);
+        System.out.println(findUser.getName());
         Project project = new Project();
         project.setName(answerNameProject);
         project.setDescription(answerDescrProject);

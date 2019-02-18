@@ -22,6 +22,7 @@
         <jackson.dataformat>2.9.8</jackson.dataformat>
         <cxf.rt.frontend.jaxws>3.3.0</cxf.rt.frontend.jaxws>
         <cxf.rt.transports.http>3.3.0</cxf.rt.transports.http>
+        <mybatis>3.5.0</mybatis>
     </properties>
 
     <build>
@@ -126,6 +127,11 @@
                 <groupId>org.apache.cxf</groupId>
                 <artifactId>cxf-rt-transports-http</artifactId>
                 <version>${cxf.rt.transports.http}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mybatis</groupId>
+                <artifactId>mybatis</artifactId>
+                <version>${mybatis}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

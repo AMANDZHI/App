@@ -2,8 +2,11 @@ package com.company.endpoint;
 
 import com.company.api.ServiceLocator;
 import com.company.api.TaskWebServiceEndpoint;
+import com.company.api.UserServiceDB;
+import com.company.model.Project;
 import com.company.model.Session;
 import com.company.model.Task;
+import com.company.model.User;
 import com.company.util.UserRole;
 import lombok.SneakyThrows;
 
@@ -104,7 +107,12 @@ public class TaskWebServiceEndpointImpl implements TaskWebServiceEndpoint {
             List<Task> forClientList = new ArrayList<>();
             List<Task> list = serviceLocator.getTaskServiceDB().getList();
             for (Task task: list) {
-                if (task.getProject().getUser().getId().equals(session.getUserId()) || serviceLocator.getUserServiceDB().findById(session.getUserId()).get().getRole().equals(UserRole.ADMIN)) {
+                Project project = task.getProject();
+                User userProject = project.getUser();
+                userProject.getId().equals(session.getUserId());
+                UserServiceDB userServiceDB = serviceLocator.getUserServiceDB();
+                User user = userServiceDB.findById(session.getUserId()).get();
+                if (userProject.getId().equals(session.getUserId()) || user.getRole().equals(UserRole.ADMIN)) {
                     forClientList.add(task);
                 }
             }

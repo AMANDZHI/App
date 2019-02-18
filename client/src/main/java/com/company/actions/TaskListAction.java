@@ -1,6 +1,7 @@
 package com.company.actions;
 
 import com.company.ActionRole;
+import com.company.api.TaskWebServiceEndpoint;
 import com.company.apiClient.Action;
 import com.company.apiClient.ServiceLocatorEndpoint;
 import com.company.api.Session;
@@ -26,7 +27,8 @@ public class TaskListAction implements Action {
     @SneakyThrows
     public void execute() {
         Session session = serviceLocatorEndpoint.getClientSessionService().getSession();
-        List<Task> list = serviceLocatorEndpoint.getTaskWebService().getListTask(session);
+        TaskWebServiceEndpoint taskWebService = serviceLocatorEndpoint.getTaskWebService();
+        List<Task> list = taskWebService.getListTask(session);
         System.out.println(list);
     }
 

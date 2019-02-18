@@ -47,7 +47,6 @@ public class Menu {
                 map.get(answerAction).execute();
 
                 Session session = serviceLocatorEndpoint.getClientSessionService().getSession();
-                System.out.println(session + " 2");
                 if (serviceLocatorEndpoint.getSessionWebService().checkSession(session)) {
                     authMenu(session);
                 } else {

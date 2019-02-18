@@ -96,19 +96,4 @@ public class CommonReader {
         System.out.println("Введите новый password юзера");
         return reader.readLine();
     }
-
-    public static String getNameFilePathForProjects() throws IOException {
-        System.out.println("Введите путь к файлу для проектов");
-        return reader.readLine();
-    }
-
-    public static String getNameFilePathForTasks() throws IOException {
-        System.out.println("Введите путь к файлу для тасков");
-        return reader.readLine();
-    }
-
-    public static String getNameFilePathForUsers() throws IOException {
-        System.out.println("Введите путь к файлу для юзеров");
-        return reader.readLine();
-    }
 }

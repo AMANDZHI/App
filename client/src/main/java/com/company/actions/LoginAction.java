@@ -26,7 +26,6 @@ public class LoginAction implements Action {
         String answerLogin = CommonReader.getLoginUser();
         String answerPassword = CommonReader.getPasswordUser();
         Session session = serviceLocatorEndpoint.getSessionWebService().openSession(answerLogin, answerPassword);
-        System.out.println(session);
         serviceLocatorEndpoint.getClientSessionService().save(session);
     }
 

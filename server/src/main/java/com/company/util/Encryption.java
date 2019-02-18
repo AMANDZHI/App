@@ -8,11 +8,13 @@ import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.SecretKeySpec;
+import java.io.FileInputStream;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.spec.KeySpec;
+import java.util.Properties;
 import java.util.Random;
 
 public class Encryption {
@@ -40,11 +42,13 @@ public class Encryption {
 
     @SneakyThrows
     public static String encryptAes(String sessionId, String userId) {
+        Properties property = new Properties();
+        FileInputStream fis = new FileInputStream("server/src/main/resources/config.properties");
+        property.load(fis);
+        String s = property.getProperty("aes.salt");
         byte[] iv = new byte[16];
         byte[] salt = new byte[16];
-        for (int i = 0; i < 16; i++) {
-            salt[i] = (byte)(i + 2*i);
-        }
+        salt = s.getBytes();
         String value = sessionId + userId;
         IvParameterSpec ivP = new IvParameterSpec(iv);
         SecretKeySpec skeySpec = new SecretKeySpec(salt, "AES");

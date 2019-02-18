@@ -15,12 +15,10 @@
         <dependency>
             <groupId>org.apache.cxf</groupId>
             <artifactId>cxf-rt-frontend-jaxws</artifactId>
-            <version>3.3.0</version>
         </dependency>
         <dependency>
             <groupId>org.apache.cxf</groupId>
             <artifactId>cxf-rt-transports-http</artifactId>
-            <version>3.3.0</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -43,10 +41,10 @@
                         <sourceRoot>src/main/java/</sourceRoot>
                         <wsdlOptions>
                             <wsdlOption>
-                                <wsdl>http://localhost:1987/wss/task?wsdl</wsdl>
+                                <wsdl>http://localhost:1986/wss/project?wsdl</wsdl>
                             </wsdlOption>
                             <wsdlOption>
-                                <wsdl>http://localhost:1986/wss/project?wsdl</wsdl>
+                                <wsdl>http://localhost:1987/wss/task?wsdl</wsdl>
                             </wsdlOption>
                             <wsdlOption>
                                 <wsdl>http://localhost:1988/wss/user?wsdl</wsdl>

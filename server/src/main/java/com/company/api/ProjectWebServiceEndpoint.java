@@ -3,7 +3,6 @@ package com.company.api;
 import com.company.model.Project;
 import com.company.model.Session;
 
-import javax.jws.WebMethod;
 import javax.jws.WebService;
 import java.util.List;
 

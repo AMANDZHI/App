@@ -30,12 +30,8 @@ public class ProjectUpdateAction implements Action {
         Project updateProject = serviceLocatorEndpoint.getProjectWebService().findByNameProject(answerNameProject, session);
         updateProject.setName(answerNewNameProject);
         updateProject.setDescription(answerDescrProject);
-        boolean answerUpdate = serviceLocatorEndpoint.getProjectWebService().updateProject(updateProject, session);
-        if (answerUpdate) {
-            System.out.println("Успешно");
-        } else {
-            System.out.println("Неудачно");
-        }
+        serviceLocatorEndpoint.getProjectWebService().updateProject(updateProject, session);
+        System.out.println("Готово");
     }
 
     @Override

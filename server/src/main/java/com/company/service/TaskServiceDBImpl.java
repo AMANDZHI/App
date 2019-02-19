@@ -16,8 +16,8 @@ public class TaskServiceDBImpl implements ServiceDB<String, Task> {
     }
 
     @Override
-    public boolean save(Task object) {
-        return taskRepositoryDB.save(object);
+    public void save(Task object) {
+        taskRepositoryDB.save(object);
     }
 
     @Override
@@ -34,14 +34,14 @@ public class TaskServiceDBImpl implements ServiceDB<String, Task> {
 
     @Override
     @SneakyThrows
-    public boolean update(Task object) {
-        return taskRepositoryDB.update(object);
+    public void update(Task object) {
+        taskRepositoryDB.update(object);
     }
 
     @Override
     @SneakyThrows
-    public boolean removeByName(String name) {
-        return taskRepositoryDB.removeByName(name);
+    public void removeByName(String name) {
+        taskRepositoryDB.removeByName(name);
     }
 
     @Override

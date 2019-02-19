@@ -9,15 +9,15 @@ import java.util.List;
 @WebService
 public interface ProjectWebServiceEndpoint {
 
-    boolean saveProject(Project object, Session session);
+    void saveProject(Project object, Session session);
 
     Project findByNameProject(String name, Session session);
 
     Project findByIdProject(String id, Session session);
 
-    boolean updateProject(Project object, Session session);
+    void updateProject(Project object, Session session);
 
-    boolean removeByNameProject(String name, Session session);
+    void removeByNameProject(String name, Session session);
 
     List<Project> getListProject(Session session);
 }

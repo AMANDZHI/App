@@ -39,12 +39,8 @@ public class UserUpdateAction implements Action {
             updateUser.setPassword(answerPasswordUser);
             updateUser.setRole(UserRole.valueOf(answerRoleUser));
 
-            boolean answerUpdate = serviceLocatorEndpoint.getUserWebService().updateUser(updateUser, session);
-            if (answerUpdate) {
-                System.out.println("Успешно");
-            } else {
-                System.out.println("Не удалось обновить");
-            }
+            serviceLocatorEndpoint.getUserWebService().updateUser(updateUser, session);
+            System.out.println("Готово");
         } else {
             System.out.println("Не найден такой юзер");
         }

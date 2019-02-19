@@ -17,13 +17,13 @@ public class UserServiceDBImpl implements UserServiceDB {
 
     @Override
     @SneakyThrows
-    public boolean save(User object) {
-        return userRepositoryDB.save(object);
+    public void save(User object) {
+        userRepositoryDB.save(object);
     }
 
     @Override
-    public boolean update(User object) {
-        return userRepositoryDB.update(object);
+    public void update(User object) {
+        userRepositoryDB.update(object);
     }
 
     @Override
@@ -37,8 +37,8 @@ public class UserServiceDBImpl implements UserServiceDB {
     }
 
     @Override
-    public boolean removeByLogin(String login) {
-        return userRepositoryDB.removeByLogin(login);
+    public void removeByLogin(String login) {
+        userRepositoryDB.removeByLogin(login);
     }
 
     @Override

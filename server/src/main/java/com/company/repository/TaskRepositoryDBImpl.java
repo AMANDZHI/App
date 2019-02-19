@@ -17,18 +17,12 @@ public class TaskRepositoryDBImpl implements RepositoryDB<String, Task> {
     }
 
     @Override
-    public boolean save(Task object) {
+    public void save(Task object) {
         SqlSession session = connectionSupplier.getSession();
         TaskMapper mapper = session.getMapper(TaskMapper.class);
         mapper.save(object);
         session.commit();
-        Optional<Task> checkTask = findById(object.getId());
         session.close();
-        if (checkTask.isPresent()) {
-            return true;
-        } else {
-            return false;
-        }
     }
 
     @Override
@@ -52,28 +46,21 @@ public class TaskRepositoryDBImpl implements RepositoryDB<String, Task> {
     }
 
     @Override
-    public boolean update(Task object) {
+    public void update(Task object) {
         SqlSession session = connectionSupplier.getSession();
         TaskMapper mapper = session.getMapper(TaskMapper.class);
         mapper.update(object);
         session.commit();
-        Optional<Task> checkTask = findById(object.getId());
         session.close();
-        if (checkTask.isPresent()) {
-            return true;
-        } else {
-            return false;
-        }
     }
 
     @Override
-    public boolean removeByName(String name) {
+    public void removeByName(String name) {
         SqlSession session = connectionSupplier.getSession();
         TaskMapper mapper = session.getMapper(TaskMapper.class);
         mapper.removeByName(name);
         session.commit();
         session.close();
-        return true;
     }
 
     @Override

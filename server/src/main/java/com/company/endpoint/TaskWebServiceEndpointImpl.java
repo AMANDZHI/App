@@ -30,13 +30,12 @@ public class TaskWebServiceEndpointImpl implements TaskWebServiceEndpoint {
 
     @WebMethod
     @Override
-    public boolean saveTask(@WebParam(name="task") Task object, @WebParam(name="session") Session session) {
+    public void saveTask(@WebParam(name="task") Task object, @WebParam(name="session") Session session) {
         if (serviceLocator.getSessionService().checkSession(session)) {
             if (object.getProject().getUser().getId().equals(session.getUserId()) || serviceLocator.getUserServiceDB().findById(session.getUserId()).get().getRole().equals(UserRole.ADMIN)) {
-                return serviceLocator.getTaskServiceDB().save(object);
+                serviceLocator.getTaskServiceDB().save(object);
             }
         }
-        return false;
     }
 
     @WebMethod
@@ -74,19 +73,18 @@ public class TaskWebServiceEndpointImpl implements TaskWebServiceEndpoint {
     @WebMethod
     @SneakyThrows
     @Override
-    public boolean updateTask(@WebParam(name="task") Task object,@WebParam(name="session") Session session) {
+    public void updateTask(@WebParam(name="task") Task object,@WebParam(name="session") Session session) {
         if (serviceLocator.getSessionService().checkSession(session)) {
             if (object.getProject().getUser().getId().equals(session.getUserId()) || serviceLocator.getUserServiceDB().findById(session.getUserId()).get().getRole().equals(UserRole.ADMIN)) {
-                return serviceLocator.getTaskServiceDB().update(object);
+                serviceLocator.getTaskServiceDB().update(object);
             }
         }
-        return false;
     }
 
     @WebMethod
     @SneakyThrows
     @Override
-    public boolean removeByNameTask(@WebParam(name="task_name") String name,@WebParam(name="session") Session session) {
+    public void removeByNameTask(@WebParam(name="task_name") String name,@WebParam(name="session") Session session) {
         if (serviceLocator.getSessionService().checkSession(session)) {
             Optional<Task> optionalTask = serviceLocator.getTaskServiceDB().findByName(name);
 
@@ -96,7 +94,6 @@ public class TaskWebServiceEndpointImpl implements TaskWebServiceEndpoint {
                 }
             }
         }
-        return false;
     }
 
     @WebMethod

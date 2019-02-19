@@ -25,12 +25,8 @@ public class ProjectRemoveAction implements Action {
     public void execute() {
         String answerNameProject = CommonReader.getNameProject();
         Session session = serviceLocatorEndpoint.getClientSessionService().getSession();
-        boolean answerRemove = serviceLocatorEndpoint.getProjectWebService().removeByNameProject(answerNameProject, session);
-        if (answerRemove) {
-            System.out.println("Успешно");
-        } else {
-            System.out.println("Не удалось");
-        }
+        serviceLocatorEndpoint.getProjectWebService().removeByNameProject(answerNameProject, session);
+        System.out.println("Готово");
     }
 
     @Override

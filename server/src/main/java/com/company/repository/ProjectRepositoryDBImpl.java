@@ -1,7 +1,6 @@
 package com.company.repository;
 
 import com.company.api.RepositoryDB;
-import com.company.api.UserRepositoryDB;
 import com.company.dao.ConnectionSupplier;
 import com.company.mapper.ProjectMapper;
 import com.company.model.Project;
@@ -18,18 +17,12 @@ public class ProjectRepositoryDBImpl implements RepositoryDB<String, Project> {
     }
 
     @Override
-    public boolean save(Project object) {
+    public void save(Project object) {
         SqlSession session = connectionSupplier.getSession();
         ProjectMapper mapper = session.getMapper(ProjectMapper.class);
         mapper.save(object);
         session.commit();
-        Optional<Project> checkProject = findById(object.getId());
         session.close();
-        if (checkProject.isPresent()) {
-            return true;
-        } else {
-            return false;
-        }
     }
 
     @Override
@@ -53,28 +46,21 @@ public class ProjectRepositoryDBImpl implements RepositoryDB<String, Project> {
     }
 
     @Override
-    public boolean update(Project object) {
+    public void update(Project object) {
         SqlSession session = connectionSupplier.getSession();
         ProjectMapper mapper = session.getMapper(ProjectMapper.class);
         mapper.update(object);
         session.commit();
-        Optional<Project> checkProject = findById(object.getId());
         session.close();
-        if (checkProject.isPresent()) {
-            return true;
-        } else {
-            return false;
-        }
     }
 
     @Override
-    public boolean removeByName(String name) {
+    public void removeByName(String name) {
         SqlSession session = connectionSupplier.getSession();
         ProjectMapper mapper = session.getMapper(ProjectMapper.class);
         mapper.removeByName(name);
         session.commit();
         session.close();
-        return true;
     }
 
     @Override

@@ -4,13 +4,11 @@ import com.company.api.*;
 import com.company.dao.ConnectionSupplier;
 import com.company.endpoint.*;
 import com.company.model.Project;
-import com.company.model.Session;
 import com.company.model.Task;
 import com.company.repository.*;
 import com.company.service.*;
 
 import javax.xml.ws.Endpoint;
-import java.util.List;
 
 public class Initializer implements ServiceLocator {
     private final ConnectionSupplier connectionSupplier = new ConnectionSupplier();

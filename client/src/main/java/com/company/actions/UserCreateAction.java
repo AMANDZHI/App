@@ -37,12 +37,8 @@ public class UserCreateAction implements Action {
         newUser.setPassword(answerPasswordUser);
         newUser.setRole(UserRole.valueOf(answerRoleUser));
 
-        boolean answerSave = serviceLocatorEndpoint.getUserWebService().saveUser(newUser, session);
-        if (answerSave) {
-            System.out.println("Удачно");
-        } else {
-            System.out.println("Неудачно");
-        }
+        serviceLocatorEndpoint.getUserWebService().saveUser(newUser, session);
+        System.out.println("Готово");
     }
 
     @Override

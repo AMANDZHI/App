@@ -22,6 +22,7 @@ public class WriteAllToFilesXmlAction implements Action {
     @SneakyThrows
     public void execute() {
         serviceLocatorEndpoint.getSerializationWebService().writeAllToXml();
+        System.out.println("Готово");
     }
 
     @Override

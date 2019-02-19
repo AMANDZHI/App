@@ -25,12 +25,9 @@ public class TaskRemoveAction implements Action {
         String answerNameTask = CommonReader.getNameTask();
 
         Session session = serviceLocatorEndpoint.getClientSessionService().getSession();
-        boolean answerRemove = serviceLocatorEndpoint.getTaskWebService().removeByNameTask(answerNameTask, session);
-        if (answerRemove) {
-            System.out.println("Успешно");
-        } else {
-            System.out.println("Неудачно");
-        }
+        serviceLocatorEndpoint.getTaskWebService().removeByNameTask(answerNameTask, session);
+        System.out.println("Готово");
+
     }
 
     @Override

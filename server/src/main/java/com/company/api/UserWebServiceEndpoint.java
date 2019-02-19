@@ -10,15 +10,15 @@ import java.util.List;
 @WebService
 public interface UserWebServiceEndpoint {
 
-    boolean saveUser(User object, Session session);
+    void saveUser(User object, Session session);
 
-    boolean updateUser(User object, Session session);
+    void updateUser(User object, Session session);
 
     User findByLoginUser(String login, Session session);
 
     User findByIdUser(String id, Session session);
 
-    boolean removeByLoginUser(String login, Session session);
+    void removeByLoginUser(String login, Session session);
 
     List<User> getListUser(Session session);
 }

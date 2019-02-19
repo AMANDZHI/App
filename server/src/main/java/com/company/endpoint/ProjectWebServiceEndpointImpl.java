@@ -28,11 +28,10 @@ public class ProjectWebServiceEndpointImpl implements ProjectWebServiceEndpoint 
     @WebMethod
     @SneakyThrows
     @Override
-    public boolean saveProject(@WebParam(name="project") Project object,@WebParam(name="session") Session session) {
+    public void saveProject(@WebParam(name="project") Project object,@WebParam(name="session") Session session) {
         if (serviceLocator.getSessionService().checkSession(session)) {
-            return serviceLocator.getProjectServiceDB().save(object);
+            serviceLocator.getProjectServiceDB().save(object);
         }
-        return false;
     }
 
     @WebMethod
@@ -68,31 +67,29 @@ public class ProjectWebServiceEndpointImpl implements ProjectWebServiceEndpoint 
     @WebMethod
     @SneakyThrows
     @Override
-    public boolean updateProject(@WebParam(name="project") Project object,@WebParam(name="session") Session session) {
+    public void updateProject(@WebParam(name="project") Project object,@WebParam(name="session") Session session) {
         if (serviceLocator.getSessionService().checkSession(session)) {
             Optional<Project> optionalProject = serviceLocator.getProjectServiceDB().findByName(object.getName());
             if (optionalProject.isPresent()) {
                 if (optionalProject.get().getUser().getId().equals(session.getUserId()) || serviceLocator.getUserServiceDB().findById(session.getUserId()).get().getRole().equals(UserRole.ADMIN)) {
-                    return serviceLocator.getProjectServiceDB().update(object);
+                    serviceLocator.getProjectServiceDB().update(object);
                 }
             }
         }
-        return false;
     }
 
     @WebMethod
     @SneakyThrows
     @Override
-    public boolean removeByNameProject(@WebParam(name="project_name") String name,@WebParam(name="session") Session session) {
+    public void removeByNameProject(@WebParam(name="project_name") String name,@WebParam(name="session") Session session) {
         if (serviceLocator.getSessionService().checkSession(session)) {
             Optional<Project> optionalProject = serviceLocator.getProjectServiceDB().findByName(name);
             if (optionalProject.isPresent()) {
                 if (optionalProject.get().getUser().getId().equals(session.getUserId()) || serviceLocator.getUserServiceDB().findById(session.getUserId()).get().getRole().equals(UserRole.ADMIN)) {
-                    return serviceLocator.getProjectServiceDB().removeByName(name);
+                    serviceLocator.getProjectServiceDB().removeByName(name);
                 }
             }
         }
-        return false;
     }
 
     @WebMethod

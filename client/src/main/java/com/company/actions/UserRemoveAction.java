@@ -25,12 +25,8 @@ public class UserRemoveAction implements Action {
         String answerLoginUser = CommonReader.getLoginUser();
 
         Session session = serviceLocatorEndpoint.getClientSessionService().getSession();
-        boolean answerRemove = serviceLocatorEndpoint.getUserWebService().removeByLoginUser(answerLoginUser, session);
-        if (answerRemove) {
-            System.out.println("Успещно");
-        } else {
-            System.out.println("Неудачно");
-        }
+        serviceLocatorEndpoint.getUserWebService().removeByLoginUser(answerLoginUser, session);
+        System.out.println("Готово");
     }
 
     @Override

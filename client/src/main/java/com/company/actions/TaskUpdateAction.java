@@ -36,12 +36,9 @@ public class TaskUpdateAction implements Action {
             updateTask.setName(answerNewNameTask);
             updateTask.setDescription(answerDescrTask);
             updateTask.setProject(findProject);
-            boolean answerUpdate = serviceLocatorEndpoint.getTaskWebService().updateTask(updateTask, session);
-            if (answerUpdate) {
-                System.out.println("Успешно");
-            } else {
-                System.out.println("Неудачно");
-            }
+            serviceLocatorEndpoint.getTaskWebService().updateTask(updateTask, session);
+            System.out.println("Готово");
+
         } else {
             System.out.println("Неудачно");
         }

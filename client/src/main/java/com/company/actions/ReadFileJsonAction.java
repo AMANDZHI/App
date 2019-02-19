@@ -22,6 +22,7 @@ public class ReadFileJsonAction implements Action {
     @SneakyThrows
     public void execute() {
         serviceLocatorEndpoint.getSerializationWebService().readJsonToObjects();
+        System.out.println("Готово");
     }
 
     @Override

@@ -29,26 +29,24 @@ public class UserWebServiceEndpointImpl implements UserWebServiceEndpoint {
 
     @WebMethod
     @Override
-    public boolean saveUser(@WebParam(name="user") User object, @WebParam(name="session")Session session) {
+    public void saveUser(@WebParam(name="user") User object, @WebParam(name="session")Session session) {
         if (sessionService.checkSession(session)) {
             object.setPassword(Encryption.md5Custom(object.getPassword()));
             if (userServiceDB.findById(session.getUserId()).get().getRole().equals(UserRole.ADMIN)) {
-                return userServiceDB.save(object);
+                userServiceDB.save(object);
             }
         }
-        return false;
     }
 
     @WebMethod
     @Override
-    public boolean updateUser(@WebParam(name="user") User object, @WebParam(name="session")Session session) {
+    public void updateUser(@WebParam(name="user") User object, @WebParam(name="session")Session session) {
         if (sessionService.checkSession(session)) {
             object.setPassword(Encryption.md5Custom(object.getPassword()));
             if (userServiceDB.findById(session.getUserId()).get().getRole().equals(UserRole.ADMIN)) {
-                return userServiceDB.update(object);
+                userServiceDB.update(object);
             }
         }
-        return false;
     }
 
     @WebMethod
@@ -82,13 +80,12 @@ public class UserWebServiceEndpointImpl implements UserWebServiceEndpoint {
 
     @WebMethod
     @Override
-    public boolean removeByLoginUser(@WebParam(name="user_login") String login, @WebParam(name="session")Session session) {
+    public void removeByLoginUser(@WebParam(name="user_login") String login, @WebParam(name="session")Session session) {
         if (sessionService.checkSession(session)) {
             if (userServiceDB.findById(session.getUserId()).get().getRole().equals(UserRole.ADMIN)) {
-                return userServiceDB.removeByLogin(login);
+                userServiceDB.removeByLogin(login);
             }
         }
-        return false;
     }
 
     @WebMethod

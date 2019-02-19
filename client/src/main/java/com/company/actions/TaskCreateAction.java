@@ -35,12 +35,8 @@ public class TaskCreateAction implements Action {
         Project project = serviceLocatorEndpoint.getProjectWebService().findByNameProject(answerProjectTask, session);
         if (project != null) {
             task.setProject(project);
-            boolean answerSave = serviceLocatorEndpoint.getTaskWebService().saveTask(task, session);
-            if (answerSave) {
-                System.out.println("Успещно");
-            } else {
-                System.out.println("Неудачно");
-            }
+            serviceLocatorEndpoint.getTaskWebService().saveTask(task, session);
+            System.out.println("Готово");
         } else {
             System.out.println("Не найден такой проект");
         }

@@ -9,15 +9,15 @@ import java.util.List;
 @WebService
 public interface TaskWebServiceEndpoint {
 
-    boolean saveTask(Task object, Session session);
+    void saveTask(Task object, Session session);
 
     Task findByNameTask(String name, Session session);
 
     Task findByIdTask(String id, Session session);
 
-    boolean updateTask(Task object, Session session);
+    void updateTask(Task object, Session session);
 
-    boolean removeByNameTask(String name, Session session);
+    void removeByNameTask(String name, Session session);
 
     List<Task> getListTask(Session session);
 }

@@ -34,13 +34,8 @@ public class ProjectCreateAction implements Action {
         project.setDescription(answerDescrProject);
         project.setUser(findUser);
 
-        boolean answerSave = serviceLocatorEndpoint.getProjectWebService().saveProject(project, session);
-
-        if (!answerSave) {
-            System.out.println("Не удалось сохранить проект в базу");
-        } else {
-            System.out.println("Удалось сохранить проект в базу");
-        }
+        serviceLocatorEndpoint.getProjectWebService().saveProject(project, session);
+        System.out.println("Готово");
     }
 
     @Override

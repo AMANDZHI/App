@@ -1,8 +1,8 @@
 package com.company.repository;
 
-import com.company.mapper.UserMapper;
 import com.company.api.UserRepositoryDB;
 import com.company.dao.ConnectionSupplier;
+import com.company.mapper.UserMapper;
 import com.company.model.User;
 import org.apache.ibatis.session.SqlSession;
 
@@ -17,33 +17,21 @@ public class UserRepositoryDBImpl implements UserRepositoryDB {
     }
 
     @Override
-    public boolean save(User object) {
+    public void save(User object) {
         SqlSession session = connectionSupplier.getSession();
         UserMapper mapper = session.getMapper(UserMapper.class);
         mapper.save(object);
         session.commit();
-        Optional<User> checkUser = findById(object.getId());
         session.close();
-        if (checkUser.isPresent()) {
-            return true;
-        } else {
-            return false;
-        }
     }
 
     @Override
-    public boolean update(User object) {
+    public void update(User object) {
         SqlSession session = connectionSupplier.getSession();
         UserMapper mapper = session.getMapper(UserMapper.class);
         mapper.update(object);
         session.commit();
-        Optional<User> checkUser = findById(object.getId());
         session.close();
-        if (checkUser.isPresent()) {
-            return true;
-        } else {
-            return false;
-        }
     }
 
     @Override
@@ -67,13 +55,12 @@ public class UserRepositoryDBImpl implements UserRepositoryDB {
     }
 
     @Override
-    public boolean removeByLogin(String login) {
+    public void removeByLogin(String login) {
         SqlSession session = connectionSupplier.getSession();
         UserMapper mapper = session.getMapper(UserMapper.class);
         mapper.removeByLogin(login);
         session.commit();
         session.close();
-        return true;
     }
 
     @Override

@@ -17,8 +17,8 @@ public class ProjectServiceDBImpl implements ServiceDB<String, Project> {
 
     @Override
     @SneakyThrows
-    public boolean save(Project object) {
-        return projectRepositoryDB.save(object);
+    public void save(Project object) {
+        projectRepositoryDB.save(object);
     }
 
     @Override
@@ -35,14 +35,14 @@ public class ProjectServiceDBImpl implements ServiceDB<String, Project> {
 
     @Override
     @SneakyThrows
-    public boolean update(Project object) {
-        return projectRepositoryDB.update(object);
+    public void update(Project object) {
+        projectRepositoryDB.update(object);
     }
 
     @Override
     @SneakyThrows
-    public boolean removeByName(String name) {
-        return projectRepositoryDB.removeByName(name);
+    public void removeByName(String name) {
+        projectRepositoryDB.removeByName(name);
     }
 
     @Override

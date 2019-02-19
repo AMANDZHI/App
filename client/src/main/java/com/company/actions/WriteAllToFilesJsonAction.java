@@ -20,6 +20,7 @@ public class WriteAllToFilesJsonAction implements Action {
     @Override
     public void execute() {
         serviceLocatorEndpoint.getSerializationWebService().writeAllToJson();
+        System.out.println("Готово");
     }
 
     @Override

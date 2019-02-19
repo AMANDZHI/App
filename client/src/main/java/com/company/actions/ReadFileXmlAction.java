@@ -22,6 +22,7 @@ public class ReadFileXmlAction implements Action {
     @SneakyThrows
     public void execute() {
         serviceLocatorEndpoint.getSerializationWebService().readXmlToObjects();
+        System.out.println("Готово");
     }
 
     @Override

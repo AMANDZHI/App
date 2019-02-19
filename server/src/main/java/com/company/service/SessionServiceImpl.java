@@ -43,25 +43,4 @@ public class SessionServiceImpl implements SessionService {
         }
         return true;
     }
-
-//    private final SessionRepository sessionRepository;
-//
-//    public SessionServiceImpl(SessionRepository sessionRepository) {
-//        this.sessionRepository = sessionRepository;
-//    }
-//
-//    @Override
-//    public void save(Session session) {
-//        sessionRepository.save(session);
-//    }
-//
-//    @Override
-//    public void invalidate() {
-//        sessionRepository.invalidate();
-//    }
-//
-//    @Override
-//    public Session getSession() {
-//        return sessionRepository.getSession();
-//    }
 }

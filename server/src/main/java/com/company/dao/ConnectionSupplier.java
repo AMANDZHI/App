@@ -1,10 +1,15 @@
 package com.company.dao;
 
+import com.fasterxml.classmate.AnnotationConfiguration;
 import lombok.SneakyThrows;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import org.hibernate.SessionFactory;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+import org.hibernate.cfg.Configuration;
+import org.hibernate.service.ServiceRegistry;
 
 import java.io.FileInputStream;
 import java.io.Reader;
@@ -34,5 +39,23 @@ public class ConnectionSupplier {
         SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
         SqlSession session = sqlSessionFactory.openSession();
        return session;
+    }
+
+    @SneakyThrows
+    public SessionFactory getSessionFactory() {
+//        Properties property = new Properties();
+//        FileInputStream fis = new FileInputStream("server/src/main/resources/config.properties");
+//        property.load(fis);
+
+        Configuration configuration = new Configuration().configure("hibernate-config.xml");
+
+//        configuration.configure("hibernate-config.xml").addProperties(property);
+
+        ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
+                .applySettings(configuration.getProperties()).build();
+
+        SessionFactory sessionFactory = configuration
+                .buildSessionFactory(serviceRegistry);
+        return sessionFactory;
     }
 }

@@ -1,12 +1,22 @@
 package com.company.model;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.UUID;
 
+@Entity
+@Table(name="project_tbl")
 public class Project implements Serializable {
+    @Id
+    @Column(name = "id")
     private String id;
+    @Column(name = "name")
     private String name;
+    @Column(name = "description")
     private String description;
+    @Column(name = "userId")
+    @JoinColumn(name = "id")
+    @ManyToOne
     private User user;
 
     public Project() {

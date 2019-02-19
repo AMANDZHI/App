@@ -4,16 +4,26 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.UUID;
 
+@Entity
+@Table(name="task_tbl")
 @Getter
 @Setter
 @ToString
 public class Task implements Serializable {
+    @Id
+    @Column(name = "id")
     private String id;
+    @Column(name = "name")
     private String name;
+    @Column(name = "description")
     private String description;
+    @Column(name = "projectId")
+    @JoinColumn(name = "id")
+    @ManyToOne
     private Project project;
 
     public Task() {

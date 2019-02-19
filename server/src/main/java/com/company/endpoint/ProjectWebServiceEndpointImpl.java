@@ -11,6 +11,7 @@ import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
@@ -98,6 +99,7 @@ public class ProjectWebServiceEndpointImpl implements ProjectWebServiceEndpoint 
     public List getListProject(@WebParam(name="session") Session session) {
         if (serviceLocator.getSessionService().checkSession(session)) {
             List<Project> forClientList = new ArrayList<>();
+
             List<Project> list = serviceLocator.getProjectServiceDB().getList();
             for (Project project: list) {
                 if (project.getUser().getId().equals(session.getUserId()) || serviceLocator.getUserServiceDB().findById(session.getUserId()).get().getRole().equals(UserRole.ADMIN)) {

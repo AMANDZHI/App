@@ -3,16 +3,13 @@ package com.company.dao;
 import com.company.model.Project;
 import com.company.model.Task;
 import com.company.model.User;
-import com.fasterxml.classmate.AnnotationConfiguration;
 import lombok.SneakyThrows;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.hibernate.SessionFactory;
-import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
-import org.hibernate.service.ServiceRegistry;
 
 import java.io.FileInputStream;
 import java.io.Reader;

@@ -31,6 +31,7 @@ public class ConnectionSupplier {
     {
         sessionFactory = createSessionFactory();
         entityManagerFactory = createEntityManagerFactory();
+        entityManager = getEntityManager();
     }
 
     @SneakyThrows

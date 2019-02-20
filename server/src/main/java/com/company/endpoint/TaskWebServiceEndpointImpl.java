@@ -2,7 +2,7 @@ package com.company.endpoint;
 
 import com.company.api.ServiceLocator;
 import com.company.api.TaskWebServiceEndpoint;
-import com.company.api.UserServiceDB;
+import com.company.api.UserService;
 import com.company.model.Project;
 import com.company.model.Session;
 import com.company.model.Task;
@@ -14,7 +14,6 @@ import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,8 +32,8 @@ public class TaskWebServiceEndpointImpl implements TaskWebServiceEndpoint {
     @Override
     public void saveTask(@WebParam(name="task") Task object, @WebParam(name="session") Session session) {
         if (serviceLocator.getSessionService().checkSession(session)) {
-            if (object.getProject().getUser().getId().equals(session.getUserId()) || serviceLocator.getUserServiceDB().findById(session.getUserId()).get().getRole().equals(UserRole.ADMIN)) {
-                serviceLocator.getTaskServiceDB().save(object);
+            if (object.getProject().getUser().getId().equals(session.getUserId()) || serviceLocator.getUserService().findById(session.getUserId()).get().getRole().equals(UserRole.ADMIN)) {
+                serviceLocator.getTaskService().save(object);
             }
         }
     }
@@ -44,10 +43,10 @@ public class TaskWebServiceEndpointImpl implements TaskWebServiceEndpoint {
     @Override
     public Task findByNameTask(@WebParam(name="task_name") String name,@WebParam(name="session") Session session) {
         if (serviceLocator.getSessionService().checkSession(session)) {
-            Optional<Task> optionalTask = serviceLocator.getTaskServiceDB().findByName(name);
+            Optional<Task> optionalTask = serviceLocator.getTaskService().findByName(name);
 
             if (optionalTask.isPresent()) {
-                if (optionalTask.get().getProject().getUser().getId().equals(session.getUserId()) || serviceLocator.getUserServiceDB().findById(session.getUserId()).get().getRole().equals(UserRole.ADMIN)) {
+                if (optionalTask.get().getProject().getUser().getId().equals(session.getUserId()) || serviceLocator.getUserService().findById(session.getUserId()).get().getRole().equals(UserRole.ADMIN)) {
                     return optionalTask.get();
                 }
             }
@@ -60,10 +59,10 @@ public class TaskWebServiceEndpointImpl implements TaskWebServiceEndpoint {
     @Override
     public Task findByIdTask(@WebParam(name="task_id") String id,@WebParam(name="session") Session session) {
         if (serviceLocator.getSessionService().checkSession(session)) {
-            Optional<Task> optionalTask = serviceLocator.getTaskServiceDB().findById(id);
+            Optional<Task> optionalTask = serviceLocator.getTaskService().findById(id);
 
             if (optionalTask.isPresent()) {
-                if (optionalTask.get().getProject().getUser().getId().equals(session.getUserId()) || serviceLocator.getUserServiceDB().findById(session.getUserId()).get().getRole().equals(UserRole.ADMIN)) {
+                if (optionalTask.get().getProject().getUser().getId().equals(session.getUserId()) || serviceLocator.getUserService().findById(session.getUserId()).get().getRole().equals(UserRole.ADMIN)) {
                     return optionalTask.get();
                 }
             }
@@ -76,8 +75,8 @@ public class TaskWebServiceEndpointImpl implements TaskWebServiceEndpoint {
     @Override
     public void updateTask(@WebParam(name="task") Task object,@WebParam(name="session") Session session) {
         if (serviceLocator.getSessionService().checkSession(session)) {
-            if (object.getProject().getUser().getId().equals(session.getUserId()) || serviceLocator.getUserServiceDB().findById(session.getUserId()).get().getRole().equals(UserRole.ADMIN)) {
-                serviceLocator.getTaskServiceDB().update(object);
+            if (object.getProject().getUser().getId().equals(session.getUserId()) || serviceLocator.getUserService().findById(session.getUserId()).get().getRole().equals(UserRole.ADMIN)) {
+                serviceLocator.getTaskService().update(object);
             }
         }
     }
@@ -87,11 +86,11 @@ public class TaskWebServiceEndpointImpl implements TaskWebServiceEndpoint {
     @Override
     public void removeByNameTask(@WebParam(name="task_name") String name,@WebParam(name="session") Session session) {
         if (serviceLocator.getSessionService().checkSession(session)) {
-            Optional<Task> optionalTask = serviceLocator.getTaskServiceDB().findByName(name);
+            Optional<Task> optionalTask = serviceLocator.getTaskService().findByName(name);
 
             if (optionalTask.isPresent()) {
-                if (optionalTask.get().getProject().getUser().getId().equals(session.getUserId()) || serviceLocator.getUserServiceDB().findById(session.getUserId()).get().getRole().equals(UserRole.ADMIN)) {
-                    serviceLocator.getTaskServiceDB().removeByName(name);
+                if (optionalTask.get().getProject().getUser().getId().equals(session.getUserId()) || serviceLocator.getUserService().findById(session.getUserId()).get().getRole().equals(UserRole.ADMIN)) {
+                    serviceLocator.getTaskService().removeByName(name);
                 }
             }
         }
@@ -103,13 +102,13 @@ public class TaskWebServiceEndpointImpl implements TaskWebServiceEndpoint {
     public List<Task> getListTask(@WebParam(name="session") Session session) {
         if (serviceLocator.getSessionService().checkSession(session)) {
             List<Task> forClientList = new ArrayList<>();
-            List<Task> list = serviceLocator.getTaskServiceDB().getList();
+            List<Task> list = serviceLocator.getTaskService().getList();
             for (Task task: list) {
                 Project project = task.getProject();
                 User userProject = project.getUser();
                 userProject.getId().equals(session.getUserId());
-                UserServiceDB userServiceDB = serviceLocator.getUserServiceDB();
-                User user = userServiceDB.findById(session.getUserId()).get();
+                UserService userService = serviceLocator.getUserService();
+                User user = userService.findById(session.getUserId()).get();
                 if (userProject.getId().equals(session.getUserId()) || user.getRole().equals(UserRole.ADMIN)) {
                     forClientList.add(task);
                 }

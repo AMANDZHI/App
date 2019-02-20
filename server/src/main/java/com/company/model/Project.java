@@ -13,10 +13,13 @@ public class Project implements Serializable {
     @Id
     @Column(name = "id")
     private String id;
+
     @Column(name = "name")
     private String name;
+
     @Column(name = "description")
     private String description;
+
     @JoinColumn(name = "userId", referencedColumnName = "id")
     @ManyToOne
     private User user;

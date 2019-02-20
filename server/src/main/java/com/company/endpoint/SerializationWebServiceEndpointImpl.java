@@ -56,20 +56,20 @@ public class SerializationWebServiceEndpointImpl implements SerializationWebServ
         List<Task> listTasks = serviceLocator.getSerializationServiceImpl().readFileToObject(filePathTasks);
 
         for (User u: listUsers) {
-            if (!serviceLocator.getUserServiceDB().findByLogin(u.getLogin()).isPresent()) {
-                serviceLocator.getUserServiceDB().save(u);
+            if (!serviceLocator.getUserService().findByLogin(u.getLogin()).isPresent()) {
+                serviceLocator.getUserService().save(u);
             }
         }
 
         for (Project p: listProjects) {
-            if (!serviceLocator.getProjectServiceDB().findById(p.getId()).isPresent()) {
-                serviceLocator.getProjectServiceDB().save(p);
+            if (!serviceLocator.getProjectService().findById(p.getId()).isPresent()) {
+                serviceLocator.getProjectService().save(p);
             }
         }
 
         for (Task t: listTasks) {
-            if (!serviceLocator.getTaskServiceDB().findById(t.getId()).isPresent()) {
-                serviceLocator.getTaskServiceDB().save(t);
+            if (!serviceLocator.getTaskService().findById(t.getId()).isPresent()) {
+                serviceLocator.getTaskService().save(t);
             }
         }
     }

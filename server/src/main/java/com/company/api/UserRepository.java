@@ -5,7 +5,7 @@ import com.company.model.User;
 import java.util.List;
 import java.util.Optional;
 
-public interface UserRepositoryDB {
+public interface UserRepository {
     void save(User object);
     void update(User object);
     Optional<User> findByLogin(String login);

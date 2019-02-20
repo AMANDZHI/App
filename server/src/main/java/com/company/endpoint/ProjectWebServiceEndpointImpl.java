@@ -11,7 +11,6 @@ import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebService;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,7 +30,7 @@ public class ProjectWebServiceEndpointImpl implements ProjectWebServiceEndpoint 
     @Override
     public void saveProject(@WebParam(name="project") Project object,@WebParam(name="session") Session session) {
         if (serviceLocator.getSessionService().checkSession(session)) {
-            serviceLocator.getProjectServiceDB().save(object);
+            serviceLocator.getProjectService().save(object);
         }
     }
 
@@ -40,9 +39,9 @@ public class ProjectWebServiceEndpointImpl implements ProjectWebServiceEndpoint 
     @Override
     public Project findByNameProject(@WebParam(name="project_name") String name,@WebParam(name="session") Session session ) {
         if (serviceLocator.getSessionService().checkSession(session)) {
-            Optional<Project> optionalProject = serviceLocator.getProjectServiceDB().findByName(name);
+            Optional<Project> optionalProject = serviceLocator.getProjectService().findByName(name);
             if (optionalProject.isPresent()) {
-                if (optionalProject.get().getUser().getId().equals(session.getUserId()) || serviceLocator.getUserServiceDB().findById(session.getUserId()).get().getRole().equals(UserRole.ADMIN)) {
+                if (optionalProject.get().getUser().getId().equals(session.getUserId()) || serviceLocator.getUserService().findById(session.getUserId()).get().getRole().equals(UserRole.ADMIN)) {
                     return optionalProject.orElse(null);
                 }
             }
@@ -55,9 +54,9 @@ public class ProjectWebServiceEndpointImpl implements ProjectWebServiceEndpoint 
     @Override
     public Project findByIdProject(@WebParam(name="project_id") String id,@WebParam(name="session") Session session) {
         if (serviceLocator.getSessionService().checkSession(session)) {
-            Optional<Project> optionalProject = serviceLocator.getProjectServiceDB().findById(id);
+            Optional<Project> optionalProject = serviceLocator.getProjectService().findById(id);
             if (optionalProject.isPresent()) {
-                if (optionalProject.get().getUser().getId().equals(session.getUserId()) || serviceLocator.getUserServiceDB().findById(session.getUserId()).get().getRole().equals(UserRole.ADMIN)) {
+                if (optionalProject.get().getUser().getId().equals(session.getUserId()) || serviceLocator.getUserService().findById(session.getUserId()).get().getRole().equals(UserRole.ADMIN)) {
                     return optionalProject.orElse(null);
                 }
             }
@@ -70,10 +69,10 @@ public class ProjectWebServiceEndpointImpl implements ProjectWebServiceEndpoint 
     @Override
     public void updateProject(@WebParam(name="project") Project object,@WebParam(name="session") Session session) {
         if (serviceLocator.getSessionService().checkSession(session)) {
-            Optional<Project> optionalProject = serviceLocator.getProjectServiceDB().findByName(object.getName());
+            Optional<Project> optionalProject = serviceLocator.getProjectService().findById(object.getId());//todo поменял на id с name
             if (optionalProject.isPresent()) {
-                if (optionalProject.get().getUser().getId().equals(session.getUserId()) || serviceLocator.getUserServiceDB().findById(session.getUserId()).get().getRole().equals(UserRole.ADMIN)) {
-                    serviceLocator.getProjectServiceDB().update(object);
+                if (optionalProject.get().getUser().getId().equals(session.getUserId()) || serviceLocator.getUserService().findById(session.getUserId()).get().getRole().equals(UserRole.ADMIN)) {
+                    serviceLocator.getProjectService().update(object);
                 }
             }
         }
@@ -84,10 +83,10 @@ public class ProjectWebServiceEndpointImpl implements ProjectWebServiceEndpoint 
     @Override
     public void removeByNameProject(@WebParam(name="project_name") String name,@WebParam(name="session") Session session) {
         if (serviceLocator.getSessionService().checkSession(session)) {
-            Optional<Project> optionalProject = serviceLocator.getProjectServiceDB().findByName(name);
+            Optional<Project> optionalProject = serviceLocator.getProjectService().findByName(name);
             if (optionalProject.isPresent()) {
-                if (optionalProject.get().getUser().getId().equals(session.getUserId()) || serviceLocator.getUserServiceDB().findById(session.getUserId()).get().getRole().equals(UserRole.ADMIN)) {
-                    serviceLocator.getProjectServiceDB().removeByName(name);
+                if (optionalProject.get().getUser().getId().equals(session.getUserId()) || serviceLocator.getUserService().findById(session.getUserId()).get().getRole().equals(UserRole.ADMIN)) {
+                    serviceLocator.getProjectService().removeByName(name);
                 }
             }
         }
@@ -100,9 +99,9 @@ public class ProjectWebServiceEndpointImpl implements ProjectWebServiceEndpoint 
         if (serviceLocator.getSessionService().checkSession(session)) {
             List<Project> forClientList = new ArrayList<>();
 
-            List<Project> list = serviceLocator.getProjectServiceDB().getList();
+            List<Project> list = serviceLocator.getProjectService().getList();
             for (Project project: list) {
-                if (project.getUser().getId().equals(session.getUserId()) || serviceLocator.getUserServiceDB().findById(session.getUserId()).get().getRole().equals(UserRole.ADMIN)) {
+                if (project.getUser().getId().equals(session.getUserId()) || serviceLocator.getUserService().findById(session.getUserId()).get().getRole().equals(UserRole.ADMIN)) {
                     forClientList.add(project);
                 }
             }

@@ -1,41 +1,31 @@
 package com.company.repository;
 
-import com.company.api.UserRepositoryDB;
+import com.company.api.UserRepository;
 import com.company.dao.ConnectionSupplier;
 import com.company.model.User;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 import java.util.List;
 import java.util.Optional;
 
-public class UserRepositoryDBImpl implements UserRepositoryDB {
+public class UserRepositoryImpl implements UserRepository {
     private final ConnectionSupplier connectionSupplier;
 
-    public UserRepositoryDBImpl(ConnectionSupplier connectionSupplier) {
+    public UserRepositoryImpl(ConnectionSupplier connectionSupplier) {
         this.connectionSupplier = connectionSupplier;
     }
 
     @Override
     public void save(User object) {
         EntityManager entityManager = connectionSupplier.getEntityManager();
-        EntityTransaction transaction = entityManager.getTransaction();
-        transaction.begin();
         entityManager.persist(object);
-        transaction.commit();
     }
 
     @Override
     public void update(User object) {
         EntityManager entityManager = connectionSupplier.getEntityManager();
-        EntityTransaction transaction = entityManager.getTransaction();
-        transaction.begin();
         entityManager.merge(object);
-        transaction.commit();
     }
 
     @Override
@@ -57,12 +47,9 @@ public class UserRepositoryDBImpl implements UserRepositoryDB {
     @Override
     public void removeByLogin(String login) {
         EntityManager entityManager = connectionSupplier.getEntityManager();
-        EntityTransaction transaction = entityManager.getTransaction();
-        transaction.begin();
         Query query = entityManager.createQuery("DELETE FROM User where login = :login");
         query.setParameter("login", login);
         query.executeUpdate();
-        transaction.commit();
     }
 
     @Override

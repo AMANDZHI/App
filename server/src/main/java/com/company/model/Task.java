@@ -17,10 +17,13 @@ public class Task implements Serializable {
     @Id
     @Column(name = "id")
     private String id;
+
     @Column(name = "name")
     private String name;
+
     @Column(name = "description")
     private String description;
+
     @JoinColumn(name = "projectId", referencedColumnName = "id")
     @ManyToOne
     private Project project;

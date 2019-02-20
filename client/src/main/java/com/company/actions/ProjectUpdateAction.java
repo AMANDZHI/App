@@ -23,9 +23,13 @@ public class ProjectUpdateAction implements Action {
     @Override
     @SneakyThrows
     public void execute() {
+
         String answerNameProject = CommonReader.getNameProject();
+
         String answerNewNameProject = CommonReader.getNewNameProject();
+
         String answerDescrProject = CommonReader.getNewDescrProject();
+
         Session session = serviceLocatorEndpoint.getClientSessionService().getSession();
         Project updateProject = serviceLocatorEndpoint.getProjectWebService().findByNameProject(answerNameProject, session);
         updateProject.setName(answerNewNameProject);

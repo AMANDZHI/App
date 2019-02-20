@@ -18,7 +18,7 @@ public class SessionServiceImpl implements SessionService {
 
     @Override
     public Session openSession(String login, String password) {
-        Optional<User> optionalUser = serviceLocator.getUserServiceDB().findByLogin(login);
+        Optional<User> optionalUser = serviceLocator.getUserService().findByLogin(login);
         if (optionalUser.isPresent()) {
             if (optionalUser.get().getPassword().equals(Encryption.md5Custom(password))) {
                 Session session = new Session(optionalUser.get().getId());

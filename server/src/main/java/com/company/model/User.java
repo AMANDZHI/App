@@ -19,12 +19,16 @@ public class User implements Serializable {
     @Id
     @Column(name = "id")
     private String id;
+
     @Column(name = "name")
     private String name;
+
     @Column(name = "login")
     private String login;
+
     @Column(name = "password")
     private String password;
+
     @Column(name = "role")
     @Enumerated(EnumType.STRING)
     private UserRole role;

@@ -1,28 +1,29 @@
 package com.company.repository;
 
 import com.company.api.DomainRepository;
-import com.company.api.RepositoryDB;
-import com.company.api.UserRepositoryDB;
+import com.company.dao.ConnectionSupplier;
 import com.company.model.Domain;
 import com.company.model.Project;
 import com.company.model.Task;
 import lombok.SneakyThrows;
+import org.apache.ibatis.session.SqlSession;
 
 public class DomainRepositoryImpl implements DomainRepository {
     private final Domain domain = new Domain();
-    private final RepositoryDB<String, Project> projectRepository;
-    private final UserRepositoryDB userRepository;
-    private final RepositoryDB<String, Task> taskRepository;
+    private final ConnectionSupplier connectionSupplier;
 
-    public DomainRepositoryImpl(RepositoryDB<String, Project> projectRepository, UserRepositoryDB userRepository, RepositoryDB<String, Task> taskRepository) {
-        this.projectRepository = projectRepository;
-        this.userRepository = userRepository;
-        this.taskRepository = taskRepository;
+    public DomainRepositoryImpl(ConnectionSupplier connectionSupplier) {
+        this.connectionSupplier = connectionSupplier;
     }
 
     @Override
     @SneakyThrows
     public Domain getDomain() {
+        SqlSession session = connectionSupplier.getSession();
+        ProjectMapperRepository projectRepository = session.getMapper(ProjectMapperRepository.class);
+        TaskMapperRepository taskRepository = session.getMapper(TaskMapperRepository.class);
+        UserMapperRepository userRepository = session.getMapper(UserMapperRepository.class);
+
         domain.setProjectList(projectRepository.getList());
         domain.setTaskList(taskRepository.getList());
         domain.setUserList(userRepository.getList());

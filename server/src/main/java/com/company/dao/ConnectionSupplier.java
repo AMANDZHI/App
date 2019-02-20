@@ -16,6 +16,11 @@ public class ConnectionSupplier {
     private String url_db;
     private String login_db;
     private String password_db;
+    private SqlSessionFactory sqlSessionFactory;
+
+    {
+        sqlSessionFactory = createSqlSessionFactory();
+    }
 
     @SneakyThrows
     public Connection getConnection() {
@@ -30,9 +35,12 @@ public class ConnectionSupplier {
 
     @SneakyThrows
     public SqlSession getSession() {
+        return sqlSessionFactory.openSession();
+    }
+
+    @SneakyThrows
+    private SqlSessionFactory createSqlSessionFactory() {
         Reader reader = Resources.getResourceAsReader("mybatis-config.xml");
-        SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
-        SqlSession session = sqlSessionFactory.openSession();
-       return session;
+        return new SqlSessionFactoryBuilder().build(reader);
     }
 }

@@ -17,8 +17,8 @@
         </environment>
     </environments>
     <mappers>
-        <mapper class="com.company.mapper.UserMapper"/>
-        <mapper class="com.company.mapper.TaskMapper"/>
-        <mapper class="com.company.mapper.ProjectMapper"/>
+        <mapper class="com.company.repository.UserMapperRepository"/>
+        <mapper class="com.company.repository.TaskMapperRepository"/>
+        <mapper class="com.company.repository.ProjectMapperRepository"/>
     </mappers>
 </configuration>

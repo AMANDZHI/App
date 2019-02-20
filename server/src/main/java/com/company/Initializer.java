@@ -5,20 +5,18 @@ import com.company.dao.ConnectionSupplier;
 import com.company.endpoint.*;
 import com.company.model.Project;
 import com.company.model.Task;
-import com.company.repository.*;
+import com.company.repository.DomainRepositoryImpl;
+import com.company.repository.SerializationRepositoryImpl;
 import com.company.service.*;
 
 import javax.xml.ws.Endpoint;
 
 public class Initializer implements ServiceLocator {
     private final ConnectionSupplier connectionSupplier = new ConnectionSupplier();
-    private final UserRepositoryDB userRepositoryDB = new UserRepositoryDBImpl(connectionSupplier);
-    private final RepositoryDB<String, Project> projectRepositoryDB = new ProjectRepositoryDBImpl(connectionSupplier);
-    private final RepositoryDB<String, Task> taskRepositoryDB = new TaskRepositoryDBImpl(connectionSupplier);
-    private final DomainRepository domainRepository = new DomainRepositoryImpl(projectRepositoryDB, userRepositoryDB, taskRepositoryDB);
-    private final ServiceDB<String, Project> projectServiceDB = new ProjectServiceDBImpl(projectRepositoryDB);
-    private final ServiceDB<String, Task> taskServiceDB = new TaskServiceDBImpl(taskRepositoryDB);
-    private final UserServiceDB userServiceDB = new UserServiceDBImpl(userRepositoryDB);
+    private final DomainRepository domainRepository = new DomainRepositoryImpl(connectionSupplier);
+    private final ServiceDB<String, Project> projectServiceDB = new ProjectServiceDBImpl(connectionSupplier);
+    private final ServiceDB<String, Task> taskServiceDB = new TaskServiceDBImpl(connectionSupplier);
+    private final UserServiceDB userServiceDB = new UserServiceDBImpl(connectionSupplier);
     private final DomainService domainService = new DomainServiceImpl(domainRepository);
     private final SerializationRepository serializationRepository = new SerializationRepositoryImpl();
     private final SerializationService serializationService = new SerializationServiceImpl(serializationRepository);

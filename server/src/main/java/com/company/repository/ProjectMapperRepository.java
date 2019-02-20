@@ -1,4 +1,4 @@
-package com.company.mapper;
+package com.company.repository;
 
 import com.company.model.Project;
 import com.company.model.User;
@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
-public interface ProjectMapper {
+public interface ProjectMapperRepository {
     final static String INSERT = "INSERT INTO project_tbl (id, name, description, userId) VALUES (#{id}, #{name}, #{description}, #{user.id})";
     final static String FIND_BY_NAME = "SELECT * FROM project_tbl WHERE name = #{name}";
     final static String FIND_BY_ID = "SELECT * FROM project_tbl WHERE id = #{id}";
@@ -19,7 +19,7 @@ public interface ProjectMapper {
             @Result(property = "id", column = "id"),
             @Result(property = "name", column = "name"),
             @Result(property = "description", column = "description"),
-            @Result(property = "user", column = "userId", javaType= User.class, one=@One(select="com.company.mapper.UserMapper.findById"))
+            @Result(property = "user", column = "userId", javaType= User.class, one=@One(select="com.company.repository.UserMapperRepository.findById"))
     })
     List<Project> getList();
 
@@ -28,7 +28,7 @@ public interface ProjectMapper {
             @Result(property = "id", column = "id"),
             @Result(property = "name", column = "name"),
             @Result(property = "description", column = "description"),
-            @Result(property = "user", column = "userId", javaType= User.class, one=@One(select="com.company.mapper.UserMapper.findById"))
+            @Result(property = "user", column = "userId", javaType= User.class, one=@One(select="com.company.repository.UserMapperRepository.findById"))
     })
     Project findByName(String name);
 
@@ -37,7 +37,7 @@ public interface ProjectMapper {
             @Result(property = "id", column = "id"),
             @Result(property = "name", column = "name"),
             @Result(property = "description", column = "description"),
-            @Result(property = "user", column = "userId", javaType= User.class, one=@One(select="com.company.mapper.UserMapper.findById"))
+            @Result(property = "user", column = "userId", javaType= User.class, one=@One(select="com.company.repository.UserMapperRepository.findById"))
     })
     Project findById(String id);
 

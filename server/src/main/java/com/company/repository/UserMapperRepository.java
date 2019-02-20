@@ -1,11 +1,11 @@
-package com.company.mapper;
+package com.company.repository;
 
 import com.company.model.User;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
-public interface UserMapper {
+public interface UserMapperRepository {
     final static String INSERT = "INSERT INTO user_tbl (id, name, login, password, role) VALUES (#{id}, #{name}, #{login}, #{password}, #{role})";
     final static String FIND_BY_LOGIN = "SELECT * FROM user_tbl WHERE login = #{login}";
     final static String FIND_BY_ID = "SELECT * FROM user_tbl WHERE id = #{id}";

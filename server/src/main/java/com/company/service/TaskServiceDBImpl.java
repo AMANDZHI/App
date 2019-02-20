@@ -5,6 +5,7 @@ import com.company.api.ServiceDB;
 import com.company.model.Task;
 import lombok.SneakyThrows;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -16,6 +17,7 @@ public class TaskServiceDBImpl implements ServiceDB<String, Task> {
     }
 
     @Override
+    @Transactional
     public void save(Task object) {
         taskRepositoryDB.save(object);
     }
@@ -34,12 +36,14 @@ public class TaskServiceDBImpl implements ServiceDB<String, Task> {
 
     @Override
     @SneakyThrows
+    @Transactional
     public void update(Task object) {
         taskRepositoryDB.update(object);
     }
 
     @Override
     @SneakyThrows
+    @Transactional
     public void removeByName(String name) {
         taskRepositoryDB.removeByName(name);
     }

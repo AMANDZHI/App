@@ -6,8 +6,9 @@ import com.company.model.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.query.Query;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,60 +21,45 @@ public class UserRepositoryDBImpl implements UserRepositoryDB {
 
     @Override
     public void save(User object) {
-        SessionFactory sessionFactory = connectionSupplier.getSessionFactory();
-        Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
-        session.save(object);
-        transaction.commit();
-        session.close();
+        EntityManager entityManager = connectionSupplier.getEntityManager();
+        entityManager.persist(object);
     }
 
     @Override
     public void update(User object) {
-        SessionFactory sessionFactory = connectionSupplier.getSessionFactory();
-        Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
-        session.update(object);
-        transaction.commit();
-        session.close();
+        EntityManager entityManager = connectionSupplier.getEntityManager();
+        entityManager.merge(object);
     }
 
     @Override
     public Optional<User> findByLogin(String login) {
-        SessionFactory sessionFactory = connectionSupplier.getSessionFactory();
-        Session session = sessionFactory.openSession();
-        Query query = session.createQuery("from User where login = :login");
+        EntityManager entityManager = connectionSupplier.getEntityManager();
+        Query query = entityManager.createQuery("from User where login = :login");
         query.setParameter("login", login);
-        User user = (User)query.uniqueResult();
+        User user = (User)query.getSingleResult();
         return Optional.of(user);
     }
 
     @Override
     public Optional<User> findById(String id) {
-        SessionFactory sessionFactory = connectionSupplier.getSessionFactory();
-        Session session = sessionFactory.openSession();
-        User user = session.find(User.class, id);
-        session.close();
+        EntityManager entityManager = connectionSupplier.getEntityManager();
+        User user = entityManager.find(User.class, id);
         return Optional.of(user);
     }
 
     @Override
     public void removeByLogin(String login) {
-        SessionFactory sessionFactory = connectionSupplier.getSessionFactory();
-        Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
-        Optional<User> findUser = findByLogin(login);
-        session.remove(findUser.get());
-        transaction.commit();
-        session.close();
+        EntityManager entityManager = connectionSupplier.getEntityManager();
+        Query query = entityManager.createQuery("DELETE FROM User where login = :login");
+        query.setParameter("login", login);
+        query.executeUpdate();
     }
 
     @Override
     public List<User> getList() {
-        SessionFactory sessionFactory = connectionSupplier.getSessionFactory();
-        Session session = sessionFactory.openSession();
-        List<User> list = session.createQuery("from User").list();
-        session.close();
+        EntityManager entityManager = connectionSupplier.getEntityManager();
+        Query query = entityManager.createQuery("from User");
+        List<User> list = query.getResultList();
         return list;
     }
 }

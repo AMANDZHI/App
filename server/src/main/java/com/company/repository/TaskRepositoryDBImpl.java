@@ -2,12 +2,14 @@ package com.company.repository;
 
 import com.company.api.RepositoryDB;
 import com.company.dao.ConnectionSupplier;
+import com.company.model.Project;
 import com.company.model.Task;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
-import org.hibernate.query.Query;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,61 +22,56 @@ public class TaskRepositoryDBImpl implements RepositoryDB<String, Task> {
 
     @Override
     public void save(Task object) {
-        SessionFactory sessionFactory = connectionSupplier.getSessionFactory();
-        Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
-        session.save(object);
-        transaction.commit();
-        session.close();
+        EntityManager entityManager = connectionSupplier.getEntityManager();
+        entityManager.persist(object);
+//        SessionFactory sessionFactory = connectionSupplier.getSessionFactory();
+//        Session session = sessionFactory.openSession();
+//        Transaction transaction = session.beginTransaction();
+//        session.save(object);
+//        transaction.commit();
+//        session.close();
     }
 
     @Override
     public Optional<Task> findByName(String name) {
-        SessionFactory sessionFactory = connectionSupplier.getSessionFactory();
-        Session session = sessionFactory.openSession();
-        Query query = session.createQuery("from Task where name = :name");
+        EntityManager entityManager = connectionSupplier.getEntityManager();
+        Query query = entityManager.createQuery("from Task where name = :name");
         query.setParameter("name", name);
-        Task task = (Task)query.uniqueResult();
-        session.close();
+        Task task = (Task)query.getSingleResult();
         return Optional.of(task);
+//        SessionFactory sessionFactory = connectionSupplier.getSessionFactory();
+//        Session session = sessionFactory.openSession();
+//        Query query = session.createQuery("from Task where name = :name");
+//        query.setParameter("name", name);
+//        Task task = (Task)query.uniqueResult();
+//        session.close();
+//        return Optional.of(task);
     }
 
     @Override
     public Optional<Task> findById(String id) {
-        SessionFactory sessionFactory = connectionSupplier.getSessionFactory();
-        Session session = sessionFactory.openSession();
-        Task task = session.find(Task.class, id);
-        session.close();
+        EntityManager entityManager = connectionSupplier.getEntityManager();
+        Task task = entityManager.find(Task.class, id);
         return Optional.of(task);
     }
 
     @Override
     public void update(Task object) {
-        SessionFactory sessionFactory = connectionSupplier.getSessionFactory();
-        Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
-        session.update(object);
-        transaction.commit();
-        session.close();
+        EntityManager entityManager = connectionSupplier.getEntityManager();
+        entityManager.merge(object);
     }
 
     @Override
     public void removeByName(String name) {
-        SessionFactory sessionFactory = connectionSupplier.getSessionFactory();
-        Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
-        Optional<Task> findTask = findByName(name);
-        session.remove(findTask.get());
-        transaction.commit();
-        session.close();
+        EntityManager entityManager = connectionSupplier.getEntityManager();
+        Optional<Task> findProject = findByName(name);
+        entityManager.remove(findProject.get());
     }
 
     @Override
     public List<Task> getList() {
-        SessionFactory sessionFactory = connectionSupplier.getSessionFactory();
-        Session session = sessionFactory.openSession();
-        List<Task> list = (List<Task>) session.createQuery("from Task").list();
-        session.close();
-        return list;
+        EntityManager entityManager = connectionSupplier.getEntityManager();
+        Query query = entityManager.createQuery("from Task");
+        return (List<Task>) query.getResultList();
     }
 }

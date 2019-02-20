@@ -3,11 +3,11 @@ package com.company.repository;
 import com.company.api.RepositoryDB;
 import com.company.dao.ConnectionSupplier;
 import com.company.model.Project;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
-import org.hibernate.query.Query;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Query;
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,62 +19,48 @@ public class ProjectRepositoryDBImpl implements RepositoryDB<String, Project> {
     }
 
     @Override
+//    @Transactional
     public void save(Project object) {
-        SessionFactory sessionFactory = connectionSupplier.getSessionFactory();
-        Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
-        session.save(object);
-        transaction.commit();
-        session.close();
+        EntityManager entityManager = connectionSupplier.getEntityManager();
+//        EntityTransaction transaction = entityManager.getTransaction();
+//        transaction.begin();
+        entityManager.persist(object);
+//        transaction.commit();
     }
 
     @Override
     public Optional<Project> findByName(String name) {
-        SessionFactory sessionFactory = connectionSupplier.getSessionFactory();
-        Session session = sessionFactory.openSession();
-        Query query = session.createQuery("from Project where name = :name");
+        EntityManager entityManager = connectionSupplier.getEntityManager();
+        Query query = entityManager.createQuery("from Project where name = :name");
         query.setParameter("name", name);
-        Project project = (Project)query.uniqueResult();
-        session.close();
+        Project project = (Project)query.getSingleResult();
         return Optional.of(project);
     }
 
     @Override
     public Optional<Project> findById(String id) {
-        SessionFactory sessionFactory = connectionSupplier.getSessionFactory();
-        Session session = sessionFactory.openSession();
-        Project project = session.find(Project.class, id);
-        session.close();
+        EntityManager entityManager = connectionSupplier.getEntityManager();
+        Project project = entityManager.find(Project.class, id);
         return Optional.of(project);
     }
 
     @Override
     public void update(Project object) {
-        SessionFactory sessionFactory = connectionSupplier.getSessionFactory();
-        Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
-        session.update(object);
-        transaction.commit();
-        session.close();
+        EntityManager entityManager = connectionSupplier.getEntityManager();
+        entityManager.merge(object);
     }
 
     @Override
     public void removeByName(String name) {
-        SessionFactory sessionFactory = connectionSupplier.getSessionFactory();
-        Session session = sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
+        EntityManager entityManager = connectionSupplier.getEntityManager();
         Optional<Project> findProject = findByName(name);
-        session.remove(findProject.get());
-        transaction.commit();
-        session.close();
+        entityManager.remove(findProject.get());
     }
 
     @Override
     public List<Project> getList() {
-        SessionFactory sessionFactory = connectionSupplier.getSessionFactory();
-        Session session = sessionFactory.openSession();
-        List<Project> list = (List<Project>) session.createQuery("from Project").list();
-        session.close();
-        return list;
+        EntityManager entityManager = connectionSupplier.getEntityManager();
+        Query query = entityManager.createQuery("from Project");
+        return (List<Project>) query.getResultList();
     }
 }

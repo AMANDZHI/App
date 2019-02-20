@@ -11,6 +11,9 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import java.io.FileInputStream;
 import java.io.Reader;
 import java.sql.Connection;
@@ -22,9 +25,11 @@ public class ConnectionSupplier {
     private String login_db;
     private String password_db;
     private SessionFactory sessionFactory;
+    private EntityManagerFactory entityManagerFactory;
 
     {
         sessionFactory = createSessionFactory();
+        entityManagerFactory = createEntityManagerFactory();
     }
 
     @SneakyThrows
@@ -47,8 +52,12 @@ public class ConnectionSupplier {
     }
 
     @SneakyThrows
-    private SessionFactory getSessionFactory() {
+    public SessionFactory getSessionFactory() {
         return sessionFactory;
+    }
+
+    public EntityManager getEntityManager() {
+        return entityManagerFactory.createEntityManager();
     }
 
     @SneakyThrows
@@ -61,5 +70,9 @@ public class ConnectionSupplier {
         configuration.addAnnotatedClass(User.class).addAnnotatedClass(Project.class).addAnnotatedClass(Task.class);
 
         return configuration.buildSessionFactory();
+    }
+
+    private EntityManagerFactory createEntityManagerFactory() {
+        return Persistence.createEntityManagerFactory("hibernateJPA");
     }
 }

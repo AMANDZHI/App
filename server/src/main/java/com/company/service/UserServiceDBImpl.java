@@ -5,6 +5,7 @@ import com.company.api.UserServiceDB;
 import com.company.model.User;
 import lombok.SneakyThrows;
 
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,11 +18,13 @@ public class UserServiceDBImpl implements UserServiceDB {
 
     @Override
     @SneakyThrows
+    @Transactional
     public void save(User object) {
         userRepositoryDB.save(object);
     }
 
     @Override
+    @Transactional
     public void update(User object) {
         userRepositoryDB.update(object);
     }
@@ -37,6 +40,7 @@ public class UserServiceDBImpl implements UserServiceDB {
     }
 
     @Override
+    @Transactional
     public void removeByLogin(String login) {
         userRepositoryDB.removeByLogin(login);
     }

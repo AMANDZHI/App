@@ -11,7 +11,6 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 
-import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import java.io.FileInputStream;
@@ -26,12 +25,10 @@ public class ConnectionSupplier {
     private String password_db;
     private SessionFactory sessionFactory;
     private EntityManagerFactory entityManagerFactory;
-    private EntityManager entityManager;
 
     {
         sessionFactory = createSessionFactory();
         entityManagerFactory = createEntityManagerFactory();
-        entityManager = getEntityManager();
     }
 
     @SneakyThrows
@@ -58,11 +55,11 @@ public class ConnectionSupplier {
         return sessionFactory;
     }
 
-    public EntityManager getEntityManager() {
-        if (this.entityManager == null) {
-            return entityManagerFactory.createEntityManager();
+    public EntityManagerFactory getEntityManagerFactory() {
+        if (entityManagerFactory == null) {
+            return createEntityManagerFactory();
         } else {
-            return entityManager;
+            return entityManagerFactory;
         }
     }
 

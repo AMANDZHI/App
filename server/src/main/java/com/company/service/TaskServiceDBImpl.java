@@ -17,7 +17,6 @@ public class TaskServiceDBImpl implements ServiceDB<String, Task> {
     }
 
     @Override
-    @Transactional
     public void save(Task object) {
         taskRepositoryDB.save(object);
     }
@@ -36,14 +35,12 @@ public class TaskServiceDBImpl implements ServiceDB<String, Task> {
 
     @Override
     @SneakyThrows
-    @Transactional
     public void update(Task object) {
         taskRepositoryDB.update(object);
     }
 
     @Override
     @SneakyThrows
-    @Transactional
     public void removeByName(String name) {
         taskRepositoryDB.removeByName(name);
     }

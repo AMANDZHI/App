@@ -8,6 +8,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 import java.util.List;
 import java.util.Optional;
@@ -22,13 +23,19 @@ public class UserRepositoryDBImpl implements UserRepositoryDB {
     @Override
     public void save(User object) {
         EntityManager entityManager = connectionSupplier.getEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
         entityManager.persist(object);
+        transaction.commit();
     }
 
     @Override
     public void update(User object) {
         EntityManager entityManager = connectionSupplier.getEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
         entityManager.merge(object);
+        transaction.commit();
     }
 
     @Override
@@ -50,9 +57,12 @@ public class UserRepositoryDBImpl implements UserRepositoryDB {
     @Override
     public void removeByLogin(String login) {
         EntityManager entityManager = connectionSupplier.getEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
         Query query = entityManager.createQuery("DELETE FROM User where login = :login");
         query.setParameter("login", login);
         query.executeUpdate();
+        transaction.commit();
     }
 
     @Override

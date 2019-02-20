@@ -26,6 +26,7 @@ public class ConnectionSupplier {
     private String password_db;
     private SessionFactory sessionFactory;
     private EntityManagerFactory entityManagerFactory;
+    private EntityManager entityManager;
 
     {
         sessionFactory = createSessionFactory();
@@ -57,7 +58,11 @@ public class ConnectionSupplier {
     }
 
     public EntityManager getEntityManager() {
-        return entityManagerFactory.createEntityManager();
+        if (this.entityManager == null) {
+            return entityManagerFactory.createEntityManager();
+        } else {
+            return entityManager;
+        }
     }
 
     @SneakyThrows

@@ -19,13 +19,12 @@ public class ProjectRepositoryDBImpl implements RepositoryDB<String, Project> {
     }
 
     @Override
-//    @Transactional
     public void save(Project object) {
         EntityManager entityManager = connectionSupplier.getEntityManager();
-//        EntityTransaction transaction = entityManager.getTransaction();
-//        transaction.begin();
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
         entityManager.persist(object);
-//        transaction.commit();
+        transaction.commit();
     }
 
     @Override
@@ -47,14 +46,20 @@ public class ProjectRepositoryDBImpl implements RepositoryDB<String, Project> {
     @Override
     public void update(Project object) {
         EntityManager entityManager = connectionSupplier.getEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
         entityManager.merge(object);
+        transaction.commit();
     }
 
     @Override
     public void removeByName(String name) {
         EntityManager entityManager = connectionSupplier.getEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
         Optional<Project> findProject = findByName(name);
         entityManager.remove(findProject.get());
+        transaction.commit();
     }
 
     @Override

@@ -18,13 +18,11 @@ public class UserServiceDBImpl implements UserServiceDB {
 
     @Override
     @SneakyThrows
-    @Transactional
     public void save(User object) {
         userRepositoryDB.save(object);
     }
 
     @Override
-    @Transactional
     public void update(User object) {
         userRepositoryDB.update(object);
     }
@@ -40,7 +38,6 @@ public class UserServiceDBImpl implements UserServiceDB {
     }
 
     @Override
-    @Transactional
     public void removeByLogin(String login) {
         userRepositoryDB.removeByLogin(login);
     }

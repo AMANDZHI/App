@@ -18,7 +18,6 @@ public class ProjectServiceDBImpl implements ServiceDB<String, Project> {
 
     @Override
     @SneakyThrows
-    @Transactional
     public void save(Project object) {
         projectRepositoryDB.save(object);
     }
@@ -37,14 +36,12 @@ public class ProjectServiceDBImpl implements ServiceDB<String, Project> {
 
     @Override
     @SneakyThrows
-    @Transactional
     public void update(Project object) {
         projectRepositoryDB.update(object);
     }
 
     @Override
     @SneakyThrows
-    @Transactional
     public void removeByName(String name) {
         projectRepositoryDB.removeByName(name);
     }

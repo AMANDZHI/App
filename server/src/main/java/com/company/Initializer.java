@@ -28,7 +28,6 @@ public class Initializer implements ServiceLocator {
     private final TaskWebServiceEndpointImpl taskServiceEndpoint = new TaskWebServiceEndpointImpl(serviceLocator);
     private final UserWebServiceEndpointImpl userWebServiceEndpoint = new UserWebServiceEndpointImpl(userServiceDB, sessionService);
     private final SessionWebServiceEndpoint sessionWebServiceEndpoint = new SessionWebServiceEndpointImpl(sessionService);
-
     private final SerializationWebServiceEndpoint serializationWebServiceEndpoint = new SerializationWebServiceEndpointImpl(serviceLocator);
 
     @Override

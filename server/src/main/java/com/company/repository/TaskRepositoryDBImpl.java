@@ -9,6 +9,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
 import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 import java.util.List;
 import java.util.Optional;
@@ -23,13 +24,10 @@ public class TaskRepositoryDBImpl implements RepositoryDB<String, Task> {
     @Override
     public void save(Task object) {
         EntityManager entityManager = connectionSupplier.getEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
         entityManager.persist(object);
-//        SessionFactory sessionFactory = connectionSupplier.getSessionFactory();
-//        Session session = sessionFactory.openSession();
-//        Transaction transaction = session.beginTransaction();
-//        session.save(object);
-//        transaction.commit();
-//        session.close();
+        transaction.commit();
     }
 
     @Override
@@ -38,14 +36,8 @@ public class TaskRepositoryDBImpl implements RepositoryDB<String, Task> {
         Query query = entityManager.createQuery("from Task where name = :name");
         query.setParameter("name", name);
         Task task = (Task)query.getSingleResult();
+
         return Optional.of(task);
-//        SessionFactory sessionFactory = connectionSupplier.getSessionFactory();
-//        Session session = sessionFactory.openSession();
-//        Query query = session.createQuery("from Task where name = :name");
-//        query.setParameter("name", name);
-//        Task task = (Task)query.uniqueResult();
-//        session.close();
-//        return Optional.of(task);
     }
 
     @Override
@@ -58,14 +50,20 @@ public class TaskRepositoryDBImpl implements RepositoryDB<String, Task> {
     @Override
     public void update(Task object) {
         EntityManager entityManager = connectionSupplier.getEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
         entityManager.merge(object);
+        transaction.commit();
     }
 
     @Override
     public void removeByName(String name) {
         EntityManager entityManager = connectionSupplier.getEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
         Optional<Task> findProject = findByName(name);
         entityManager.remove(findProject.get());
+        transaction.commit();
     }
 
     @Override

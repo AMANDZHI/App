@@ -4,14 +4,11 @@ import com.company.api.*;
 import com.company.dao.ConnectionSupplier;
 import com.company.endpoint.*;
 import com.company.model.Project;
-import com.company.model.Session;
 import com.company.model.Task;
-import com.company.model.User;
 import com.company.repository.*;
 import com.company.service.*;
 
 import javax.xml.ws.Endpoint;
-import java.util.List;
 
 public class Initializer implements ServiceLocator {
     private final ConnectionSupplier connectionSupplier = new ConnectionSupplier();
@@ -65,13 +62,6 @@ public class Initializer implements ServiceLocator {
     }
 
     public void run() {
-//        Session session = sessionWebServiceEndpoint.openSession("admin", "admin");
-//        List<User> listUser = userWebServiceEndpoint.getListUser(session);
-//        for (User u: listUser) {
-//            System.out.println(u);
-//        }
-        userServiceDB.getList();
-
         Endpoint.publish("http://localhost:1986/wss/project", projectServiceEndpoint);
         Endpoint.publish("http://localhost:1987/wss/task", taskServiceEndpoint);
         Endpoint.publish("http://localhost:1988/wss/user", userWebServiceEndpoint);

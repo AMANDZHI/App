@@ -1,11 +1,14 @@
 package com.company.model;
 
+import lombok.ToString;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.UUID;
 
 @Entity
 @Table(name="project_tbl")
+@ToString
 public class Project implements Serializable {
     @Id
     @Column(name = "id")
@@ -14,8 +17,7 @@ public class Project implements Serializable {
     private String name;
     @Column(name = "description")
     private String description;
-    @Column(name = "userId")
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "userId", referencedColumnName = "id")
     @ManyToOne
     private User user;
 
@@ -60,19 +62,6 @@ public class Project implements Serializable {
 
     public void setUser(User user) {
         this.user = user;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Project)) return false;
-
-        Project project = (Project) o;
-
-        if (getId() != null ? !getId().equals(project.getId()) : project.getId() != null) return false;
-        if (getName() != null ? !getName().equals(project.getName()) : project.getName() != null) return false;
-        if (getDescription() != null ? !getDescription().equals(project.getDescription()) : project.getDescription() != null) return false;
-        return getUser() != null ? getUser().equals(project.getUser()) : project.getUser() == null;
     }
 
     @Override

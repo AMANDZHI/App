@@ -1,5 +1,8 @@
 package com.company.dao;
 
+import com.company.model.Project;
+import com.company.model.Task;
+import com.company.model.User;
 import com.fasterxml.classmate.AnnotationConfiguration;
 import lombok.SneakyThrows;
 import org.apache.ibatis.io.Resources;
@@ -43,19 +46,15 @@ public class ConnectionSupplier {
 
     @SneakyThrows
     public SessionFactory getSessionFactory() {
-//        Properties property = new Properties();
-//        FileInputStream fis = new FileInputStream("server/src/main/resources/config.properties");
-//        property.load(fis);
+        Properties property = new Properties();
+        FileInputStream fis = new FileInputStream("server/src/main/resources/config.properties");
+        property.load(fis);
 
-        Configuration configuration = new Configuration().configure("hibernate-config.xml");
-
-//        configuration.configure("hibernate-config.xml").addProperties(property);
-
-        ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
-                .applySettings(configuration.getProperties()).build();
+        Configuration configuration = new Configuration().configure("hibernate-config.xml").addProperties(property);
+        configuration.addAnnotatedClass(User.class).addAnnotatedClass(Project.class).addAnnotatedClass(Task.class);
 
         SessionFactory sessionFactory = configuration
-                .buildSessionFactory(serviceRegistry);
+                .buildSessionFactory();
         return sessionFactory;
     }
 }

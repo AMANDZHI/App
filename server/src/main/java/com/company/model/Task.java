@@ -21,8 +21,7 @@ public class Task implements Serializable {
     private String name;
     @Column(name = "description")
     private String description;
-    @Column(name = "projectId")
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "projectId", referencedColumnName = "id")
     @ManyToOne
     private Project project;
 

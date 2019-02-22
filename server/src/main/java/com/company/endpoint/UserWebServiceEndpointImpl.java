@@ -29,7 +29,7 @@ public class UserWebServiceEndpointImpl implements UserWebServiceEndpoint {
 
     @WebMethod
     @Override
-    public User saveUser(@WebParam(name="name") String name, @WebParam(name="login") String login, @WebParam(name="password") String password, @WebParam(name="role") String role,  @WebParam(name="session")Session session) {
+    public void saveUser(@WebParam(name="name") String name, @WebParam(name="login") String login, @WebParam(name="password") String password, @WebParam(name="role") String role,  @WebParam(name="session")Session session) {
         if (sessionService.checkSession(session)) {
             User user = new User();
             user.setName(name);
@@ -39,15 +39,15 @@ public class UserWebServiceEndpointImpl implements UserWebServiceEndpoint {
 
             User userSession = userService.findById(session.getUserId()).get();
             if (userSession.getRole().equals(UserRole.ADMIN)) {
-                return userService.save(user);
+                userService.save(user);
             }
         }
-        return null;
+
     }
 
     @WebMethod
     @Override
-    public void updateUser(@WebParam(name="login") String login, @WebParam(name="newName") String newName, @WebParam(name="newLogin") String newLogin, @WebParam(name="newPassword") String newPassword,@WebParam(name="newRole") String newRole, @WebParam(name="session")Session session) {
+    public User updateUser(@WebParam(name="login") String login, @WebParam(name="newName") String newName, @WebParam(name="newLogin") String newLogin, @WebParam(name="newPassword") String newPassword,@WebParam(name="newRole") String newRole, @WebParam(name="session")Session session) {
         if (sessionService.checkSession(session)) {
             Optional<User> optionalUser = userService.findByLogin(login);
             if (optionalUser.isPresent()) {
@@ -58,10 +58,11 @@ public class UserWebServiceEndpointImpl implements UserWebServiceEndpoint {
                     user.setLogin(newLogin);
                     user.setRole(UserRole.valueOf(newRole));
                     user.setPassword(Encryption.md5Custom(newPassword));
-                    userService.update(user);
+                    return userService.update(user);
                 }
             }
         }
+        return null;
     }
 
     @WebMethod

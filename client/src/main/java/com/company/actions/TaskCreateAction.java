@@ -28,8 +28,8 @@ public class TaskCreateAction implements Action {
 
         Session session = serviceLocatorEndpoint.getClientSessionService().getSession();
         TaskWebServiceEndpoint taskWebService = serviceLocatorEndpoint.getTaskWebService();
-        Task task = taskWebService.saveTask(answerNameTask, answerDescrTask, answerProjectTask, session);
-        System.out.println(task);
+        taskWebService.saveTask(answerNameTask, answerDescrTask, answerProjectTask, session);
+        System.out.println("Готово");
     }
 
     @Override

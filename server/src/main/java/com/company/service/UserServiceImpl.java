@@ -20,24 +20,24 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @SneakyThrows
-    public User save(User object) {
+    public void save(User object) {
         EntityManager entityManager = connectionSupplier.getEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
         UserRepositoryImpl userRepository = new UserRepositoryImpl(entityManager);
-        User user = userRepository.save(object);
+        userRepository.save(object);
         transaction.commit();
-        return user;
     }
 
     @Override
-    public void update(User object) {
+    public User update(User object) {
         EntityManager entityManager = connectionSupplier.getEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
         UserRepositoryImpl userRepository = new UserRepositoryImpl(entityManager);
-        userRepository.update(object);
+        User user = userRepository.update(object);
         transaction.commit();
+        return user;
     }
 
     @Override

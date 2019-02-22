@@ -59,14 +59,10 @@ public class Initializer implements ServiceLocator {
     }
 
     public void run() {
+        runEndpoint();
+    }
 
-//        Session session = sessionWebServiceEndpoint.openSession("admin", "admin");
-//        User byIdUser = userWebServiceEndpoint.findByIdUser(session.getUserId(), session);
-//        Project p3 = projectServiceEndpoint.findByNameProject("Project2", session);
-//        Task task = new Task("task7", "task7", p3, byIdUser);
-//        taskServiceEndpoint.saveTask(task, session);
-
-
+    private void runEndpoint() {
         Endpoint.publish("http://localhost:1986/wss/project", projectServiceEndpoint);
         Endpoint.publish("http://localhost:1987/wss/task", taskServiceEndpoint);
         Endpoint.publish("http://localhost:1988/wss/user", userWebServiceEndpoint);

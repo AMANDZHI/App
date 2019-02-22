@@ -1,11 +1,11 @@
 package com.company.actions;
 
 import com.company.ActionRole;
-import com.company.apiClient.Action;
-import com.company.apiClient.ServiceLocatorEndpoint;
 import com.company.api.Session;
 import com.company.api.User;
-import com.company.api.UserRole;
+import com.company.api.UserWebServiceEndpoint;
+import com.company.apiClient.Action;
+import com.company.apiClient.ServiceLocatorEndpoint;
 import lombok.SneakyThrows;
 
 public class UserUpdateAction implements Action {
@@ -32,8 +32,9 @@ public class UserUpdateAction implements Action {
 
         Session session = serviceLocatorEndpoint.getClientSessionService().getSession();
 
-        serviceLocatorEndpoint.getUserWebService().updateUser(answerLoginUser, answerNewNameUser, answerNewLoginUser, answerPasswordUser, answerRoleUser, session);
-
+        UserWebServiceEndpoint userWebService = serviceLocatorEndpoint.getUserWebService();
+        User user = userWebService.updateUser(answerLoginUser, answerNewNameUser, answerNewLoginUser, answerPasswordUser, answerRoleUser, session);
+        System.out.println(user);
     }
 
     @Override

@@ -15,7 +15,7 @@ public interface ProjectWebServiceEndpoint {
 
     Project findByIdProject(String id, Session session);
 
-    void updateProject(String name ,String newName, String newDescription, Session session);
+    Project updateProject(String name ,String newName, String newDescription, Session session);
 
     void removeByNameProject(String name, Session session);
 

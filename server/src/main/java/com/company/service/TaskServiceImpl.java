@@ -19,14 +19,13 @@ public class TaskServiceImpl implements Service<String, Task> {
     }
 
     @Override
-    public Task save(Task object) {
+    public void save(Task object) {
         EntityManager entityManager = connectionSupplier.getEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
         TaskRepositoryImpl taskRepository = new TaskRepositoryImpl(entityManager);
-        Task task = taskRepository.save(object);
+        taskRepository.save(object);
         transaction.commit();
-        return task;
     }
 
     @Override
@@ -51,13 +50,14 @@ public class TaskServiceImpl implements Service<String, Task> {
 
     @Override
     @SneakyThrows
-    public void update(Task object) {
+    public Task update(Task object) {
         EntityManager entityManager = connectionSupplier.getEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
         TaskRepositoryImpl taskRepository = new TaskRepositoryImpl(entityManager);
-        taskRepository.update(object);
+        Task task= taskRepository.update(object);
         transaction.commit();
+        return task;
     }
 
     @Override

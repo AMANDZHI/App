@@ -31,7 +31,7 @@ public class TaskWebServiceEndpointImpl implements TaskWebServiceEndpoint {
 
     @WebMethod
     @Override
-    public Task saveTask(@WebParam(name="name") String nameTask, @WebParam(name="description") String description, @WebParam(name="nameProject") String nameProject, @WebParam(name="session") Session session) {
+    public void saveTask(@WebParam(name="name") String nameTask, @WebParam(name="description") String description, @WebParam(name="nameProject") String nameProject, @WebParam(name="session") Session session) {
         if (serviceLocator.getSessionService().checkSession(session)) {
             Optional<Project> optionalProject = serviceLocator.getProjectService().findByName(nameProject);
             if (optionalProject.isPresent()) {
@@ -43,11 +43,9 @@ public class TaskWebServiceEndpointImpl implements TaskWebServiceEndpoint {
                     Service<String, Task> taskService = serviceLocator.getTaskService();
                     Task task = new Task(nameTask, description, project, userSession);
                     taskService.save(task);
-                    return task;
                 }
             }
         }
-        return null;
     }
 
     @WebMethod
@@ -85,7 +83,7 @@ public class TaskWebServiceEndpointImpl implements TaskWebServiceEndpoint {
     @WebMethod
     @SneakyThrows
     @Override
-    public void updateTask(@WebParam(name="name") String nameTask, @WebParam(name="newName") String newNameTask, @WebParam(name="newDescription") String newDescription, @WebParam(name="newNameProject") String newNameProject,@WebParam(name="session") Session session) {
+    public Task updateTask(@WebParam(name="name") String nameTask, @WebParam(name="newName") String newNameTask, @WebParam(name="newDescription") String newDescription, @WebParam(name="newNameProject") String newNameProject,@WebParam(name="session") Session session) {
         if (serviceLocator.getSessionService().checkSession(session)) {
             Optional<Project> optionalProject = serviceLocator.getProjectService().findByName(newNameProject);
             if (optionalProject.isPresent()) {
@@ -103,12 +101,13 @@ public class TaskWebServiceEndpointImpl implements TaskWebServiceEndpoint {
                             task.setName(newNameTask);
                             task.setDescription(newDescription);
                             task.setProject(project);
-                            taskService.update(task);
+                            return taskService.update(task);
                         }
                     }
                 }
             }
         }
+        return null;
     }
 
     @WebMethod

@@ -74,7 +74,7 @@ public class ProjectWebServiceEndpointImpl implements ProjectWebServiceEndpoint 
     @WebMethod
     @SneakyThrows
     @Override
-    public void updateProject(@WebParam(name="name") String name, @WebParam(name="newName") String newName, @WebParam(name="newDescription") String newDescription, @WebParam(name="session") Session session) {
+    public Project updateProject(@WebParam(name="name") String name, @WebParam(name="newName") String newName, @WebParam(name="newDescription") String newDescription, @WebParam(name="session") Session session) {
         if (serviceLocator.getSessionService().checkSession(session)) {
             Service<String, Project> projectService = serviceLocator.getProjectService();
             Optional<Project> optionalProject = projectService.findByName(name);
@@ -90,10 +90,11 @@ public class ProjectWebServiceEndpointImpl implements ProjectWebServiceEndpoint 
                 if (user.getId().equals(session.getUserId()) || userSession.getRole().equals(UserRole.ADMIN)) {
                     project.setName(newName);
                     project.setDescription(newDescription);
-                    projectService.update(project);
+                    return projectService.update(project);
                 }
             }
         }
+        return null;
     }
 
     @WebMethod

@@ -20,14 +20,13 @@ public class ProjectServiceImpl implements Service<String, Project> {
 
     @Override
     @SneakyThrows
-    public Project save(Project object) {
+    public void save(Project object) {
         EntityManager entityManager = connectionSupplier.getEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
         ProjectRepositoryImpl projectRepository = new ProjectRepositoryImpl(entityManager);
-        Project project = projectRepository.save(object);
+        projectRepository.save(object);
         transaction.commit();
-        return project;
     }
 
     @Override
@@ -48,13 +47,14 @@ public class ProjectServiceImpl implements Service<String, Project> {
 
     @Override
     @SneakyThrows
-    public void update(Project object) {
+    public Project update(Project object) {
         EntityManager entityManager = connectionSupplier.getEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
         ProjectRepositoryImpl projectRepository = new ProjectRepositoryImpl(entityManager);
-        projectRepository.update(object);
+        Project project = projectRepository.update(object);
         transaction.commit();
+        return project;
     }
 
     @Override

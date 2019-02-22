@@ -10,9 +10,9 @@ import java.util.List;
 @WebService
 public interface UserWebServiceEndpoint {
 
-    User saveUser(String name, String login, String password, String role, Session session);
+    void saveUser(String name, String login, String password, String role, Session session);
 
-    void updateUser(String login, String newName, String newLogin, String newPassword, String newRole, Session session);
+    User updateUser(String login, String newName, String newLogin, String newPassword, String newRole, Session session);
 
     User findByLoginUser(String login, Session session);
 

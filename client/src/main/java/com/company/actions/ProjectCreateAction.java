@@ -27,7 +27,6 @@ public class ProjectCreateAction implements Action {
         String answerNameProject = CommonReader.getNameProject();
         String answerDescrProject = CommonReader.getDescrProject();
         Session session = serviceLocatorEndpoint.getClientSessionService().getSession();
-
         serviceLocatorEndpoint.getProjectWebService().saveProject(answerNameProject, answerDescrProject, session);
         System.out.println("Готово");
     }

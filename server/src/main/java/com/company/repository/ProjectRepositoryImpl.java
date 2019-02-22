@@ -17,8 +17,8 @@ public class ProjectRepositoryImpl implements Repository<String, Project> {
     }
 
     @Override
-    public Project save(Project object) {
-        return entityManager.merge(object);
+    public void save(Project object) {
+        entityManager.persist(object);
     }
 
     @Override
@@ -36,8 +36,8 @@ public class ProjectRepositoryImpl implements Repository<String, Project> {
     }
 
     @Override
-    public void update(Project object) {
-        entityManager.merge(object);
+    public Project update(Project object) {
+        return entityManager.merge(object);
     }
 
     @Override

@@ -72,10 +72,6 @@ public class Project implements Serializable {
         return listTasks;
     }
 
-    public void setListTasks(List<Task> listTasks) {
-        this.listTasks = listTasks;
-    }
-
     @Override
     public String toString() {
         return "Project{" +

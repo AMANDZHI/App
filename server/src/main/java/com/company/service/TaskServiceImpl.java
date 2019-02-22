@@ -20,7 +20,7 @@ public class TaskServiceImpl implements Service<String, Task> {
 
     @Override
     public Task save(Task object) {
-        EntityManager entityManager = connectionSupplier.getEntityManagerFactory().createEntityManager();
+        EntityManager entityManager = connectionSupplier.getEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
         TaskRepositoryImpl taskRepository = new TaskRepositoryImpl(entityManager);
@@ -32,7 +32,7 @@ public class TaskServiceImpl implements Service<String, Task> {
     @Override
     @SneakyThrows
     public Optional<Task> findByName(String name) {
-        EntityManager entityManager = connectionSupplier.getEntityManagerFactory().createEntityManager();
+        EntityManager entityManager = connectionSupplier.getEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
         TaskRepositoryImpl taskRepository = new TaskRepositoryImpl(entityManager);
@@ -44,7 +44,7 @@ public class TaskServiceImpl implements Service<String, Task> {
     @Override
     @SneakyThrows
     public Optional<Task> findById(String id) {
-        EntityManager entityManager = connectionSupplier.getEntityManagerFactory().createEntityManager();
+        EntityManager entityManager = connectionSupplier.getEntityManager();
         TaskRepositoryImpl taskRepository = new TaskRepositoryImpl(entityManager);
         return taskRepository.findById(id);
     }
@@ -52,7 +52,7 @@ public class TaskServiceImpl implements Service<String, Task> {
     @Override
     @SneakyThrows
     public void update(Task object) {
-        EntityManager entityManager = connectionSupplier.getEntityManagerFactory().createEntityManager();
+        EntityManager entityManager = connectionSupplier.getEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
         TaskRepositoryImpl taskRepository = new TaskRepositoryImpl(entityManager);
@@ -63,7 +63,7 @@ public class TaskServiceImpl implements Service<String, Task> {
     @Override
     @SneakyThrows
     public void removeByName(String name) {
-        EntityManager entityManager = connectionSupplier.getEntityManagerFactory().createEntityManager();
+        EntityManager entityManager = connectionSupplier.getEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
         TaskRepositoryImpl taskRepository = new TaskRepositoryImpl(entityManager);
@@ -74,7 +74,7 @@ public class TaskServiceImpl implements Service<String, Task> {
     @Override
     @SneakyThrows
     public List<Task> getList() {
-        EntityManager entityManager = connectionSupplier.getEntityManagerFactory().createEntityManager();
+        EntityManager entityManager = connectionSupplier.getEntityManager();
         TaskRepositoryImpl taskRepository = new TaskRepositoryImpl(entityManager);
         return taskRepository.getList();
     }

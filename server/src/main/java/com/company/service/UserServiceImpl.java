@@ -21,7 +21,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @SneakyThrows
     public User save(User object) {
-        EntityManager entityManager = connectionSupplier.getEntityManagerFactory().createEntityManager();
+        EntityManager entityManager = connectionSupplier.getEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
         UserRepositoryImpl userRepository = new UserRepositoryImpl(entityManager);
@@ -32,7 +32,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void update(User object) {
-        EntityManager entityManager = connectionSupplier.getEntityManagerFactory().createEntityManager();
+        EntityManager entityManager = connectionSupplier.getEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
         UserRepositoryImpl userRepository = new UserRepositoryImpl(entityManager);
@@ -42,21 +42,21 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<User> findByLogin(String login) {
-        EntityManager entityManager = connectionSupplier.getEntityManagerFactory().createEntityManager();
+        EntityManager entityManager = connectionSupplier.getEntityManager();
         UserRepositoryImpl userRepository = new UserRepositoryImpl(entityManager);
         return userRepository.findByLogin(login);
     }
 
     @Override
     public Optional<User> findById(String id) {
-        EntityManager entityManager = connectionSupplier.getEntityManagerFactory().createEntityManager();
+        EntityManager entityManager = connectionSupplier.getEntityManager();
         UserRepositoryImpl userRepository = new UserRepositoryImpl(entityManager);
         return userRepository.findById(id);
     }
 
     @Override
     public void removeByLogin(String login) {
-        EntityManager entityManager = connectionSupplier.getEntityManagerFactory().createEntityManager();
+        EntityManager entityManager = connectionSupplier.getEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
         UserRepositoryImpl userRepository = new UserRepositoryImpl(entityManager);
@@ -66,7 +66,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public List<User> getList() {
-        EntityManager entityManager = connectionSupplier.getEntityManagerFactory().createEntityManager();
+        EntityManager entityManager = connectionSupplier.getEntityManager();
         UserRepositoryImpl userRepository = new UserRepositoryImpl(entityManager);
         return userRepository.getList();
     }

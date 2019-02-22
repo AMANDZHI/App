@@ -1,11 +1,8 @@
 
 package com.company.api;
 
-import java.util.ArrayList;
-import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
 
@@ -21,7 +18,6 @@ import javax.xml.bind.annotation.XmlType;
  *       &lt;sequence&gt;
  *         &lt;element name="description" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *         &lt;element name="listTasks" type="{http://api.company.com/}task" maxOccurs="unbounded" minOccurs="0"/&gt;
  *         &lt;element name="name" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="user" type="{http://api.company.com/}user" minOccurs="0"/&gt;
  *       &lt;/sequence&gt;
@@ -36,7 +32,6 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "project", propOrder = {
     "description",
     "id",
-    "listTasks",
     "name",
     "user"
 })
@@ -44,8 +39,6 @@ public class Project {
 
     protected String description;
     protected String id;
-    @XmlElement(nillable = true)
-    protected List<Task> listTasks;
     protected String name;
     protected User user;
 
@@ -95,35 +88,6 @@ public class Project {
      */
     public void setId(String value) {
         this.id = value;
-    }
-
-    /**
-     * Gets the value of the listTasks property.
-     * 
-     * <p>
-     * This accessor method returns a reference to the live list,
-     * not a snapshot. Therefore any modification you make to the
-     * returned list will be present inside the JAXB object.
-     * This is why there is not a <CODE>set</CODE> method for the listTasks property.
-     * 
-     * <p>
-     * For example, to add a new item, do as follows:
-     * <pre>
-     *    getListTasks().add(newItem);
-     * </pre>
-     * 
-     * 
-     * <p>
-     * Objects of the following type(s) are allowed in the list
-     * {@link Task }
-     * 
-     * 
-     */
-    public List<Task> getListTasks() {
-        if (listTasks == null) {
-            listTasks = new ArrayList<Task>();
-        }
-        return this.listTasks;
     }
 
     /**

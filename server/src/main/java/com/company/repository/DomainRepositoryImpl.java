@@ -22,7 +22,7 @@ public class DomainRepositoryImpl implements DomainRepository {
     @Override
     @SneakyThrows
     public Domain getDomain() {
-        EntityManager entityManager = connectionSupplier.getEntityManagerFactory().createEntityManager();
+        EntityManager entityManager = connectionSupplier.getEntityManager();
 
         ProjectRepositoryImpl projectRepository = new ProjectRepositoryImpl(entityManager);
         TaskRepositoryImpl taskRepository = new TaskRepositoryImpl(entityManager);

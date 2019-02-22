@@ -9,13 +9,13 @@ import java.util.List;
 @WebService
 public interface TaskWebServiceEndpoint {
 
-    void saveTask(Task object, Session session);
+    Task saveTask(String nameTask, String descriptionTask, String nameProject , Session session);
 
     Task findByNameTask(String name, Session session);
 
     Task findByIdTask(String id, Session session);
 
-    void updateTask(Task object, Session session);
+    void updateTask(String name, String newNameTask, String newDescriptionTask, String newNameProject, Session session);
 
     void removeByNameTask(String name, Session session);
 

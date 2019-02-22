@@ -31,19 +31,9 @@ public class UserUpdateAction implements Action {
         String answerRoleUser = CommonReader.getRoleUser();
 
         Session session = serviceLocatorEndpoint.getClientSessionService().getSession();
-        User updateUser = serviceLocatorEndpoint.getUserWebService().findByLoginUser(answerLoginUser, session);
 
-        if (updateUser != null) {
-            updateUser.setName(answerNewNameUser);
-            updateUser.setLogin(answerNewLoginUser);
-            updateUser.setPassword(answerPasswordUser);
-            updateUser.setRole(UserRole.valueOf(answerRoleUser));
+        serviceLocatorEndpoint.getUserWebService().updateUser(answerLoginUser, answerNewNameUser, answerNewLoginUser, answerPasswordUser, answerRoleUser, session);
 
-            serviceLocatorEndpoint.getUserWebService().updateUser(updateUser, session);
-            System.out.println("Готово");
-        } else {
-            System.out.println("Не найден такой юзер");
-        }
     }
 
     @Override

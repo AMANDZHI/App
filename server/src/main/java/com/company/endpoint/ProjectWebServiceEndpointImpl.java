@@ -1,9 +1,12 @@
 package com.company.endpoint;
 
 import com.company.api.ProjectWebServiceEndpoint;
+import com.company.api.Service;
 import com.company.api.ServiceLocator;
+import com.company.api.UserService;
 import com.company.model.Project;
 import com.company.model.Session;
+import com.company.model.User;
 import com.company.util.UserRole;
 import lombok.SneakyThrows;
 
@@ -28,9 +31,13 @@ public class ProjectWebServiceEndpointImpl implements ProjectWebServiceEndpoint 
     @WebMethod
     @SneakyThrows
     @Override
-    public void saveProject(@WebParam(name="project") Project object,@WebParam(name="session") Session session) {
+    public void saveProject(@WebParam(name="name") String name, @WebParam(name="description") String description ,@WebParam(name="session") Session session) {
         if (serviceLocator.getSessionService().checkSession(session)) {
-            serviceLocator.getProjectService().save(object);
+            Optional<User> findUser = serviceLocator.getUserService().findById(session.getUserId());
+            User userSession = findUser.get();
+            Project project = new Project(name, description, userSession);
+            Service<String, Project> projectService = serviceLocator.getProjectService();
+            projectService.save(project);
         }
     }
 
@@ -67,12 +74,23 @@ public class ProjectWebServiceEndpointImpl implements ProjectWebServiceEndpoint 
     @WebMethod
     @SneakyThrows
     @Override
-    public void updateProject(@WebParam(name="project") Project object,@WebParam(name="session") Session session) {
+    public void updateProject(@WebParam(name="name") String name, @WebParam(name="newName") String newName, @WebParam(name="newDescription") String newDescription, @WebParam(name="session") Session session) {
         if (serviceLocator.getSessionService().checkSession(session)) {
-            Optional<Project> optionalProject = serviceLocator.getProjectService().findById(object.getId());//todo поменял на id с name
+            Service<String, Project> projectService = serviceLocator.getProjectService();
+            Optional<Project> optionalProject = projectService.findByName(name);
+
             if (optionalProject.isPresent()) {
-                if (optionalProject.get().getUser().getId().equals(session.getUserId()) || serviceLocator.getUserService().findById(session.getUserId()).get().getRole().equals(UserRole.ADMIN)) {
-                    serviceLocator.getProjectService().update(object);
+                Project project = optionalProject.get();
+                User user = project.getUser();
+
+                UserService userService = serviceLocator.getUserService();
+                Optional<User> optionalSessionUser = userService.findById(session.getUserId());
+                User userSession = optionalSessionUser.get();
+
+                if (user.getId().equals(session.getUserId()) || userSession.getRole().equals(UserRole.ADMIN)) {
+                    project.setName(newName);
+                    project.setDescription(newDescription);
+                    projectService.update(project);
                 }
             }
         }
@@ -98,10 +116,13 @@ public class ProjectWebServiceEndpointImpl implements ProjectWebServiceEndpoint 
     public List getListProject(@WebParam(name="session") Session session) {
         if (serviceLocator.getSessionService().checkSession(session)) {
             List<Project> forClientList = new ArrayList<>();
+            UserService userService = serviceLocator.getUserService();
+            User userSession = userService.findById(session.getUserId()).get();
 
             List<Project> list = serviceLocator.getProjectService().getList();
             for (Project project: list) {
-                if (project.getUser().getId().equals(session.getUserId()) || serviceLocator.getUserService().findById(session.getUserId()).get().getRole().equals(UserRole.ADMIN)) {
+                User userProject = project.getUser();
+                if (userProject.getId().equals(session.getUserId()) || userSession.getRole().equals(UserRole.ADMIN)) {
                     forClientList.add(project);
                 }
             }

@@ -29,19 +29,19 @@ public class TaskUpdateAction implements Action {
         String answerDescrTask = CommonReader.getNewDescrTask();
         String answerProjectTask = CommonReader.getNewNameProjectTask();
         Session session = serviceLocatorEndpoint.getClientSessionService().getSession();
-        Project findProject = serviceLocatorEndpoint.getProjectWebService().findByNameProject(answerProjectTask, session);
-        Task updateTask = serviceLocatorEndpoint.getTaskWebService().findByNameTask(answerNameTask, session);
+//        Project findProject = serviceLocatorEndpoint.getProjectWebService().findByNameProject(answerProjectTask, session);
+//        Task updateTask = serviceLocatorEndpoint.getTaskWebService().findByNameTask(answerNameTask, session);
 
-        if (findProject != null && updateTask != null) {
-            updateTask.setName(answerNewNameTask);
-            updateTask.setDescription(answerDescrTask);
-            updateTask.setProject(findProject);
-            serviceLocatorEndpoint.getTaskWebService().updateTask(updateTask, session);
-            System.out.println("Готово");
-
-        } else {
-            System.out.println("Неудачно");
-        }
+//        if (findProject != null && updateTask != null) {
+//            updateTask.setName(answerNewNameTask);
+//            updateTask.setDescription(answerDescrTask);
+//            updateTask.setProject(findProject);
+            serviceLocatorEndpoint.getTaskWebService().updateTask(answerNameTask, answerNewNameTask, answerDescrTask, answerProjectTask, session);
+//            System.out.println("Готово");
+//
+//        } else {
+//            System.out.println("Неудачно");
+//        }
     }
 
     @Override

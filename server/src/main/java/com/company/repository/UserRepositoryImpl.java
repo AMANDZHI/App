@@ -16,9 +16,8 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public void save(User object) {
-//        entityManager.persist(object);
-        entityManager.merge(object);
+    public User save(User object) {
+        return entityManager.merge(object);
     }
 
     @Override

@@ -27,20 +27,9 @@ public class TaskCreateAction implements Action {
         String answerProjectTask = CommonReader.getNameProject();
 
         Session session = serviceLocatorEndpoint.getClientSessionService().getSession();
-        ProjectWebServiceEndpoint projectWebService = serviceLocatorEndpoint.getProjectWebService();
-        Project project = projectWebService.findByNameProject(answerProjectTask, session);
-        if (project != null) {
-            Task task = new Task();
-            task.setName(answerNameTask);
-            task.setDescription(answerDescrTask);
-            task.setProject(project);
-            User findUser = serviceLocatorEndpoint.getUserWebService().findByIdUser(session.getUserId(), session);
-            task.setUser(findUser);
-            serviceLocatorEndpoint.getTaskWebService().saveTask(task, session);
-            System.out.println("Готово");
-        } else {
-            System.out.println("Не найден такой проект");
-        }
+        TaskWebServiceEndpoint taskWebService = serviceLocatorEndpoint.getTaskWebService();
+        Task task = taskWebService.saveTask(answerNameTask, answerDescrTask, answerProjectTask, session);
+        System.out.println(task);
     }
 
     @Override

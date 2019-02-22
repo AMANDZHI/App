@@ -17,9 +17,8 @@ public class TaskRepositoryImpl implements Repository<String, Task> {
     }
 
     @Override
-    public void save(Task object) {
-        entityManager.merge(object);
-//        entityManager.persist(object);
+    public Task save(Task object) {
+        return entityManager.merge(object);
     }
 
     @Override

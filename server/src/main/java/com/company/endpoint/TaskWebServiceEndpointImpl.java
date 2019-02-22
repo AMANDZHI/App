@@ -1,5 +1,6 @@
 package com.company.endpoint;
 
+import com.company.api.Service;
 import com.company.api.ServiceLocator;
 import com.company.api.TaskWebServiceEndpoint;
 import com.company.api.UserService;
@@ -30,12 +31,23 @@ public class TaskWebServiceEndpointImpl implements TaskWebServiceEndpoint {
 
     @WebMethod
     @Override
-    public void saveTask(@WebParam(name="task") Task object, @WebParam(name="session") Session session) {
+    public Task saveTask(@WebParam(name="name") String nameTask, @WebParam(name="description") String description, @WebParam(name="nameProject") String nameProject, @WebParam(name="session") Session session) {
         if (serviceLocator.getSessionService().checkSession(session)) {
-            if (object.getUser().getId().equals(session.getUserId()) || serviceLocator.getUserService().findById(session.getUserId()).get().getRole().equals(UserRole.ADMIN)) {
-                serviceLocator.getTaskService().save(object);
+            Optional<Project> optionalProject = serviceLocator.getProjectService().findByName(nameProject);
+            if (optionalProject.isPresent()) {
+                UserService userService = serviceLocator.getUserService();
+                User userSession = userService.findById(session.getUserId()).get();
+                Project project = optionalProject.get();
+                User userProject = project.getUser();
+                if (userProject.getId().equals(session.getUserId()) || userSession.getRole().equals(UserRole.ADMIN)) {
+                    Service<String, Task> taskService = serviceLocator.getTaskService();
+                    Task task = new Task(nameTask, description, project, userSession);
+                    taskService.save(task);
+                    return task;
+                }
             }
         }
+        return null;
     }
 
     @WebMethod
@@ -73,10 +85,28 @@ public class TaskWebServiceEndpointImpl implements TaskWebServiceEndpoint {
     @WebMethod
     @SneakyThrows
     @Override
-    public void updateTask(@WebParam(name="task") Task object,@WebParam(name="session") Session session) {
+    public void updateTask(@WebParam(name="name") String nameTask, @WebParam(name="newName") String newNameTask, @WebParam(name="newDescription") String newDescription, @WebParam(name="newNameProject") String newNameProject,@WebParam(name="session") Session session) {
         if (serviceLocator.getSessionService().checkSession(session)) {
-            if (object.getUser().getId().equals(session.getUserId()) || serviceLocator.getUserService().findById(session.getUserId()).get().getRole().equals(UserRole.ADMIN)) {
-                serviceLocator.getTaskService().update(object);
+            Optional<Project> optionalProject = serviceLocator.getProjectService().findByName(newNameProject);
+            if (optionalProject.isPresent()) {
+                Project project = optionalProject.get();
+                User userProject = project.getUser();
+                UserService userService = serviceLocator.getUserService();
+                User userSession = userService.findById(session.getUserId()).get();
+                if (userProject.getId().equals(session.getUserId()) || userSession.getRole().equals(UserRole.ADMIN)) {
+                    Service<String, Task> taskService = serviceLocator.getTaskService();
+                    Optional<Task> optionalTask = taskService.findByName(nameTask);
+                    if (optionalTask.isPresent()) {
+                        Task task = optionalTask.get();
+                        User userTask = task.getUser();
+                        if (userTask.getId().equals(session.getUserId()) || userSession.getRole().equals(UserRole.ADMIN)) {
+                            task.setName(newNameTask);
+                            task.setDescription(newDescription);
+                            task.setProject(project);
+                            taskService.update(task);
+                        }
+                    }
+                }
             }
         }
     }

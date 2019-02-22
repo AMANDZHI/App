@@ -30,14 +30,7 @@ public class UserCreateAction implements Action {
         String answerRoleUser = CommonReader.getRoleUser();
 
         Session session = serviceLocatorEndpoint.getClientSessionService().getSession();
-
-        User newUser = new User();
-        newUser.setName(answerNameUser);
-        newUser.setLogin(answerLoginUser);
-        newUser.setPassword(answerPasswordUser);
-        newUser.setRole(UserRole.valueOf(answerRoleUser));
-
-        serviceLocatorEndpoint.getUserWebService().saveUser(newUser, session);
+        serviceLocatorEndpoint.getUserWebService().saveUser(answerNameUser, answerLoginUser, answerPasswordUser, answerRoleUser, session);
         System.out.println("Готово");
     }
 

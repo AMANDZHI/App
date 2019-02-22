@@ -17,16 +17,14 @@ public class ProjectRepositoryImpl implements Repository<String, Project> {
     }
 
     @Override
-    public void save(Project object) {
-//        entityManager.persist(object);
-        entityManager.merge(object);
+    public Project save(Project object) {
+        return entityManager.merge(object);
     }
 
     @Override
     public Optional<Project> findByName(String name) {
-        //Query query = entityManager.createQuery("from Project where name = :name");
-        TypedQuery<Project> query = entityManager.createQuery("SELECT p FROM Project p WHERE p.name = ?1", Project.class);
-        query.setParameter(1, name);
+        Query query = entityManager.createQuery("from Project where name = :name");
+        query.setParameter("name", name);
         Project project = (Project)query.getSingleResult();
         return Optional.of(project);
     }

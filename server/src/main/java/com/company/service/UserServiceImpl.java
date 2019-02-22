@@ -20,13 +20,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @SneakyThrows
-    public void save(User object) {
+    public User save(User object) {
         EntityManager entityManager = connectionSupplier.getEntityManagerFactory().createEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
         UserRepositoryImpl userRepository = new UserRepositoryImpl(entityManager);
-        userRepository.save(object);
+        User user = userRepository.save(object);
         transaction.commit();
+        return user;
     }
 
     @Override

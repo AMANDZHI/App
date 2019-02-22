@@ -31,10 +31,7 @@ public class ProjectUpdateAction implements Action {
         String answerDescrProject = CommonReader.getNewDescrProject();
 
         Session session = serviceLocatorEndpoint.getClientSessionService().getSession();
-        Project updateProject = serviceLocatorEndpoint.getProjectWebService().findByNameProject(answerNameProject, session);
-        updateProject.setName(answerNewNameProject);
-        updateProject.setDescription(answerDescrProject);
-        serviceLocatorEndpoint.getProjectWebService().updateProject(updateProject, session);
+        serviceLocatorEndpoint.getProjectWebService().updateProject(answerNameProject, answerNewNameProject, answerDescrProject, session);
         System.out.println("Готово");
     }
 

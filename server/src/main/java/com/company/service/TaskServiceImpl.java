@@ -19,13 +19,14 @@ public class TaskServiceImpl implements Service<String, Task> {
     }
 
     @Override
-    public void save(Task object) {
+    public Task save(Task object) {
         EntityManager entityManager = connectionSupplier.getEntityManagerFactory().createEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
         TaskRepositoryImpl taskRepository = new TaskRepositoryImpl(entityManager);
-        taskRepository.save(object);
+        Task task = taskRepository.save(object);
         transaction.commit();
+        return task;
     }
 
     @Override

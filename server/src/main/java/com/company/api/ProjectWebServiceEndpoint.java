@@ -9,13 +9,13 @@ import java.util.List;
 @WebService
 public interface ProjectWebServiceEndpoint {
 
-    void saveProject(Project object, Session session);
+    void saveProject(String name, String description, Session session);
 
     Project findByNameProject(String name, Session session);
 
     Project findByIdProject(String id, Session session);
 
-    void updateProject(Project object, Session session);
+    void updateProject(String name ,String newName, String newDescription, Session session);
 
     void removeByNameProject(String name, Session session);
 

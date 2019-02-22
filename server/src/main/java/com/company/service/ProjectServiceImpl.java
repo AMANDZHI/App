@@ -20,13 +20,14 @@ public class ProjectServiceImpl implements Service<String, Project> {
 
     @Override
     @SneakyThrows
-    public void save(Project object) {
+    public Project save(Project object) {
         EntityManager entityManager = connectionSupplier.getEntityManagerFactory().createEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
         ProjectRepositoryImpl projectRepository = new ProjectRepositoryImpl(entityManager);
-        projectRepository.save(object);
+        Project project = projectRepository.save(object);
         transaction.commit();
+        return project;
     }
 
     @Override

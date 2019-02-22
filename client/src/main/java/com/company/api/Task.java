@@ -20,6 +20,7 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="name" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
  *         &lt;element name="project" type="{http://api.company.com/}project" minOccurs="0"/&gt;
+ *         &lt;element name="user" type="{http://api.company.com/}user" minOccurs="0"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -33,7 +34,8 @@ import javax.xml.bind.annotation.XmlType;
     "description",
     "id",
     "name",
-    "project"
+    "project",
+    "user"
 })
 public class Task {
 
@@ -41,6 +43,7 @@ public class Task {
     protected String id;
     protected String name;
     protected Project project;
+    protected User user;
 
     /**
      * Gets the value of the description property.
@@ -136,6 +139,30 @@ public class Task {
      */
     public void setProject(Project value) {
         this.project = value;
+    }
+
+    /**
+     * Gets the value of the user property.
+     * 
+     * @return
+     *     possible object is
+     *     {@link User }
+     *     
+     */
+    public User getUser() {
+        return user;
+    }
+
+    /**
+     * Sets the value of the user property.
+     * 
+     * @param value
+     *     allowed object is
+     *     {@link User }
+     *     
+     */
+    public void setUser(User value) {
+        this.user = value;
     }
 
 }

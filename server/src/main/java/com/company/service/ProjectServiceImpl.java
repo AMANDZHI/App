@@ -1,6 +1,5 @@
 package com.company.service;
 
-import com.company.api.Repository;
 import com.company.api.Service;
 import com.company.dao.ConnectionSupplier;
 import com.company.model.Project;
@@ -13,22 +12,19 @@ import java.util.List;
 import java.util.Optional;
 
 public class ProjectServiceImpl implements Service<String, Project> {
-    private Repository<String, Project> projectRepository;
     private final ConnectionSupplier connectionSupplier;
 
-    public ProjectServiceImpl(Repository<String, Project> projectRepository, ConnectionSupplier connectionSupplier) {
-        this.projectRepository = projectRepository;
+    public ProjectServiceImpl(ConnectionSupplier connectionSupplier) {
         this.connectionSupplier = connectionSupplier;
-
     }
 
     @Override
     @SneakyThrows
     public void save(Project object) {
-        projectRepository = new ProjectRepositoryImpl(connectionSupplier);
-        EntityManager entityManager = connectionSupplier.getEntityManager();
+        EntityManager entityManager = connectionSupplier.getEntityManagerFactory().createEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
         transaction.begin();
+        ProjectRepositoryImpl projectRepository = new ProjectRepositoryImpl(entityManager);
         projectRepository.save(object);
         transaction.commit();
     }
@@ -36,21 +32,26 @@ public class ProjectServiceImpl implements Service<String, Project> {
     @Override
     @SneakyThrows
     public Optional<Project> findByName(String name) {
-        projectRepository = new ProjectRepositoryImpl(connectionSupplier, );
+        EntityManager entityManager = connectionSupplier.getEntityManagerFactory().createEntityManager();
+        ProjectRepositoryImpl projectRepository = new ProjectRepositoryImpl(entityManager);
         return projectRepository.findByName(name);
     }
 
     @Override
     @SneakyThrows
     public Optional<Project> findById(String id) {
+        EntityManager entityManager = connectionSupplier.getEntityManagerFactory().createEntityManager();
+        ProjectRepositoryImpl projectRepository = new ProjectRepositoryImpl(entityManager);
         return projectRepository.findById(id);
     }
 
     @Override
     @SneakyThrows
     public void update(Project object) {
-        EntityManager entityManager = connectionSupplier.getEntityManager();
+        EntityManager entityManager = connectionSupplier.getEntityManagerFactory().createEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+        ProjectRepositoryImpl projectRepository = new ProjectRepositoryImpl(entityManager);
         projectRepository.update(object);
         transaction.commit();
     }
@@ -58,8 +59,10 @@ public class ProjectServiceImpl implements Service<String, Project> {
     @Override
     @SneakyThrows
     public void removeByName(String name) {
-        EntityManager entityManager = connectionSupplier.getEntityManager();
+        EntityManager entityManager = connectionSupplier.getEntityManagerFactory().createEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
+        transaction.begin();
+        ProjectRepositoryImpl projectRepository = new ProjectRepositoryImpl(entityManager);
         projectRepository.removeByName(name);
         transaction.commit();
     }
@@ -67,6 +70,8 @@ public class ProjectServiceImpl implements Service<String, Project> {
     @Override
     @SneakyThrows
     public List<Project> getList() {
+        EntityManager entityManager = connectionSupplier.getEntityManagerFactory().createEntityManager();
+        ProjectRepositoryImpl projectRepository = new ProjectRepositoryImpl(entityManager);
         return projectRepository.getList();
     }
 }

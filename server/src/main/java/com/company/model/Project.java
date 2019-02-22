@@ -1,28 +1,29 @@
 package com.company.model;
 
-import lombok.ToString;
-
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
 @Table(name="project_tbl")
-@ToString
 public class Project implements Serializable {
     @Id
     @Column(name = "id")
     private String id;
 
-    @Column(name = "name")
+    @Column(name = "name", nullable = false, unique = true)
     private String name;
 
-    @Column(name = "description")
+    @Column(name = "description", nullable = false)
     private String description;
 
-    @JoinColumn(name = "userId", referencedColumnName = "id")
+    @JoinColumn(name = "userId", referencedColumnName = "id", nullable = false)
     @ManyToOne
     private User user;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "project", cascade = CascadeType.ALL)
+    private List<Task> listTasks;
 
     public Project() {
         this.id = UUID.randomUUID().toString();
@@ -67,10 +68,18 @@ public class Project implements Serializable {
         this.user = user;
     }
 
+    public List<Task> getListTasks() {
+        return listTasks;
+    }
+
+    public void setListTasks(List<Task> listTasks) {
+        this.listTasks = listTasks;
+    }
+
     @Override
     public String toString() {
         return "Project{" +
-                "id=" + id +
+                "id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", user=" + user +

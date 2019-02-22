@@ -1,11 +1,9 @@
 package com.company.actions;
 
 import com.company.ActionRole;
+import com.company.api.*;
 import com.company.apiClient.Action;
 import com.company.apiClient.ServiceLocatorEndpoint;
-import com.company.api.Project;
-import com.company.api.Session;
-import com.company.api.Task;
 import lombok.SneakyThrows;
 
 public class TaskCreateAction implements Action {
@@ -29,12 +27,15 @@ public class TaskCreateAction implements Action {
         String answerProjectTask = CommonReader.getNameProject();
 
         Session session = serviceLocatorEndpoint.getClientSessionService().getSession();
-        Task task = new Task();
-        task.setName(answerNameTask);
-        task.setDescription(answerDescrTask);
-        Project project = serviceLocatorEndpoint.getProjectWebService().findByNameProject(answerProjectTask, session);
+        ProjectWebServiceEndpoint projectWebService = serviceLocatorEndpoint.getProjectWebService();
+        Project project = projectWebService.findByNameProject(answerProjectTask, session);
         if (project != null) {
+            Task task = new Task();
+            task.setName(answerNameTask);
+            task.setDescription(answerDescrTask);
             task.setProject(project);
+            User findUser = serviceLocatorEndpoint.getUserWebService().findByIdUser(session.getUserId(), session);
+            task.setUser(findUser);
             serviceLocatorEndpoint.getTaskWebService().saveTask(task, session);
             System.out.println("Готово");
         } else {

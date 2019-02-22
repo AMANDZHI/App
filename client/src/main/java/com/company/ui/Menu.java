@@ -3,6 +3,7 @@ package com.company.ui;
 import com.company.ActionRole;
 import com.company.api.User;
 import com.company.api.UserRole;
+import com.company.api.UserWebServiceEndpoint;
 import com.company.apiClient.Action;
 import com.company.apiClient.ServiceLocatorEndpoint;
 import com.company.api.Session;
@@ -62,7 +63,8 @@ public class Menu {
     @SneakyThrows
     private void authMenu(Session session) {
         System.out.println("Выберите действие. Введите текст команды");
-        User user = serviceLocatorEndpoint.getUserWebService().findByIdUser(session.getUserId(), session);
+        UserWebServiceEndpoint userWebService = serviceLocatorEndpoint.getUserWebService();
+        User user = userWebService.findByIdUser(session.getUserId(), session);
         if (user != null) {
             if (user.getRole().equals(UserRole.ADMIN)) {
                 for (Map.Entry<String, Action> pair : map.entrySet()) {

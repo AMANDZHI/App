@@ -23,6 +23,7 @@
         <cxf.rt.frontend.jaxws>3.3.0</cxf.rt.frontend.jaxws>
         <cxf.rt.transports.http>3.3.0</cxf.rt.transports.http>
         <hibernate.version>5.4.1.Final</hibernate.version>
+        <spring.data.jpa>2.1.5.RELEASE</spring.data.jpa>
     </properties>
 
     <build>
@@ -137,6 +138,11 @@
                 <groupId>org.hibernate</groupId>
                 <artifactId>hibernate-entitymanager</artifactId>
                 <version>${hibernate.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.data</groupId>
+                <artifactId>spring-data-jpa</artifactId>
+                <version>spring.data.jpa</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

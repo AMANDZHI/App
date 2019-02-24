@@ -1,8 +1,15 @@
 package com.company;
 
+
+import com.company.config.SpringConfiguration;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
 public class Application {
+
     public static void main(String[] args) {
-	 Initializer initializer = new Initializer();
-	 initializer.run();
+        ApplicationContext ctx = new AnnotationConfigApplicationContext(SpringConfiguration.class);
+        EndpointPublisher bean = ctx.getBean(EndpointPublisher.class);
+        bean.runEndpoint();
     }
 }

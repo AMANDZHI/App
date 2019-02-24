@@ -3,13 +3,14 @@ package com.company.service;
 import com.company.api.DomainRepository;
 import com.company.api.DomainService;
 import com.company.model.Domain;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+@Component
 public class DomainServiceImpl implements DomainService {
-    private final DomainRepository domainRepository;
 
-    public DomainServiceImpl(DomainRepository domainRepository) {
-        this.domainRepository = domainRepository;
-    }
+    @Autowired
+    private DomainRepository domainRepository;
 
     @Override
     public Domain getDomain() {

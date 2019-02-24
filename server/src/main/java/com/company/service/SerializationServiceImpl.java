@@ -3,15 +3,16 @@ package com.company.service;
 import com.company.api.SerializationRepository;
 import com.company.api.SerializationService;
 import com.company.model.Domain;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Component
 public class SerializationServiceImpl implements SerializationService {
-    private final SerializationRepository serializationRepository;
 
-    public SerializationServiceImpl(SerializationRepository serializationRepository) {
-        this.serializationRepository = serializationRepository;
-    }
+    @Autowired
+    private SerializationRepository serializationRepository;
 
     @Override
     public void writeObjectToFile(String path, List list) {

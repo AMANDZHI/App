@@ -1,41 +1,31 @@
 package com.company.service;
 
 import com.company.api.Service;
-import com.company.dao.ConnectionSupplier;
 import com.company.model.Task;
-import com.company.repository.TaskRepositoryImpl;
+import com.company.repository.TaskRepositoryData;
 import lombok.SneakyThrows;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
+@Component("taskService")
 public class TaskServiceImpl implements Service<String, Task> {
-    private final ConnectionSupplier connectionSupplier;
 
-    public TaskServiceImpl(ConnectionSupplier connectionSupplier) {
-        this.connectionSupplier = connectionSupplier;
-    }
+    @Autowired
+    private TaskRepositoryData taskRepository;
 
     @Override
+    @Transactional
     public void save(Task object) {
-        EntityManager entityManager = connectionSupplier.getEntityManager();
-        EntityTransaction transaction = entityManager.getTransaction();
-        transaction.begin();
-        TaskRepositoryImpl taskRepository = new TaskRepositoryImpl(entityManager);
         taskRepository.save(object);
-        transaction.commit();
     }
 
     @Override
     @SneakyThrows
     public Optional<Task> findByName(String name) {
-        EntityManager entityManager = connectionSupplier.getEntityManager();
-        EntityTransaction transaction = entityManager.getTransaction();
-        transaction.begin();
-        TaskRepositoryImpl taskRepository = new TaskRepositoryImpl(entityManager);
-        transaction.commit();
         return taskRepository.findByName(name);
 
     }
@@ -43,39 +33,27 @@ public class TaskServiceImpl implements Service<String, Task> {
     @Override
     @SneakyThrows
     public Optional<Task> findById(String id) {
-        EntityManager entityManager = connectionSupplier.getEntityManager();
-        TaskRepositoryImpl taskRepository = new TaskRepositoryImpl(entityManager);
         return taskRepository.findById(id);
     }
 
     @Override
     @SneakyThrows
+    @Transactional
     public Task update(Task object) {
-        EntityManager entityManager = connectionSupplier.getEntityManager();
-        EntityTransaction transaction = entityManager.getTransaction();
-        transaction.begin();
-        TaskRepositoryImpl taskRepository = new TaskRepositoryImpl(entityManager);
-        Task task= taskRepository.update(object);
-        transaction.commit();
+        Task task= taskRepository.save(object);
         return task;
     }
 
     @Override
     @SneakyThrows
+    @Transactional
     public void removeByName(String name) {
-        EntityManager entityManager = connectionSupplier.getEntityManager();
-        EntityTransaction transaction = entityManager.getTransaction();
-        transaction.begin();
-        TaskRepositoryImpl taskRepository = new TaskRepositoryImpl(entityManager);
-        taskRepository.removeByName(name);
-        transaction.commit();
+        taskRepository.deleteByName(name);
     }
 
     @Override
     @SneakyThrows
     public List<Task> getList() {
-        EntityManager entityManager = connectionSupplier.getEntityManager();
-        TaskRepositoryImpl taskRepository = new TaskRepositoryImpl(entityManager);
-        return taskRepository.getList();
+        return taskRepository.findAll();
     }
 }

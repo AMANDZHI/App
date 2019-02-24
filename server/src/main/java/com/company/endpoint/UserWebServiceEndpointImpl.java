@@ -7,6 +7,8 @@ import com.company.model.Session;
 import com.company.model.User;
 import com.company.util.Encryption;
 import com.company.util.UserRole;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
@@ -14,18 +16,15 @@ import javax.jws.WebService;
 import java.util.List;
 import java.util.Optional;
 
+@Component
 @WebService(endpointInterface = "com.company.api.UserWebServiceEndpoint")
 public class UserWebServiceEndpointImpl implements UserWebServiceEndpoint {
+
+    @Autowired
     private UserService userService;
+
+    @Autowired
     private SessionService sessionService;
-
-    public UserWebServiceEndpointImpl() {
-    }
-
-    public UserWebServiceEndpointImpl(UserService userService, SessionService sessionService) {
-        this.userService = userService;
-        this.sessionService = sessionService;
-    }
 
     @WebMethod
     @Override

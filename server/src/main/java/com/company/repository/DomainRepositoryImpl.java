@@ -1,36 +1,37 @@
 package com.company.repository;
 
 import com.company.api.DomainRepository;
-import com.company.dao.ConnectionSupplier;
 import com.company.model.Domain;
 import com.company.model.Project;
 import com.company.model.Task;
 import com.company.model.User;
 import lombok.SneakyThrows;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-import javax.persistence.EntityManager;
 import java.util.List;
 
+@Component
 public class DomainRepositoryImpl implements DomainRepository {
-    private final Domain domain = new Domain();
-    private final ConnectionSupplier connectionSupplier;
 
-    public DomainRepositoryImpl(ConnectionSupplier connectionSupplier) {
-        this.connectionSupplier = connectionSupplier;
-    }
+    @Autowired
+    private Domain domain;
+
+    @Autowired
+    private ProjectRepositoryData projectRepository;
+
+    @Autowired
+    private TaskRepositoryData taskRepository;
+
+    @Autowired
+    private UserRepositoryData userRepository;
 
     @Override
     @SneakyThrows
     public Domain getDomain() {
-        EntityManager entityManager = connectionSupplier.getEntityManager();
-
-        ProjectRepositoryImpl projectRepository = new ProjectRepositoryImpl(entityManager);
-        TaskRepositoryImpl taskRepository = new TaskRepositoryImpl(entityManager);
-        UserRepositoryImpl userRepository = new UserRepositoryImpl(entityManager);
-
-        List<Project> listProjects = projectRepository.getList();
-        List<Task> listTasks = taskRepository.getList();
-        List<User> listUsers = userRepository.getList();
+        List<Project> listProjects = projectRepository.findAll();
+        List<Task> listTasks = taskRepository.findAll();
+        List<User> listUsers = userRepository.findAll();
 
         domain.setProjectList(listProjects);
         domain.setTaskList(listTasks);

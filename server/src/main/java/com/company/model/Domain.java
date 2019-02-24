@@ -1,8 +1,11 @@
 package com.company.model;
 
+import org.springframework.stereotype.Component;
+
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class Domain {
     List<Project> projectList = new ArrayList<>();
     List<Task> taskList = new ArrayList<>();

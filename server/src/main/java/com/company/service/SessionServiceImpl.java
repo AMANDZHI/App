@@ -1,24 +1,25 @@
 package com.company.service;
 
-import com.company.api.ServiceLocator;
 import com.company.api.SessionService;
+import com.company.api.UserService;
 import com.company.model.Session;
 import com.company.model.User;
 import com.company.util.Encryption;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.Date;
 import java.util.Optional;
 
+@Component
 public class SessionServiceImpl implements SessionService {
-    private final ServiceLocator serviceLocator;
 
-    public SessionServiceImpl(ServiceLocator serviceLocator) {
-        this.serviceLocator = serviceLocator;
-    }
+    @Autowired
+    private UserService userService;
 
     @Override
     public Session openSession(String login, String password) {
-        Optional<User> optionalUser = serviceLocator.getUserService().findByLogin(login);
+        Optional<User> optionalUser = userService.findByLogin(login);
         if (optionalUser.isPresent()) {
             if (optionalUser.get().getPassword().equals(Encryption.md5Custom(password))) {
                 Session session = new Session(optionalUser.get().getId());

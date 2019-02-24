@@ -1,46 +1,55 @@
 package com.company.endpoint;
 
-import com.company.api.SerializationWebServiceEndpoint;
-import com.company.api.ServiceLocator;
+import com.company.api.*;
 import com.company.model.Domain;
 import com.company.model.Project;
 import com.company.model.Task;
 import com.company.model.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import javax.jws.WebMethod;
 import javax.jws.WebService;
 import java.util.List;
 
+@Component
 @WebService(endpointInterface = "com.company.api.SerializationWebServiceEndpoint")
 public class SerializationWebServiceEndpointImpl implements SerializationWebServiceEndpoint {
-    private ServiceLocator serviceLocator;
 
-    public SerializationWebServiceEndpointImpl() {
-    }
+    @Autowired
+    private DomainService domainService;
 
-    public SerializationWebServiceEndpointImpl(ServiceLocator serviceLocator) {
-        this.serviceLocator = serviceLocator;
-    }
+    @Autowired
+    private SerializationService serializationService;
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private Service<String, Project> projectService;
+
+    @Autowired
+    private Service<String, Task> taskService;
 
     @WebMethod
     @Override
     public void writeObjectsToFiles() {
-        List<Project> listProjects = serviceLocator.getDomainServiceImpl().getDomain().getProjectList();
-        List<Task> listUsers = serviceLocator.getDomainServiceImpl().getDomain().getTaskList();
-        List<User> listTasks = serviceLocator.getDomainServiceImpl().getDomain().getUserList();
+        List<Project> listProjects = domainService.getDomain().getProjectList();
+        List<Task> listUsers = domainService.getDomain().getTaskList();
+        List<User> listTasks = domainService.getDomain().getUserList();
 
         String filePathUsers = "exportData/users.txt";
         String filePathTasks = "exportData/tasks.txt";
         String filePathProjects = "exportData/projects.txt";
 
         if (listProjects.size() != 0) {
-            serviceLocator.getSerializationServiceImpl().writeObjectToFile(filePathProjects, listProjects);
+            serializationService.writeObjectToFile(filePathProjects, listProjects);
         }
         if (listUsers.size() != 0) {
-            serviceLocator.getSerializationServiceImpl().writeObjectToFile(filePathUsers, listUsers);
+            serializationService.writeObjectToFile(filePathUsers, listUsers);
         }
         if (listTasks.size() != 0) {
-            serviceLocator.getSerializationServiceImpl().writeObjectToFile(filePathTasks, listTasks);
+            serializationService.writeObjectToFile(filePathTasks, listTasks);
         }
     }
 
@@ -51,25 +60,25 @@ public class SerializationWebServiceEndpointImpl implements SerializationWebServ
         String filePathTasks = "exportData/tasks.txt";
         String filePathProjects = "exportData/projects.txt";
 
-        List<Project> listProjects = serviceLocator.getSerializationServiceImpl().readFileToObject(filePathProjects);
-        List<User> listUsers = serviceLocator.getSerializationServiceImpl().readFileToObject(filePathUsers);
-        List<Task> listTasks = serviceLocator.getSerializationServiceImpl().readFileToObject(filePathTasks);
+        List<Project> listProjects = serializationService.readFileToObject(filePathProjects);
+        List<User> listUsers = serializationService.readFileToObject(filePathUsers);
+        List<Task> listTasks = serializationService.readFileToObject(filePathTasks);
 
         for (User u: listUsers) {
-            if (!serviceLocator.getUserService().findByLogin(u.getLogin()).isPresent()) {
-                serviceLocator.getUserService().save(u);
+            if (!userService.findByLogin(u.getLogin()).isPresent()) {
+                userService.save(u);
             }
         }
 
         for (Project p: listProjects) {
-            if (!serviceLocator.getProjectService().findById(p.getId()).isPresent()) {
-                serviceLocator.getProjectService().save(p);
+            if (!projectService.findById(p.getId()).isPresent()) {
+                projectService.save(p);
             }
         }
 
         for (Task t: listTasks) {
-            if (!serviceLocator.getTaskService().findById(t.getId()).isPresent()) {
-                serviceLocator.getTaskService().save(t);
+            if (!taskService.findById(t.getId()).isPresent()) {
+                taskService.save(t);
             }
         }
     }
@@ -78,29 +87,29 @@ public class SerializationWebServiceEndpointImpl implements SerializationWebServ
     @Override
     public void writeAllToJson() {
         String filePath = "exportData/all.json";
-        Domain domain = serviceLocator.getDomainServiceImpl().getDomain();
-        serviceLocator.getSerializationServiceImpl().writeAllToJson(filePath, domain);
+        Domain domain = domainService.getDomain();
+        serializationService.writeAllToJson(filePath, domain);
     }
 
     @WebMethod
     @Override
     public void writeAllToXml() {
         String filePath = "exportData/all.xml";
-        Domain domain = serviceLocator.getDomainServiceImpl().getDomain();
-        serviceLocator.getSerializationServiceImpl().writeAllToXml(filePath, domain);
+        Domain domain = domainService.getDomain();
+        serializationService.writeAllToXml(filePath, domain);
     }
 
     @WebMethod
     @Override
     public void readJsonToObjects() {
         String filePath = "exportData/all.json";
-        serviceLocator.getSerializationServiceImpl().readJsonToObjects(filePath);
+        serializationService.readJsonToObjects(filePath);
     }
 
     @WebMethod
     @Override
     public void readXmlToObjects() {
         String filePath = "exportData/all.xml";
-        serviceLocator.getSerializationServiceImpl().readXmlToObjects(filePath);
+        serializationService.readXmlToObjects(filePath);
     }
 }

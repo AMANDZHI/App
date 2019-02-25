@@ -1,6 +1,7 @@
 package com.company.actions;
 
 import com.company.ActionRole;
+import com.company.api.ProjectWebServiceEndpoint;
 import com.company.apiClient.Action;
 import com.company.apiClient.ServiceLocatorEndpoint;
 import com.company.api.Session;
@@ -25,8 +26,13 @@ public class ProjectRemoveAction implements Action {
     public void execute() {
         String answerNameProject = CommonReader.getNameProject();
         Session session = serviceLocatorEndpoint.getClientSessionService().getSession();
-        serviceLocatorEndpoint.getProjectWebService().removeByNameProject(answerNameProject, session);
-        System.out.println("Готово");
+        ProjectWebServiceEndpoint projectWebService = serviceLocatorEndpoint.getProjectWebService();
+        boolean removeProject = projectWebService.removeByNameProject(answerNameProject, session);
+        if (removeProject) {
+            System.out.println("Готово");
+        } else {
+            System.out.println("Неудачно");
+        }
     }
 
     @Override

@@ -3,21 +3,29 @@ package com.company.api;
 import com.company.model.Project;
 import com.company.model.Session;
 
+import javax.jws.WebMethod;
+import javax.jws.WebParam;
 import javax.jws.WebService;
 import java.util.List;
 
 @WebService
 public interface ProjectWebServiceEndpoint {
 
-    void saveProject(String name, String description, Session session);
+    @WebMethod
+    Project saveProject(@WebParam(name="name") String name, @WebParam(name="description") String description , @WebParam(name="session") Session session);
 
-    Project findByNameProject(String name, Session session);
+    @WebMethod
+    Project findByNameProject(@WebParam(name="project_name") String name,@WebParam(name="session") Session session);
 
-    Project findByIdProject(String id, Session session);
+    @WebMethod
+    Project findByIdProject(@WebParam(name="project_id") String id,@WebParam(name="session") Session session);
 
-    Project updateProject(String name ,String newName, String newDescription, Session session);
+    @WebMethod
+    Project updateProject(@WebParam(name="name") String name, @WebParam(name="newName") String newName, @WebParam(name="newDescription") String newDescription, @WebParam(name="session") Session session);
 
-    void removeByNameProject(String name, Session session);
+    @WebMethod
+    boolean removeByNameProject(@WebParam(name="project_name") String name,@WebParam(name="session") Session session);
 
-    List<Project> getListProject(Session session);
+    @WebMethod
+    List<Project> getListProject(@WebParam(name="session") Session session);
 }

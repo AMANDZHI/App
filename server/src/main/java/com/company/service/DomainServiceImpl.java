@@ -4,9 +4,9 @@ import com.company.api.DomainRepository;
 import com.company.api.DomainService;
 import com.company.model.Domain;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
+@Service
 public class DomainServiceImpl implements DomainService {
 
     @Autowired

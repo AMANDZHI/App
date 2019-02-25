@@ -6,12 +6,12 @@ import com.company.model.Session;
 import com.company.model.User;
 import com.company.util.Encryption;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.Optional;
 
-@Component
+@Service
 public class SessionServiceImpl implements SessionService {
 
     @Autowired

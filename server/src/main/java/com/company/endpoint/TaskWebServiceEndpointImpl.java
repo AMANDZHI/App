@@ -1,6 +1,9 @@
 package com.company.endpoint;
 
-import com.company.api.*;
+import com.company.api.Service;
+import com.company.api.SessionService;
+import com.company.api.TaskWebServiceEndpoint;
+import com.company.api.UserService;
 import com.company.model.Project;
 import com.company.model.Session;
 import com.company.model.Task;
@@ -11,8 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
-import javax.jws.WebMethod;
-import javax.jws.WebParam;
 import javax.jws.WebService;
 import java.util.ArrayList;
 import java.util.List;
@@ -36,9 +37,8 @@ public class TaskWebServiceEndpointImpl implements TaskWebServiceEndpoint {
     @Autowired
     private UserService userService;
 
-    @WebMethod
     @Override
-    public void saveTask(@WebParam(name="name") String nameTask, @WebParam(name="description") String description, @WebParam(name="nameProject") String nameProject, @WebParam(name="session") Session session) {
+    public Task saveTask(String nameTask, String description, String nameProject, Session session) {
         if (sessionService.checkSession(session)) {
             Optional<Project> optionalProject = projectService.findByName(nameProject);
             if (optionalProject.isPresent()) {
@@ -47,16 +47,16 @@ public class TaskWebServiceEndpointImpl implements TaskWebServiceEndpoint {
                 User userProject = project.getUser();
                 if (userProject.getId().equals(session.getUserId()) || userSession.getRole().equals(UserRole.ADMIN)) {
                     Task task = new Task(nameTask, description, project, userSession);
-                    taskService.save(task);
+                    return taskService.save(task);
                 }
             }
         }
+        return null;
     }
 
-    @WebMethod
     @SneakyThrows
     @Override
-    public Task findByNameTask(@WebParam(name="task_name") String name,@WebParam(name="session") Session session) {
+    public Task findByNameTask(String name, Session session) {
         if (sessionService.checkSession(session)) {
             Optional<Task> optionalTask = taskService.findByName(name);
 
@@ -69,10 +69,9 @@ public class TaskWebServiceEndpointImpl implements TaskWebServiceEndpoint {
         return null;
     }
 
-    @WebMethod
     @SneakyThrows
     @Override
-    public Task findByIdTask(@WebParam(name="task_id") String id,@WebParam(name="session") Session session) {
+    public Task findByIdTask(String id, Session session) {
         if (sessionService.checkSession(session)) {
             Optional<Task> optionalTask = taskService.findById(id);
 
@@ -85,10 +84,9 @@ public class TaskWebServiceEndpointImpl implements TaskWebServiceEndpoint {
         return null;
     }
 
-    @WebMethod
     @SneakyThrows
     @Override
-    public Task updateTask(@WebParam(name="name") String nameTask, @WebParam(name="newName") String newNameTask, @WebParam(name="newDescription") String newDescription, @WebParam(name="newNameProject") String newNameProject,@WebParam(name="session") Session session) {
+    public Task updateTask(String nameTask, String newNameTask, String newDescription, String newNameProject, Session session) {
         if (sessionService.checkSession(session)) {
             Optional<Project> optionalProject = projectService.findByName(newNameProject);
             if (optionalProject.isPresent()) {
@@ -113,25 +111,24 @@ public class TaskWebServiceEndpointImpl implements TaskWebServiceEndpoint {
         return null;
     }
 
-    @WebMethod
     @SneakyThrows
     @Override
-    public void removeByNameTask(@WebParam(name="task_name") String name,@WebParam(name="session") Session session) {
+    public boolean removeByNameTask(String name, Session session) {
         if (sessionService.checkSession(session)) {
             Optional<Task> optionalTask = taskService.findByName(name);
 
             if (optionalTask.isPresent()) {
                 if (optionalTask.get().getUser().getId().equals(session.getUserId()) || userService.findById(session.getUserId()).get().getRole().equals(UserRole.ADMIN)) {
-                    taskService.removeByName(name);
+                    return taskService.removeByName(name);
                 }
             }
         }
+        return false;
     }
 
-    @WebMethod
     @SneakyThrows
     @Override
-    public List<Task> getListTask(@WebParam(name="session") Session session) {
+    public List<Task> getListTask(Session session) {
         if (sessionService.checkSession(session)) {
             List<Task> forClientList = new ArrayList<>();
             List<Task> list = taskService.getList();

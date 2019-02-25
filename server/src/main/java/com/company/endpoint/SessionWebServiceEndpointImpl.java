@@ -6,8 +6,6 @@ import com.company.model.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.jws.WebMethod;
-import javax.jws.WebParam;
 import javax.jws.WebService;
 
 @Component
@@ -18,14 +16,12 @@ public class SessionWebServiceEndpointImpl implements SessionWebServiceEndpoint 
     private SessionService sessionService;
 
     @Override
-    @WebMethod
-    public Session openSession(@WebParam(name="login") String login,@WebParam(name="password") String password) {
+    public Session openSession(String login, String password) {
         return sessionService.openSession(login, password);
     }
 
     @Override
-    @WebMethod
-    public boolean checkSession(@WebParam(name="session") Session session) {
+    public boolean checkSession(Session session) {
         return sessionService.checkSession(session);
     }
 }

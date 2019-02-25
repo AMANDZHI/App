@@ -1,6 +1,7 @@
 package com.company.actions;
 
 import com.company.ActionRole;
+import com.company.api.ProjectWebServiceEndpoint;
 import com.company.apiClient.Action;
 import com.company.apiClient.ServiceLocatorEndpoint;
 import com.company.api.Project;
@@ -27,8 +28,13 @@ public class ProjectCreateAction implements Action {
         String answerNameProject = CommonReader.getNameProject();
         String answerDescrProject = CommonReader.getDescrProject();
         Session session = serviceLocatorEndpoint.getClientSessionService().getSession();
-        serviceLocatorEndpoint.getProjectWebService().saveProject(answerNameProject, answerDescrProject, session);
-        System.out.println("Готово");
+        ProjectWebServiceEndpoint projectWebService = serviceLocatorEndpoint.getProjectWebService();
+        Project saveProject = projectWebService.saveProject(answerNameProject, answerDescrProject, session);
+        if (saveProject != null) {
+            System.out.println("Готово");
+        } else {
+            System.out.println("Неудачно");
+        }
     }
 
     @Override

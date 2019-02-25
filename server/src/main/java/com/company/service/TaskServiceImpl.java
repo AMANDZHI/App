@@ -5,13 +5,14 @@ import com.company.model.Task;
 import com.company.repository.TaskRepositoryData;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
-@Component("taskService")
+@org.springframework.stereotype.Service
+@Qualifier("taskService")
 public class TaskServiceImpl implements Service<String, Task> {
 
     @Autowired
@@ -19,8 +20,8 @@ public class TaskServiceImpl implements Service<String, Task> {
 
     @Override
     @Transactional
-    public void save(Task object) {
-        taskRepository.save(object);
+    public Task save(Task object) {
+        return taskRepository.save(object);
     }
 
     @Override
@@ -47,8 +48,9 @@ public class TaskServiceImpl implements Service<String, Task> {
     @Override
     @SneakyThrows
     @Transactional
-    public void removeByName(String name) {
-        taskRepository.deleteByName(name);
+    public boolean removeByName(String name) {
+        Long answerDelete = taskRepository.deleteByName(name);
+        return answerDelete > 0;
     }
 
     @Override

@@ -10,8 +10,6 @@ import com.company.util.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.jws.WebMethod;
-import javax.jws.WebParam;
 import javax.jws.WebService;
 import java.util.List;
 import java.util.Optional;
@@ -26,9 +24,8 @@ public class UserWebServiceEndpointImpl implements UserWebServiceEndpoint {
     @Autowired
     private SessionService sessionService;
 
-    @WebMethod
     @Override
-    public void saveUser(@WebParam(name="name") String name, @WebParam(name="login") String login, @WebParam(name="password") String password, @WebParam(name="role") String role,  @WebParam(name="session")Session session) {
+    public User saveUser(String name, String login, String password, String role, Session session) {
         if (sessionService.checkSession(session)) {
             User user = new User();
             user.setName(name);
@@ -41,12 +38,11 @@ public class UserWebServiceEndpointImpl implements UserWebServiceEndpoint {
                 userService.save(user);
             }
         }
-
+        return null;
     }
 
-    @WebMethod
     @Override
-    public User updateUser(@WebParam(name="login") String login, @WebParam(name="newName") String newName, @WebParam(name="newLogin") String newLogin, @WebParam(name="newPassword") String newPassword,@WebParam(name="newRole") String newRole, @WebParam(name="session")Session session) {
+    public User updateUser(String login, String newName, String newLogin, String newPassword, String newRole, Session session) {
         if (sessionService.checkSession(session)) {
             Optional<User> optionalUser = userService.findByLogin(login);
             if (optionalUser.isPresent()) {
@@ -64,9 +60,8 @@ public class UserWebServiceEndpointImpl implements UserWebServiceEndpoint {
         return null;
     }
 
-    @WebMethod
     @Override
-    public User findByLoginUser(@WebParam(name="user_login") String login, @WebParam(name="session")Session session) {
+    public User findByLoginUser(String login, Session session) {
         if (sessionService.checkSession(session)) {
             if (userService.findById(session.getUserId()).get().getRole().equals(UserRole.ADMIN)) {
                 Optional<User> optionalLogin = userService.findByLogin(login);
@@ -76,9 +71,8 @@ public class UserWebServiceEndpointImpl implements UserWebServiceEndpoint {
         return null;
     }
 
-    @WebMethod
     @Override
-    public User findByIdUser(@WebParam(name="user_id") String id,@WebParam(name="session")Session session) {
+    public User findByIdUser(String id, Session session) {
         if (sessionService.checkSession(session)) {
             Optional<User> optionalUser = userService.findById(id);
             System.out.println(optionalUser.get());
@@ -93,19 +87,18 @@ public class UserWebServiceEndpointImpl implements UserWebServiceEndpoint {
         return null;
     }
 
-    @WebMethod
     @Override
-    public void removeByLoginUser(@WebParam(name="user_login") String login, @WebParam(name="session")Session session) {
+    public boolean removeByLoginUser(String login, Session session) {
         if (sessionService.checkSession(session)) {
             if (userService.findById(session.getUserId()).get().getRole().equals(UserRole.ADMIN)) {
-                userService.removeByLogin(login);
+                return userService.removeByLogin(login);
             }
         }
+        return false;
     }
 
-    @WebMethod
     @Override
-    public List<User> getListUser(@WebParam(name="session")Session session) {
+    public List<User> getListUser(Session session) {
         if (sessionService.checkSession(session)) {
             if (userService.findById(session.getUserId()).get().getRole().equals(UserRole.ADMIN)) {
                 return userService.getList();

@@ -6,6 +6,7 @@ import com.company.model.Project;
 import com.company.model.Task;
 import com.company.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import javax.jws.WebMethod;
@@ -26,9 +27,11 @@ public class SerializationWebServiceEndpointImpl implements SerializationWebServ
     private UserService userService;
 
     @Autowired
+    @Qualifier("projectService")
     private Service<String, Project> projectService;
 
     @Autowired
+    @Qualifier("taskService")
     private Service<String, Task> taskService;
 
     @WebMethod

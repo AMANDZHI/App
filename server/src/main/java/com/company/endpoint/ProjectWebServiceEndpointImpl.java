@@ -1,6 +1,9 @@
 package com.company.endpoint;
 
-import com.company.api.*;
+import com.company.api.ProjectWebServiceEndpoint;
+import com.company.api.Service;
+import com.company.api.SessionService;
+import com.company.api.UserService;
 import com.company.model.Project;
 import com.company.model.Session;
 import com.company.model.User;
@@ -10,8 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
-import javax.jws.WebMethod;
-import javax.jws.WebParam;
 import javax.jws.WebService;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,22 +32,21 @@ public class ProjectWebServiceEndpointImpl implements ProjectWebServiceEndpoint 
     @Autowired
     UserService userService;
 
-    @WebMethod
     @SneakyThrows
     @Override
-    public void saveProject(@WebParam(name="name") String name, @WebParam(name="description") String description ,@WebParam(name="session") Session session) {
+    public Project saveProject(String name, String description, Session session) {
         if (sessionService.checkSession(session)) {
             Optional<User> findUser = userService.findById(session.getUserId());
             User userSession = findUser.get();
             Project project = new Project(name, description, userSession);
-            projectService.save(project);
+            return projectService.save(project);
         }
+        return null;
     }
 
-    @WebMethod
     @SneakyThrows
     @Override
-    public Project findByNameProject(@WebParam(name="project_name") String name,@WebParam(name="session") Session session ) {
+    public Project findByNameProject(String name, Session session ) {
         if (sessionService.checkSession(session)) {
             Optional<Project> optionalProject = projectService.findByName(name);
             if (optionalProject.isPresent()) {
@@ -58,10 +58,9 @@ public class ProjectWebServiceEndpointImpl implements ProjectWebServiceEndpoint 
         return null;
     }
 
-    @WebMethod
     @SneakyThrows
     @Override
-    public Project findByIdProject(@WebParam(name="project_id") String id,@WebParam(name="session") Session session) {
+    public Project findByIdProject(String id, Session session) {
         if (sessionService.checkSession(session)) {
             Optional<Project> optionalProject = projectService.findById(id);
             if (optionalProject.isPresent()) {
@@ -73,10 +72,9 @@ public class ProjectWebServiceEndpointImpl implements ProjectWebServiceEndpoint 
         return null;
     }
 
-    @WebMethod
     @SneakyThrows
     @Override
-    public Project updateProject(@WebParam(name="name") String name, @WebParam(name="newName") String newName, @WebParam(name="newDescription") String newDescription, @WebParam(name="session") Session session) {
+    public Project updateProject(String name, String newName, String newDescription, Session session) {
         if (sessionService.checkSession(session)) {
             Optional<Project> optionalProject = projectService.findByName(name);
 
@@ -97,24 +95,23 @@ public class ProjectWebServiceEndpointImpl implements ProjectWebServiceEndpoint 
         return null;
     }
 
-    @WebMethod
     @SneakyThrows
     @Override
-    public void removeByNameProject(@WebParam(name="project_name") String name,@WebParam(name="session") Session session) {
+    public boolean removeByNameProject(String name, Session session) {
         if (sessionService.checkSession(session)) {
             Optional<Project> optionalProject = projectService.findByName(name);
             if (optionalProject.isPresent()) {
                 if (optionalProject.get().getUser().getId().equals(session.getUserId()) || userService.findById(session.getUserId()).get().getRole().equals(UserRole.ADMIN)) {
-                    projectService.removeByName(name);
+                    return projectService.removeByName(name);
                 }
             }
         }
+        return false;
     }
 
-    @WebMethod
     @SneakyThrows
     @Override
-    public List getListProject(@WebParam(name="session") Session session) {
+    public List getListProject(Session session) {
         if (sessionService.checkSession(session)) {
             List<Project> forClientList = new ArrayList<>();
             User userSession = userService.findById(session.getUserId()).get();

@@ -3,21 +3,29 @@ package com.company.api;
 import com.company.model.Session;
 import com.company.model.Task;
 
+import javax.jws.WebMethod;
+import javax.jws.WebParam;
 import javax.jws.WebService;
 import java.util.List;
 
 @WebService
 public interface TaskWebServiceEndpoint {
 
-    void saveTask(String nameTask, String descriptionTask, String nameProject , Session session);
+    @WebMethod
+    Task saveTask(@WebParam(name="name") String nameTask, @WebParam(name="description") String description, @WebParam(name="nameProject") String nameProject, @WebParam(name="session") Session session);
 
-    Task findByNameTask(String name, Session session);
+    @WebMethod
+    Task findByNameTask(@WebParam(name="task_name") String name,@WebParam(name="session") Session session);
 
-    Task findByIdTask(String id, Session session);
+    @WebMethod
+    Task findByIdTask(@WebParam(name="task_id") String id,@WebParam(name="session") Session session);
 
-    Task updateTask(String name, String newNameTask, String newDescriptionTask, String newNameProject, Session session);
+    @WebMethod
+    Task updateTask(@WebParam(name="name") String nameTask, @WebParam(name="newName") String newNameTask, @WebParam(name="newDescription") String newDescription, @WebParam(name="newNameProject") String newNameProject,@WebParam(name="session") Session session);
 
-    void removeByNameTask(String name, Session session);
+    @WebMethod
+    boolean removeByNameTask(@WebParam(name="task_name") String name,@WebParam(name="session") Session session);
 
-    List<Task> getListTask(Session session);
+    @WebMethod
+    List<Task> getListTask(@WebParam(name="session") Session session);
 }

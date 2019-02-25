@@ -6,12 +6,13 @@ import com.company.repository.UserRepositoryData;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
-@Component
+@Service
 public class UserServiceImpl implements UserService {
 
     @Autowired
@@ -20,8 +21,8 @@ public class UserServiceImpl implements UserService {
     @Override
     @SneakyThrows
     @Transactional
-    public void save(User object) {
-        userRepository.save(object);
+    public User save(User object) {
+        return userRepository.save(object);
     }
 
     @Override
@@ -43,8 +44,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public void removeByLogin(String login) {
-        userRepository.deleteByLogin(login);
+    public boolean removeByLogin(String login) {
+        Long answerDelete = userRepository.deleteByLogin(login);
+        return answerDelete > 0;
     }
 
     @Override

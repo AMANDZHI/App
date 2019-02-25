@@ -16,10 +16,10 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
- *         &lt;element name="arg0" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *         &lt;element name="arg1" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *         &lt;element name="arg2" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *         &lt;element name="arg3" type="{http://api.company.com/}session" minOccurs="0"/&gt;
+ *         &lt;element name="name" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
+ *         &lt;element name="newName" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
+ *         &lt;element name="newDescription" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
+ *         &lt;element name="session" type="{http://api.company.com/}session" minOccurs="0"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -30,112 +30,112 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "updateProject", propOrder = {
-    "arg0",
-    "arg1",
-    "arg2",
-    "arg3"
+    "name",
+    "newName",
+    "newDescription",
+    "session"
 })
 public class UpdateProject {
 
-    protected String arg0;
-    protected String arg1;
-    protected String arg2;
-    protected Session arg3;
+    protected String name;
+    protected String newName;
+    protected String newDescription;
+    protected Session session;
 
     /**
-     * Gets the value of the arg0 property.
+     * Gets the value of the name property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getArg0() {
-        return arg0;
+    public String getName() {
+        return name;
     }
 
     /**
-     * Sets the value of the arg0 property.
+     * Sets the value of the name property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setArg0(String value) {
-        this.arg0 = value;
+    public void setName(String value) {
+        this.name = value;
     }
 
     /**
-     * Gets the value of the arg1 property.
+     * Gets the value of the newName property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getArg1() {
-        return arg1;
+    public String getNewName() {
+        return newName;
     }
 
     /**
-     * Sets the value of the arg1 property.
+     * Sets the value of the newName property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setArg1(String value) {
-        this.arg1 = value;
+    public void setNewName(String value) {
+        this.newName = value;
     }
 
     /**
-     * Gets the value of the arg2 property.
+     * Gets the value of the newDescription property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getArg2() {
-        return arg2;
+    public String getNewDescription() {
+        return newDescription;
     }
 
     /**
-     * Sets the value of the arg2 property.
+     * Sets the value of the newDescription property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setArg2(String value) {
-        this.arg2 = value;
+    public void setNewDescription(String value) {
+        this.newDescription = value;
     }
 
     /**
-     * Gets the value of the arg3 property.
+     * Gets the value of the session property.
      * 
      * @return
      *     possible object is
      *     {@link Session }
      *     
      */
-    public Session getArg3() {
-        return arg3;
+    public Session getSession() {
+        return session;
     }
 
     /**
-     * Sets the value of the arg3 property.
+     * Sets the value of the session property.
      * 
      * @param value
      *     allowed object is
      *     {@link Session }
      *     
      */
-    public void setArg3(Session value) {
-        this.arg3 = value;
+    public void setSession(Session value) {
+        this.session = value;
     }
 
 }

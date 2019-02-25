@@ -16,11 +16,11 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
- *         &lt;element name="arg0" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *         &lt;element name="arg1" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *         &lt;element name="arg2" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *         &lt;element name="arg3" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *         &lt;element name="arg4" type="{http://api.company.com/}session" minOccurs="0"/&gt;
+ *         &lt;element name="name" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
+ *         &lt;element name="login" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
+ *         &lt;element name="password" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
+ *         &lt;element name="role" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
+ *         &lt;element name="session" type="{http://api.company.com/}session" minOccurs="0"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -31,138 +31,138 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "saveUser", propOrder = {
-    "arg0",
-    "arg1",
-    "arg2",
-    "arg3",
-    "arg4"
+    "name",
+    "login",
+    "password",
+    "role",
+    "session"
 })
 public class SaveUser {
 
-    protected String arg0;
-    protected String arg1;
-    protected String arg2;
-    protected String arg3;
-    protected Session arg4;
+    protected String name;
+    protected String login;
+    protected String password;
+    protected String role;
+    protected Session session;
 
     /**
-     * Gets the value of the arg0 property.
+     * Gets the value of the name property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getArg0() {
-        return arg0;
+    public String getName() {
+        return name;
     }
 
     /**
-     * Sets the value of the arg0 property.
+     * Sets the value of the name property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setArg0(String value) {
-        this.arg0 = value;
+    public void setName(String value) {
+        this.name = value;
     }
 
     /**
-     * Gets the value of the arg1 property.
+     * Gets the value of the login property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getArg1() {
-        return arg1;
+    public String getLogin() {
+        return login;
     }
 
     /**
-     * Sets the value of the arg1 property.
+     * Sets the value of the login property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setArg1(String value) {
-        this.arg1 = value;
+    public void setLogin(String value) {
+        this.login = value;
     }
 
     /**
-     * Gets the value of the arg2 property.
+     * Gets the value of the password property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getArg2() {
-        return arg2;
+    public String getPassword() {
+        return password;
     }
 
     /**
-     * Sets the value of the arg2 property.
+     * Sets the value of the password property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setArg2(String value) {
-        this.arg2 = value;
+    public void setPassword(String value) {
+        this.password = value;
     }
 
     /**
-     * Gets the value of the arg3 property.
+     * Gets the value of the role property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getArg3() {
-        return arg3;
+    public String getRole() {
+        return role;
     }
 
     /**
-     * Sets the value of the arg3 property.
+     * Sets the value of the role property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setArg3(String value) {
-        this.arg3 = value;
+    public void setRole(String value) {
+        this.role = value;
     }
 
     /**
-     * Gets the value of the arg4 property.
+     * Gets the value of the session property.
      * 
      * @return
      *     possible object is
      *     {@link Session }
      *     
      */
-    public Session getArg4() {
-        return arg4;
+    public Session getSession() {
+        return session;
     }
 
     /**
-     * Sets the value of the arg4 property.
+     * Sets the value of the session property.
      * 
      * @param value
      *     allowed object is
      *     {@link Session }
      *     
      */
-    public void setArg4(Session value) {
-        this.arg4 = value;
+    public void setSession(Session value) {
+        this.session = value;
     }
 
 }

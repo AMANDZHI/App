@@ -1,6 +1,7 @@
 package com.company.actions;
 
 import com.company.ActionRole;
+import com.company.api.UserWebServiceEndpoint;
 import com.company.apiClient.Action;
 import com.company.apiClient.ServiceLocatorEndpoint;
 import com.company.api.Session;
@@ -25,8 +26,13 @@ public class UserRemoveAction implements Action {
         String answerLoginUser = CommonReader.getLoginUser();
 
         Session session = serviceLocatorEndpoint.getClientSessionService().getSession();
-        serviceLocatorEndpoint.getUserWebService().removeByLoginUser(answerLoginUser, session);
-        System.out.println("Готово");
+        UserWebServiceEndpoint userWebService = serviceLocatorEndpoint.getUserWebService();
+        boolean removeUser = userWebService.removeByLoginUser(answerLoginUser, session);
+        if (removeUser) {
+            System.out.println("Готово");
+        } else {
+            System.out.println("Неудачно");
+        }
     }
 
     @Override

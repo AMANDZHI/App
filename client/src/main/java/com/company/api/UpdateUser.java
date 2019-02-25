@@ -16,12 +16,12 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
- *         &lt;element name="arg0" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *         &lt;element name="arg1" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *         &lt;element name="arg2" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *         &lt;element name="arg3" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *         &lt;element name="arg4" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
- *         &lt;element name="arg5" type="{http://api.company.com/}session" minOccurs="0"/&gt;
+ *         &lt;element name="login" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
+ *         &lt;element name="newName" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
+ *         &lt;element name="newLogin" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
+ *         &lt;element name="newPassword" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
+ *         &lt;element name="newRole" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
+ *         &lt;element name="session" type="{http://api.company.com/}session" minOccurs="0"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -32,164 +32,164 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "updateUser", propOrder = {
-    "arg0",
-    "arg1",
-    "arg2",
-    "arg3",
-    "arg4",
-    "arg5"
+    "login",
+    "newName",
+    "newLogin",
+    "newPassword",
+    "newRole",
+    "session"
 })
 public class UpdateUser {
 
-    protected String arg0;
-    protected String arg1;
-    protected String arg2;
-    protected String arg3;
-    protected String arg4;
-    protected Session arg5;
+    protected String login;
+    protected String newName;
+    protected String newLogin;
+    protected String newPassword;
+    protected String newRole;
+    protected Session session;
 
     /**
-     * Gets the value of the arg0 property.
+     * Gets the value of the login property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getArg0() {
-        return arg0;
+    public String getLogin() {
+        return login;
     }
 
     /**
-     * Sets the value of the arg0 property.
+     * Sets the value of the login property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setArg0(String value) {
-        this.arg0 = value;
+    public void setLogin(String value) {
+        this.login = value;
     }
 
     /**
-     * Gets the value of the arg1 property.
+     * Gets the value of the newName property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getArg1() {
-        return arg1;
+    public String getNewName() {
+        return newName;
     }
 
     /**
-     * Sets the value of the arg1 property.
+     * Sets the value of the newName property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setArg1(String value) {
-        this.arg1 = value;
+    public void setNewName(String value) {
+        this.newName = value;
     }
 
     /**
-     * Gets the value of the arg2 property.
+     * Gets the value of the newLogin property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getArg2() {
-        return arg2;
+    public String getNewLogin() {
+        return newLogin;
     }
 
     /**
-     * Sets the value of the arg2 property.
+     * Sets the value of the newLogin property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setArg2(String value) {
-        this.arg2 = value;
+    public void setNewLogin(String value) {
+        this.newLogin = value;
     }
 
     /**
-     * Gets the value of the arg3 property.
+     * Gets the value of the newPassword property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getArg3() {
-        return arg3;
+    public String getNewPassword() {
+        return newPassword;
     }
 
     /**
-     * Sets the value of the arg3 property.
+     * Sets the value of the newPassword property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setArg3(String value) {
-        this.arg3 = value;
+    public void setNewPassword(String value) {
+        this.newPassword = value;
     }
 
     /**
-     * Gets the value of the arg4 property.
+     * Gets the value of the newRole property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getArg4() {
-        return arg4;
+    public String getNewRole() {
+        return newRole;
     }
 
     /**
-     * Sets the value of the arg4 property.
+     * Sets the value of the newRole property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setArg4(String value) {
-        this.arg4 = value;
+    public void setNewRole(String value) {
+        this.newRole = value;
     }
 
     /**
-     * Gets the value of the arg5 property.
+     * Gets the value of the session property.
      * 
      * @return
      *     possible object is
      *     {@link Session }
      *     
      */
-    public Session getArg5() {
-        return arg5;
+    public Session getSession() {
+        return session;
     }
 
     /**
-     * Sets the value of the arg5 property.
+     * Sets the value of the session property.
      * 
      * @param value
      *     allowed object is
      *     {@link Session }
      *     
      */
-    public void setArg5(Session value) {
-        this.arg5 = value;
+    public void setSession(Session value) {
+        this.session = value;
     }
 
 }

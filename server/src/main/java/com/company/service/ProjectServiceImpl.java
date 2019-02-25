@@ -5,13 +5,14 @@ import com.company.model.Project;
 import com.company.repository.ProjectRepositoryData;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
-@Component("projectService")
+@org.springframework.stereotype.Service
+@Qualifier("projectService")
 public class ProjectServiceImpl implements Service<String, Project> {
 
     @Autowired
@@ -20,8 +21,8 @@ public class ProjectServiceImpl implements Service<String, Project> {
     @Override
     @SneakyThrows
     @Transactional
-    public void save(Project object) {
-        projectRepository.save(object);
+    public Project save(Project object) {
+        return projectRepository.save(object);
     }
 
     @Override
@@ -40,15 +41,15 @@ public class ProjectServiceImpl implements Service<String, Project> {
     @SneakyThrows
     @Transactional
     public Project update(Project object) {
-        Project project = projectRepository.save(object);
-        return project;
+        return projectRepository.save(object);
     }
 
     @Override
     @SneakyThrows
     @Transactional
-    public void removeByName(String name) {
-        projectRepository.deleteByName(name);
+    public boolean removeByName(String name) {
+        Long answerDelete = projectRepository.deleteByName(name);
+        return answerDelete > 0;
     }
 
     @Override

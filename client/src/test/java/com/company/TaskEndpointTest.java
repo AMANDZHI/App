@@ -12,7 +12,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {ConfigurationTest.class})
-public class TaskEndpointTest {
+class TaskEndpointTest {
 
     @Autowired
     private SessionWebServiceEndpoint sessionWebServiceEndpoint;
@@ -25,7 +25,7 @@ public class TaskEndpointTest {
 
 
     @BeforeEach
-    public void initCreateData() {
+    void initCreateData() {
         Session session = getSession();
         projectWebService.saveProject("projectTest1", "description1", session);
         projectWebService.saveProject("projectTest2", "description2", session);
@@ -33,7 +33,7 @@ public class TaskEndpointTest {
     }
 
     @AfterEach
-    public void removeData() {
+    void removeData() {
         Session session = getSession();
         projectWebService.removeByNameProject("projectTest1", session);
         projectWebService.removeByNameProject("projectTest2", session);
@@ -41,30 +41,32 @@ public class TaskEndpointTest {
     }
 
     @Test
-    public void taskCreateTest() {
+    void taskCreateTest() {
         Session session = getSession();
         Task actual = taskWebService.saveTask("taskTest5", "description", "projectTest1",  session);
         Assertions.assertNotEquals(null, actual.getId());
-        taskWebService.removeByNameTask("taskTest5", session);
+        boolean removeActual = taskWebService.removeByNameTask("taskTest5", session);
+        Assertions.assertTrue(removeActual);
     }
 
     @Test
-    public void taskFindByNameTest() {
+    void taskFindByNameTest() {
         Session session = getSession();
         Task task = taskWebService.findByNameTask("taskTest", session);
         Assertions.assertNotEquals(null, task);
     }
 
     @Test
-    public void taskUpdateTest() {
+    void taskUpdateTest() {
         Session session = getSession();
         Task actual = taskWebService.updateTask("taskTest", "newTask", "newDescr", "projectTest2", session);
         Assertions.assertNotEquals("taskTest", actual.getName());
-        taskWebService.removeByNameTask("newTask", session);
+        boolean removeActual = taskWebService.removeByNameTask("newTask", session);
+        Assertions.assertTrue(removeActual);
     }
 
     @Test
-    public void taskRemoveByName() {
+    void taskRemoveByName() {
         Session session = getSession();
         boolean actual = taskWebService.removeByNameTask("taskTest", session);
         Assertions.assertTrue(actual);

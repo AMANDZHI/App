@@ -15,7 +15,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {ConfigurationTest.class})
-public class UserEndpointTest {
+class UserEndpointTest {
 
     @Autowired
     private SessionWebServiceEndpoint sessionWebServiceEndpoint;
@@ -24,42 +24,44 @@ public class UserEndpointTest {
     private UserWebServiceEndpoint userWebService;
 
     @BeforeEach
-    public void initCreateData() {
+    void initCreateData() {
         Session session = getSession();
         userWebService.saveUser("userTest", "userTest","userTest", "user", session);
     }
 
     @AfterEach
-    public void removeData() {
+    void removeData() {
         Session session = getSession();
         userWebService.removeByLoginUser("userTest", session);
     }
 
     @Test
-    public void userCreateTest() {
+    void userCreateTest() {
         Session session = getSession();
         User actual = userWebService.saveUser("userTest5", "userTest5", "userTest5", "user", session);
         Assertions.assertNotEquals(null, actual.getId());
-        userWebService.removeByLoginUser("userTest5", session);
+        boolean removeActual = userWebService.removeByLoginUser("userTest5", session);
+        Assertions.assertTrue(removeActual);
     }
 
     @Test
-    public void userFindByLoginTest() {
+    void userFindByLoginTest() {
         Session session = getSession();
         User actual = userWebService.findByLoginUser("userTest", session);
         Assertions.assertNotEquals(null, actual);
     }
 
     @Test
-    public void userUpdateTest() {
+    void userUpdateTest() {
         Session session = getSession();
         User actual = userWebService.updateUser("userTest", "newUser", "newUser","newPassword", "user", session);
         Assertions.assertNotEquals("user", actual.getLogin());
-        userWebService.removeByLoginUser("newUser", session);
+        boolean removeActual = userWebService.removeByLoginUser("newUser", session);
+        Assertions.assertTrue(removeActual);
     }
 
     @Test
-    public void userRemoveByName() {
+    void userRemoveByName() {
         Session session = getSession();
         boolean actual = userWebService.removeByLoginUser("userTest", session);
         Assertions.assertTrue(actual);

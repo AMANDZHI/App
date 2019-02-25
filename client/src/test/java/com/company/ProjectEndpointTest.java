@@ -15,7 +15,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {ConfigurationTest.class})
-public class ProjectEndpointTest {
+class ProjectEndpointTest {
 
     @Autowired
     private SessionWebServiceEndpoint sessionWebServiceEndpoint;
@@ -24,43 +24,45 @@ public class ProjectEndpointTest {
     private ProjectWebServiceEndpoint projectWebService;
 
     @BeforeEach
-    public void initCreateData() {
+    void initCreateData() {
         Session session = getSession();
         projectWebService.saveProject("projectTest1", "description", session);
     }
 
     @AfterEach
-    public void removeData() {
+    void removeData() {
         Session session = getSession();
         projectWebService.removeByNameProject("projectTest1", session);
         projectWebService.removeByNameProject("projectTest2", session);
     }
 
     @Test
-    public void projectCreateTest() {
+    void projectCreateTest() {
         Session session = getSession();
         Project actual = projectWebService.saveProject("projectTest5", "description", session);
         Assertions.assertNotEquals(null, actual.getId());
-        projectWebService.removeByNameProject("projectTest5", session);
+        boolean removeActual = projectWebService.removeByNameProject("projectTest5", session);
+        Assertions.assertTrue(removeActual);
     }
 
     @Test
-    public void projectFindByNameTest() {
+    void projectFindByNameTest() {
         Session session = getSession();
         Project actual = projectWebService.findByNameProject("projectTest1", session);
         Assertions.assertNotEquals(null, actual);
     }
 
     @Test
-    public void projectUpdateTest() {
+    void projectUpdateTest() {
         Session session = getSession();
         Project actual = projectWebService.updateProject("projectTest1", "newProject", "newDescr", session);
         Assertions.assertNotEquals("project", actual.getName());
-        projectWebService.removeByNameProject("newProject", session);
+        boolean removeActual = projectWebService.removeByNameProject("newProject", session);
+        Assertions.assertTrue(removeActual);
     }
 
     @Test
-    public void projectRemoveByName() {
+    void projectRemoveByName() {
         Session session = getSession();
         boolean actual = projectWebService.removeByNameProject("projectTest1", session);
         Assertions.assertTrue(actual);

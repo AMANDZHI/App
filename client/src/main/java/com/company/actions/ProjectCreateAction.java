@@ -8,8 +8,11 @@ import com.company.api.Project;
 import com.company.api.Session;
 import com.company.api.User;
 import lombok.SneakyThrows;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 public class ProjectCreateAction implements Action {
+
     private ServiceLocatorEndpoint serviceLocatorEndpoint;
 
     @Override

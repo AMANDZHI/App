@@ -24,13 +24,13 @@ public class ProjectWebServiceEndpointImpl implements ProjectWebServiceEndpoint 
 
     @Autowired
     @Qualifier("projectService")
-    Service<String, Project> projectService;
+    private Service<String, Project> projectService;
 
     @Autowired
-    SessionService sessionService;
+    private SessionService sessionService;
 
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @SneakyThrows
     @Override

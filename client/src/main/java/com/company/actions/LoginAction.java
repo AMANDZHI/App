@@ -2,10 +2,11 @@ package com.company.actions;
 
 
 import com.company.ActionRole;
+import com.company.api.Session;
 import com.company.apiClient.Action;
 import com.company.apiClient.ServiceLocatorEndpoint;
-import com.company.api.Session;
 import lombok.SneakyThrows;
+import org.springframework.stereotype.Component;
 
 public class LoginAction implements Action {
     private ServiceLocatorEndpoint serviceLocatorEndpoint;

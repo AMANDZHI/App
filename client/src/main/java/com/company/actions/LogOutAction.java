@@ -4,8 +4,11 @@ import com.company.ActionRole;
 import com.company.apiClient.Action;
 import com.company.apiClient.ServiceLocatorEndpoint;
 import lombok.SneakyThrows;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 public class LogOutAction implements Action {
+
     private ServiceLocatorEndpoint serviceLocatorEndpoint;
 
     @Override

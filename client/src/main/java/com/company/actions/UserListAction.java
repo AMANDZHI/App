@@ -1,16 +1,25 @@
 package com.company.actions;
 
 import com.company.ActionRole;
+import com.company.api.UserWebServiceEndpoint;
 import com.company.apiClient.Action;
-import com.company.apiClient.ServiceLocatorEndpoint;
 import com.company.api.Session;
 import com.company.api.User;
+import com.company.service.ClientSessionService;
 import lombok.SneakyThrows;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Component
 public class UserListAction implements Action {
-    private ServiceLocatorEndpoint serviceLocatorEndpoint;
+
+    @Autowired
+    private UserWebServiceEndpoint userWebService;
+
+    @Autowired
+    private ClientSessionService clientSessionService;
 
     @Override
     public String getName() {
@@ -25,16 +34,11 @@ public class UserListAction implements Action {
     @Override
     @SneakyThrows
     public void execute() {
-        Session session = serviceLocatorEndpoint.getClientSessionService().getSession();
-        List<User> listUser = serviceLocatorEndpoint.getUserWebService().getListUser(session);
+        Session session = clientSessionService.getSession();
+        List<User> listUser = userWebService.getListUser(session);
         for (User u: listUser) {
             System.out.println("login: " +  u.getLogin());
         }
-    }
-
-    @Override
-    public void setServiceLocatorEndpoint(ServiceLocatorEndpoint serviceLocatorEndpoint) {
-        this.serviceLocatorEndpoint = serviceLocatorEndpoint;
     }
 
     @Override

@@ -5,11 +5,19 @@ import com.company.api.Session;
 import com.company.api.User;
 import com.company.api.UserWebServiceEndpoint;
 import com.company.apiClient.Action;
-import com.company.apiClient.ServiceLocatorEndpoint;
+import com.company.service.ClientSessionService;
 import lombok.SneakyThrows;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+@Component
 public class UserUpdateAction implements Action {
-    private ServiceLocatorEndpoint serviceLocatorEndpoint;
+
+    @Autowired
+    private UserWebServiceEndpoint userWebService;
+
+    @Autowired
+    private ClientSessionService clientSessionService;
 
     @Override
     public String getName() {
@@ -30,16 +38,10 @@ public class UserUpdateAction implements Action {
         String answerPasswordUser = CommonReader.getNewPasswordUser();
         String answerRoleUser = CommonReader.getRoleUser();
 
-        Session session = serviceLocatorEndpoint.getClientSessionService().getSession();
+        Session session = clientSessionService.getSession();
 
-        UserWebServiceEndpoint userWebService = serviceLocatorEndpoint.getUserWebService();
         User user = userWebService.updateUser(answerLoginUser, answerNewNameUser, answerNewLoginUser, answerPasswordUser, answerRoleUser, session);
         System.out.println(user);
-    }
-
-    @Override
-    public void setServiceLocatorEndpoint(ServiceLocatorEndpoint serviceLocatorEndpoint) {
-        this.serviceLocatorEndpoint = serviceLocatorEndpoint;
     }
 
     @Override

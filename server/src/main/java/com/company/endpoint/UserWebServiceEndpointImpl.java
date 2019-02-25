@@ -31,11 +31,11 @@ public class UserWebServiceEndpointImpl implements UserWebServiceEndpoint {
             user.setName(name);
             user.setLogin(login);
             user.setPassword(Encryption.md5Custom(password));
-            user.setRole(UserRole.valueOf(role));
+            user.setRole(UserRole.valueOf(role.toUpperCase()));
 
             User userSession = userService.findById(session.getUserId()).get();
             if (userSession.getRole().equals(UserRole.ADMIN)) {
-                userService.save(user);
+                return userService.save(user);
             }
         }
         return null;
@@ -51,7 +51,7 @@ public class UserWebServiceEndpointImpl implements UserWebServiceEndpoint {
                 if (userSession.getRole().equals(UserRole.ADMIN)) {
                     user.setName(newName);
                     user.setLogin(newLogin);
-                    user.setRole(UserRole.valueOf(newRole));
+                    user.setRole(UserRole.valueOf(newRole.toUpperCase()));
                     user.setPassword(Encryption.md5Custom(newPassword));
                     return userService.update(user);
                 }

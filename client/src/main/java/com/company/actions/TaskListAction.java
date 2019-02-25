@@ -3,15 +3,22 @@ package com.company.actions;
 import com.company.ActionRole;
 import com.company.api.TaskWebServiceEndpoint;
 import com.company.apiClient.Action;
-import com.company.apiClient.ServiceLocatorEndpoint;
 import com.company.api.Session;
 import com.company.api.Task;
+import com.company.service.ClientSessionService;
 import lombok.SneakyThrows;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Component
 public class TaskListAction implements Action {
-    private ServiceLocatorEndpoint serviceLocatorEndpoint;
+    @Autowired
+    private TaskWebServiceEndpoint taskWebServiceEndpoint;
+
+    @Autowired
+    private ClientSessionService clientSessionService;
 
     @Override
     public String getName() {
@@ -26,15 +33,9 @@ public class TaskListAction implements Action {
     @Override
     @SneakyThrows
     public void execute() {
-        Session session = serviceLocatorEndpoint.getClientSessionService().getSession();
-        TaskWebServiceEndpoint taskWebService = serviceLocatorEndpoint.getTaskWebService();
-        List<Task> list = taskWebService.getListTask(session);
+        Session session = clientSessionService.getSession();
+        List<Task> list = taskWebServiceEndpoint.getListTask(session);
         System.out.println(list);
-    }
-
-    @Override
-    public void setServiceLocatorEndpoint(ServiceLocatorEndpoint serviceLocatorEndpoint) {
-        this.serviceLocatorEndpoint = serviceLocatorEndpoint;
     }
 
     @Override

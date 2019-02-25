@@ -2,14 +2,21 @@ package com.company.actions;
 
 import com.company.ActionRole;
 import com.company.api.ProjectWebServiceEndpoint;
-import com.company.apiClient.Action;
-import com.company.apiClient.ServiceLocatorEndpoint;
 import com.company.api.Session;
+import com.company.apiClient.Action;
+import com.company.service.ClientSessionService;
 import lombok.SneakyThrows;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-
+@Component
 public class ProjectRemoveAction implements Action {
-    private ServiceLocatorEndpoint serviceLocatorEndpoint;
+
+    @Autowired
+    private ProjectWebServiceEndpoint projectWebServiceEndpoint;
+
+    @Autowired
+    private ClientSessionService clientSessionService;
 
     @Override
     public String getName() {
@@ -25,19 +32,13 @@ public class ProjectRemoveAction implements Action {
     @SneakyThrows
     public void execute() {
         String answerNameProject = CommonReader.getNameProject();
-        Session session = serviceLocatorEndpoint.getClientSessionService().getSession();
-        ProjectWebServiceEndpoint projectWebService = serviceLocatorEndpoint.getProjectWebService();
-        boolean removeProject = projectWebService.removeByNameProject(answerNameProject, session);
+        Session session = clientSessionService.getSession();
+        boolean removeProject = projectWebServiceEndpoint.removeByNameProject(answerNameProject, session);
         if (removeProject) {
             System.out.println("Готово");
         } else {
             System.out.println("Неудачно");
         }
-    }
-
-    @Override
-    public void setServiceLocatorEndpoint(ServiceLocatorEndpoint serviceLocatorEndpoint) {
-        this.serviceLocatorEndpoint = serviceLocatorEndpoint;
     }
 
     @Override

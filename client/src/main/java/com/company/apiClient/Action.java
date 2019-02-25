@@ -7,6 +7,5 @@ public interface Action {
     String getName();
     String getDescription();
     void execute();
-    void setServiceLocatorEndpoint(ServiceLocatorEndpoint serviceLocatorEndpoint);
     ActionRole getRole();
 }

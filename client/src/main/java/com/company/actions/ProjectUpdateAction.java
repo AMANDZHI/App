@@ -1,14 +1,23 @@
 package com.company.actions;
 
 import com.company.ActionRole;
-import com.company.apiClient.Action;
-import com.company.apiClient.ServiceLocatorEndpoint;
 import com.company.api.Project;
+import com.company.api.ProjectWebServiceEndpoint;
 import com.company.api.Session;
+import com.company.apiClient.Action;
+import com.company.service.ClientSessionService;
 import lombok.SneakyThrows;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+@Component
 public class ProjectUpdateAction implements Action {
-    private ServiceLocatorEndpoint serviceLocatorEndpoint;
+
+    @Autowired
+    private ProjectWebServiceEndpoint projectWebServiceEndpoint;
+
+    @Autowired
+    private ClientSessionService clientSessionService;
 
     @Override
     public String getName() {
@@ -30,14 +39,9 @@ public class ProjectUpdateAction implements Action {
 
         String answerDescrProject = CommonReader.getNewDescrProject();
 
-        Session session = serviceLocatorEndpoint.getClientSessionService().getSession();
-        Project project = serviceLocatorEndpoint.getProjectWebService().updateProject(answerNameProject, answerNewNameProject, answerDescrProject, session);
+        Session session = clientSessionService.getSession();
+        Project project = projectWebServiceEndpoint.updateProject(answerNameProject, answerNewNameProject, answerDescrProject, session);
         System.out.println(project);
-    }
-
-    @Override
-    public void setServiceLocatorEndpoint(ServiceLocatorEndpoint serviceLocatorEndpoint) {
-        this.serviceLocatorEndpoint = serviceLocatorEndpoint;
     }
 
     @Override

@@ -1,14 +1,23 @@
 package com.company.actions;
 
 import com.company.ActionRole;
+import com.company.api.UserWebServiceEndpoint;
 import com.company.apiClient.Action;
-import com.company.apiClient.ServiceLocatorEndpoint;
 import com.company.api.Session;
 import com.company.api.User;
+import com.company.service.ClientSessionService;
 import lombok.SneakyThrows;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+@Component
 public class UserFindAction implements Action {
-    private ServiceLocatorEndpoint serviceLocatorEndpoint;
+
+    @Autowired
+    private UserWebServiceEndpoint userWebService;
+
+    @Autowired
+    private ClientSessionService clientSessionService;
 
     @Override
     public String getName() {
@@ -24,18 +33,13 @@ public class UserFindAction implements Action {
     @SneakyThrows
     public void execute() {
         String answerLoginUser = CommonReader.getLoginUser();
-        Session session = serviceLocatorEndpoint.getClientSessionService().getSession();
-        User user = serviceLocatorEndpoint.getUserWebService().findByLoginUser(answerLoginUser, session);
+        Session session = clientSessionService.getSession();
+        User user = userWebService.findByLoginUser(answerLoginUser, session);
         if (user != null) {
             System.out.println(user);
         } else {
             System.out.println("Неудачно");
         }
-    }
-
-    @Override
-    public void setServiceLocatorEndpoint(ServiceLocatorEndpoint serviceLocatorEndpoint) {
-        this.serviceLocatorEndpoint = serviceLocatorEndpoint;
     }
 
     @Override

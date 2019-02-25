@@ -1,26 +1,37 @@
 package com.company.ui;
 
 import com.company.ActionRole;
-import com.company.api.User;
-import com.company.api.UserRole;
-import com.company.api.UserWebServiceEndpoint;
+import com.company.api.*;
 import com.company.apiClient.Action;
-import com.company.apiClient.ServiceLocatorEndpoint;
-import com.company.api.Session;
+import com.company.service.ClientSessionService;
 import lombok.SneakyThrows;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.util.Map;
 
+@Component
 public class Menu {
-    private final BufferedReader reader;
-    private final Map<String, Action> map;
-    private final ServiceLocatorEndpoint serviceLocatorEndpoint;
+    private final BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+    private Map<String, Action> map;
 
-    public Menu(BufferedReader reader, Map<String, Action> map, ServiceLocatorEndpoint serviceLocatorEndpoint) {
-        this.reader = reader;
+    public void setMap(Map<String, Action> map) {
         this.map = map;
-        this.serviceLocatorEndpoint = serviceLocatorEndpoint;
+    }
+
+    @Autowired
+    private ClientSessionService clientSessionService;
+
+    @Autowired
+    private SessionWebServiceEndpoint sessionWebServiceEndpoint;
+
+    @Autowired
+    private UserWebServiceEndpoint userWebService;
+
+    public Menu(Map<String, Action> map) {
+        this.map = map;
     }
 
     @SneakyThrows
@@ -47,8 +58,8 @@ public class Menu {
             if (map.get(answerAction).equals(map.get("login"))) {
                 map.get(answerAction).execute();
 
-                Session session = serviceLocatorEndpoint.getClientSessionService().getSession();
-                if (serviceLocatorEndpoint.getSessionWebService().checkSession(session)) {
+                Session session = clientSessionService.getSession();
+                if (sessionWebServiceEndpoint.checkSession(session)) {
                     authMenu(session);
                 } else {
                     startMenu();
@@ -63,7 +74,6 @@ public class Menu {
     @SneakyThrows
     private void authMenu(Session session) {
         System.out.println("Выберите действие. Введите текст команды");
-        UserWebServiceEndpoint userWebService = serviceLocatorEndpoint.getUserWebService();
         User user = userWebService.findByIdUser(session.getUserId(), session);
         if (user != null) {
             if (user.getRole().equals(UserRole.ADMIN)) {
@@ -79,7 +89,7 @@ public class Menu {
                     authMenu(session);
                 }
 
-                if (serviceLocatorEndpoint.getSessionWebService().checkSession(session)) {
+                if (sessionWebServiceEndpoint.checkSession(session)) {
                     map.get(answerAuth).execute();
                     authMenu(session);
                 } else {
@@ -98,7 +108,7 @@ public class Menu {
                     authMenu(session);
                 }
 
-                if (serviceLocatorEndpoint.getSessionWebService().checkSession(session)) {
+                if (sessionWebServiceEndpoint.checkSession(session)) {
                     map.get(answerAuth).execute();
                     authMenu(session);
                 } else {

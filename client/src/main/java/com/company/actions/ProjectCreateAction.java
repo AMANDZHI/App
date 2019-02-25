@@ -1,19 +1,21 @@
 package com.company.actions;
 
 import com.company.ActionRole;
-import com.company.api.ProjectWebServiceEndpoint;
+import com.company.api.*;
 import com.company.apiClient.Action;
-import com.company.apiClient.ServiceLocatorEndpoint;
-import com.company.api.Project;
-import com.company.api.Session;
-import com.company.api.User;
+import com.company.service.ClientSessionService;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+@Component
 public class ProjectCreateAction implements Action {
 
-    private ServiceLocatorEndpoint serviceLocatorEndpoint;
+    @Autowired
+    private ProjectWebServiceEndpoint projectWebServiceEndpoint;
+
+    @Autowired
+    private ClientSessionService clientSessionService;
 
     @Override
     public String getName() {
@@ -30,19 +32,13 @@ public class ProjectCreateAction implements Action {
     public void execute() {
         String answerNameProject = CommonReader.getNameProject();
         String answerDescrProject = CommonReader.getDescrProject();
-        Session session = serviceLocatorEndpoint.getClientSessionService().getSession();
-        ProjectWebServiceEndpoint projectWebService = serviceLocatorEndpoint.getProjectWebService();
-        Project saveProject = projectWebService.saveProject(answerNameProject, answerDescrProject, session);
+        Session session = clientSessionService.getSession();
+        Project saveProject = projectWebServiceEndpoint.saveProject(answerNameProject, answerDescrProject, session);
         if (saveProject != null) {
             System.out.println("Готово");
         } else {
             System.out.println("Неудачно");
         }
-    }
-
-    @Override
-    public void setServiceLocatorEndpoint(ServiceLocatorEndpoint serviceLocatorEndpoint) {
-        this.serviceLocatorEndpoint = serviceLocatorEndpoint;
     }
 
     @Override

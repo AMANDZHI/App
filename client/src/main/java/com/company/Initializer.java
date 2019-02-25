@@ -1,82 +1,93 @@
 package com.company;
 
-import com.company.api.*;
+import com.company.actions.*;
 import com.company.apiClient.Action;
-import com.company.apiClient.ServiceLocatorEndpoint;
-import com.company.endpoint.*;
-import com.company.repository.ClientSessionRepository;
-import com.company.service.ClientSessionService;
 import com.company.ui.Menu;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
+import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Initializer implements ServiceLocatorEndpoint {
-    private final BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-    private final SessionWebServiceEndpoint sessionWebService = new SessionWebServiceEndpointImplService().getSessionWebServiceEndpointImplPort();
-    private final ProjectWebServiceEndpoint projectWebService = new ProjectWebServiceEndpointImplService().getProjectWebServiceEndpointImplPort();
-    private final TaskWebServiceEndpoint taskWebService = new TaskWebServiceEndpointImplService().getTaskWebServiceEndpointImplPort();
-    private final UserWebServiceEndpoint userWebService = new UserWebServiceEndpointImplService().getUserWebServiceEndpointImplPort();
-    private final ClientSessionRepository clientSessionRepository = new ClientSessionRepository();
-    private final ClientSessionService clientSessionService = new ClientSessionService(clientSessionRepository);
-    private final ServiceLocatorEndpoint serviceLocatorEndpoint = this;
-    private final Map<String, Action> map = new HashMap<>();
-    private final Menu menu = new Menu(reader, map, serviceLocatorEndpoint);
-    private final List<Action> listForAction = new ArrayList<>();
-    private final SerializationWebServiceEndpoint serializationWebService = new SerializationWebServiceEndpointImplService().getSerializationWebServiceEndpointImplPort();
+@Component
+public class Initializer {
 
-    public void run(Class[] classes) {
-        init(classes);
+    @Autowired
+    private Menu menu;
+
+    @Autowired
+    private ProjectCreateAction projectCreateAction;
+    @Autowired
+    private ProjectFindAction projectFindAction;
+    @Autowired
+    private ProjectListAction projectListAction;
+    @Autowired
+    private ProjectRemoveAction projectRemoveAction;
+    @Autowired
+    private ProjectUpdateAction projectUpdateAction;
+
+    @Autowired
+    private TaskCreateAction taskCreateAction;
+    @Autowired
+    private TaskFindAction taskFindAction;
+    @Autowired
+    private TaskListAction taskListAction;
+    @Autowired
+    private TaskRemoveAction taskRemoveAction;
+    @Autowired
+    private TaskUpdateAction taskUpdateAction;
+
+    @Autowired
+    private LogOutAction logOutAction;
+    @Autowired
+    private LoginAction loginAction;
+
+    @Autowired
+    private UserCreateAction userCreateAction;
+    @Autowired
+    private UserFindAction userFindAction;
+    @Autowired
+    private UserListAction userListAction;
+    @Autowired
+    private UserRemoveAction userRemoveAction;
+    @Autowired
+    private UserUpdateAction userUpdateAction;
+
+    @Autowired
+    private ReadFileJsonAction readFileJsonAction;
+    @Autowired
+    private ReadFilesTxtAction readFilesTxtAction;
+    @Autowired
+    private ReadFileXmlAction readFileXmlAction;
+    @Autowired
+    private WriteAllToFilesJsonAction writeAllToFilesJsonAction;
+    @Autowired
+    private WriteAllToFilesTxtAction writeAllToFilesTxtAction;
+    @Autowired
+    private WriteAllToFilesXmlAction writeAllToFilesXmlAction;
+
+    private final Map<String, Action> map = new HashMap<>();
+    private final List<Action> listForAction = new ArrayList<>();
+
+    @PostConstruct
+    public void run() {
+        init();
+        menu.setMap(map);
         menu.startMenu();
     }
 
-    private void init(Class[] classes) {
-        try {
-            for (Class aClass : classes) {
-                Action o = (Action) aClass.newInstance();
-                o.setServiceLocatorEndpoint(serviceLocatorEndpoint);
-                listForAction.add(o);
-            }
+    private void init() {
+        Action[] action = {projectCreateAction, projectFindAction, projectListAction, projectRemoveAction, projectUpdateAction, taskCreateAction, taskFindAction, taskListAction, taskRemoveAction, taskUpdateAction, userCreateAction, userFindAction, userListAction, userRemoveAction, userUpdateAction, loginAction, logOutAction, writeAllToFilesJsonAction, writeAllToFilesTxtAction, writeAllToFilesXmlAction, readFileJsonAction, readFilesTxtAction, readFileXmlAction};
 
-            for (Action action: listForAction) {
-                map.put(action.getName(), action);
-            }
-        } catch (InstantiationException | IllegalAccessException e) {
-            e.printStackTrace();
+        for (Action a: action) {
+            listForAction.add(a);
         }
-    }
 
-    @Override
-    public SessionWebServiceEndpoint getSessionWebService() {
-        return sessionWebService;
-    }
-
-    @Override
-    public ProjectWebServiceEndpoint getProjectWebService() {
-        return projectWebService;
-    }
-
-    @Override
-    public TaskWebServiceEndpoint getTaskWebService() {
-        return taskWebService;
-    }
-
-    @Override
-    public UserWebServiceEndpoint getUserWebService() {
-        return userWebService;
-    }
-
-    @Override
-    public ClientSessionService getClientSessionService() {
-        return clientSessionService;
-    }
-
-    @Override
-    public SerializationWebServiceEndpoint getSerializationWebService() {
-        return serializationWebService;
+        for (Action a : listForAction) {
+            map.put(a.getName(), a);
+        }
     }
 }

@@ -1,14 +1,23 @@
 package com.company.actions;
 
 import com.company.ActionRole;
-import com.company.apiClient.Action;
-import com.company.apiClient.ServiceLocatorEndpoint;
 import com.company.api.Session;
 import com.company.api.Task;
+import com.company.api.TaskWebServiceEndpoint;
+import com.company.apiClient.Action;
+import com.company.service.ClientSessionService;
 import lombok.SneakyThrows;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+@Component
 public class TaskFindAction implements Action {
-    private ServiceLocatorEndpoint serviceLocatorEndpoint;
+
+    @Autowired
+    private TaskWebServiceEndpoint taskWebServiceEndpoint;
+
+    @Autowired
+    private ClientSessionService clientSessionService;
 
     @Override
     public String getName() {
@@ -24,18 +33,13 @@ public class TaskFindAction implements Action {
     @SneakyThrows
     public void execute() {
         String answerNameTask = CommonReader.getNameTask();
-        Session session = serviceLocatorEndpoint.getClientSessionService().getSession();
-        Task findTask = serviceLocatorEndpoint.getTaskWebService().findByNameTask(answerNameTask, session);
+        Session session = clientSessionService.getSession();
+        Task findTask = taskWebServiceEndpoint.findByNameTask(answerNameTask, session);
         if (findTask != null) {
             System.out.println(findTask);
         } else {
             System.out.println("Неудачно");
         }
-    }
-
-    @Override
-    public void setServiceLocatorEndpoint(ServiceLocatorEndpoint serviceLocatorEndpoint) {
-        this.serviceLocatorEndpoint = serviceLocatorEndpoint;
     }
 
     @Override

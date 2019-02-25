@@ -2,14 +2,16 @@ package com.company.actions;
 
 import com.company.ActionRole;
 import com.company.apiClient.Action;
-import com.company.apiClient.ServiceLocatorEndpoint;
+import com.company.service.ClientSessionService;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+@Component
 public class LogOutAction implements Action {
 
-    private ServiceLocatorEndpoint serviceLocatorEndpoint;
+    @Autowired
+    private ClientSessionService clientSessionService;
 
     @Override
     public String getName() {
@@ -24,13 +26,8 @@ public class LogOutAction implements Action {
     @Override
     @SneakyThrows
     public void execute() {
-        serviceLocatorEndpoint.getClientSessionService().save(null);
+        clientSessionService.save(null);
         System.out.println("Вышли из системы");
-    }
-
-    @Override
-    public void setServiceLocatorEndpoint(ServiceLocatorEndpoint serviceLocatorEndpoint) {
-        this.serviceLocatorEndpoint = serviceLocatorEndpoint;
     }
 
     @Override

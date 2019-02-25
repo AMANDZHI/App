@@ -1,9 +1,9 @@
 package com.company;
 
-import com.company.api.Project;
-import com.company.api.ProjectWebServiceEndpoint;
 import com.company.api.Session;
 import com.company.api.SessionWebServiceEndpoint;
+import com.company.api.User;
+import com.company.api.UserWebServiceEndpoint;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,54 +15,53 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ExtendWith(SpringExtension.class)
 @ContextConfiguration(classes = {ConfigurationTest.class})
-public class ProjectEndpointTest {
+public class UserEndpointTest {
 
     @Autowired
     private SessionWebServiceEndpoint sessionWebServiceEndpoint;
 
     @Autowired
-    private ProjectWebServiceEndpoint projectWebService;
+    private UserWebServiceEndpoint userWebService;
 
     @BeforeEach
     public void initCreateData() {
         Session session = getSession();
-        projectWebService.saveProject("projectTest1", "description", session);
+        userWebService.saveUser("userTest", "userTest","userTest", "user", session);
     }
 
     @AfterEach
     public void removeData() {
         Session session = getSession();
-        projectWebService.removeByNameProject("projectTest1", session);
-        projectWebService.removeByNameProject("projectTest2", session);
+        userWebService.removeByLoginUser("userTest", session);
     }
 
     @Test
-    public void projectCreateTest() {
+    public void userCreateTest() {
         Session session = getSession();
-        Project actual = projectWebService.saveProject("projectTest5", "description", session);
+        User actual = userWebService.saveUser("userTest5", "userTest5", "userTest5", "user", session);
         Assertions.assertNotEquals(null, actual.getId());
-        projectWebService.removeByNameProject("projectTest5", session);
+        userWebService.removeByLoginUser("userTest5", session);
     }
 
     @Test
-    public void projectFindByNameTest() {
+    public void userFindByLoginTest() {
         Session session = getSession();
-        Project actual = projectWebService.findByNameProject("projectTest1", session);
+        User actual = userWebService.findByLoginUser("userTest", session);
         Assertions.assertNotEquals(null, actual);
     }
 
     @Test
-    public void projectUpdateTest() {
+    public void userUpdateTest() {
         Session session = getSession();
-        Project actual = projectWebService.updateProject("projectTest1", "newProject", "newDescr", session);
-        Assertions.assertNotEquals("project", actual.getName());
-        projectWebService.removeByNameProject("newProject", session);
+        User actual = userWebService.updateUser("userTest", "newUser", "newUser","newPassword", "user", session);
+        Assertions.assertNotEquals("user", actual.getLogin());
+        userWebService.removeByLoginUser("newUser", session);
     }
 
     @Test
-    public void projectRemoveByName() {
+    public void userRemoveByName() {
         Session session = getSession();
-        boolean actual = projectWebService.removeByNameProject("projectTest1", session);
+        boolean actual = userWebService.removeByLoginUser("userTest", session);
         Assertions.assertTrue(actual);
     }
 
